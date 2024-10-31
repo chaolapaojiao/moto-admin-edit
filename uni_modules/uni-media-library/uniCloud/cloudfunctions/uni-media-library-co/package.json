@@ -1,0 +1,11 @@
+{
+    "name": "uni-media-library-co",
+    "dependencies": {},
+    "extensions": {
+        "uni-cloud-jql": {}
+    },
+    "origin-plugin-dev-name": "uni-media-library",
+    "origin-plugin-version": "1.0.1",
+    "plugin-dev-name": "uni-media-library",
+    "plugin-version": "1.0.1"
+}

@@ -1,0 +1,43 @@
+{
+  "hash": "a1e603e7",
+  "configHash": "9265c7be",
+  "lockfileHash": "b2031616",
+  "browserHash": "51aa5249",
+  "optimized": {
+    "element-plus": {
+      "src": "../../../../../node_modules/element-plus/es/index.mjs",
+      "file": "element-plus.js",
+      "fileHash": "f3f05ae3",
+      "needsInterop": false
+    },
+    "js-md5": {
+      "src": "../../../../../node_modules/js-md5/src/md5.js",
+      "file": "js-md5.js",
+      "fileHash": "e75b2e7c",
+      "needsInterop": true
+    },
+    "jsencrypt": {
+      "src": "../../../../../node_modules/jsencrypt/lib/index.js",
+      "file": "jsencrypt.js",
+      "fileHash": "bf64b091",
+      "needsInterop": false
+    },
+    "image-conversion": {
+      "src": "../../../../../node_modules/image-conversion/index.js",
+      "file": "image-conversion.js",
+      "fileHash": "c4cf11da",
+      "needsInterop": true
+    },
+    "image-compressor": {
+      "src": "../../../../../node_modules/image-compressor/dist/image-compressor.js",
+      "file": "image-compressor.js",
+      "fileHash": "c4e63c7a",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-MNTBHR2J": {
+      "file": "chunk-MNTBHR2J.js"
+    }
+  }
+}
