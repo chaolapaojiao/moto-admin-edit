@@ -18,12 +18,14 @@
 	import request from '@/api/http.js'
 	const http = request.http
 	import ToolbarTool from "./base.vue"
+	import * as imageConversion from 'image-conversion'
 	export default {
 		name: "tool-image",
 		emits: ['change'],
 		props: {
 			active: Boolean,
-			disabled: Boolean
+			disabled: Boolean,
+			getEditorContent: Function
 		},
 		components: {
 			ToolbarTool
@@ -43,19 +45,9 @@
 					count: 1, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					success: async (res) => {
+						const imageUrl = res.tempFilePaths[0]
 						this.onInsert({
 							src: res.tempFilePaths[0]
-						})
-						http.upload('common/imageUpload', {
-							name: 'file',
-							filePath: res.tempFilePaths[0]
-						}).then(res => {
-							const result = JSON.parse(res.data)
-							if (result.code === 200) {
-								this.onInsert({
-									src: result.data.url,
-								})
-							}
 						})
 					}
 				});

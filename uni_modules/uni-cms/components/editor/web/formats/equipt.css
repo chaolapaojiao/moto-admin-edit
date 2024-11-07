@@ -1,0 +1,18 @@
+.custom-element {
+	user-select: none;
+	background-color: #f0f0f0;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+}
+
+.no-select {
+	user-select: none;
+	/* 禁用文本选择 */
+	-webkit-user-select: none;
+	/* Safari 支持 */
+	-moz-user-select: none;
+	/* Firefox 支持 */
+	-ms-user-select: none;
+	/* IE 支持 */
+}

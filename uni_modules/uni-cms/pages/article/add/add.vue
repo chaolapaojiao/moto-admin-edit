@@ -274,19 +274,6 @@ export default {
 				})
 			}
 
-			if (this.formData.thumbnail) {
-				for (const thumbnail of this.formData.thumbnail) {
-					if (!thumbnail.source) {
-						// 如果封面图为空，提示用户
-						uni.hideLoading()
-						return uni.showToast({
-							icon: 'none',
-							title: '封面图必填',
-						})
-					}
-				}
-			}
-
 			this.$refs.form.validate().then((res) => {
 				this.editorCtx.getContents({
 					success: (e) => {

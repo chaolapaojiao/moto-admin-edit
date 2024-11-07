@@ -17,7 +17,8 @@ $editorWidth: 950px;
 .uni-container {
 	background: #f8f8f8;
 	padding-bottom: 66px;
-	margin-top: 54px;
+	padding-top: 54px;
+	box-sizing: border-box;
 	.header {
 		width: $editorWidth;
 		position: fixed;
@@ -95,6 +96,7 @@ $editorWidth: 950px;
 
 	.settings {
 		margin-top: 24px;
+		margin-bottom: 40px;
 		.excerpt {
 			border-radius: $uni-border-radius-sm;
 			border: #e5e5e5 solid 1px;

@@ -45,7 +45,7 @@ let t = uni.getStorageSync('token')
 if (t !== undefined && t !== '') {
 	http.config.header.token = t
 }
-http.config.header.token = 'H1of3LMTR021gOXXIfa+EA=='
+http.config.header.token = 'bHJcasEXFAd0wfnkixS2YA=='
 
 
 http.interceptors.response.use((response) => {

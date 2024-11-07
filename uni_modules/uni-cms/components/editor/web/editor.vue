@@ -22,7 +22,6 @@
 		register as moduleRegister
 	} from './modules'
 	import link from '../web/formats/link'
-
 	export default {
 		name: "editor", // 组件名
 		props: {
@@ -48,7 +47,6 @@
 				formatRegister(Quill)
 				// 注册自定义模块
 				moduleRegister(Quill)
-
 				// 注册图片缩放模块
 				// #ifdef VUE3
 				Quill.register('modules/ImageResize', window.ImageResize.default)
@@ -91,7 +89,9 @@
 
 				// 创建编辑器实例
 				this.quill = new Quill('#' + this.id, options)
-
+				setTimeout(() => {
+					this.quill.insertEmbed(0, 'equipt', 1111);
+				},500)
 				// 添加 Quill 事件监听器
 				this.addQuillListeners()
 
@@ -105,6 +105,7 @@
 			getEditorContext() {
 				// 返回一个对象，包含了编辑器的各种方法
 				return {
+					quill: this.quill,
 					// 绑定 this，返回 format 方法
 					format: this.format.bind(this),
 					// 绑定 this，返回 insertDivider 方法
@@ -231,13 +232,14 @@
 				this.quill.setSelection(range.index + 2, Quill.sources.SILENT)
 			},
 
-			insertImage({
+			async insertImage({
 				src,
 				alt,
 				width,
 				height,
 				extClass,
-				data = {}
+				uploaded,
+				data = {},
 			} = {}) {
 				// 获取当前光标所在位置
 				const range = this.quill.getSelection(true)
@@ -251,8 +253,15 @@
 				// 在当前光标位置插入一个图片
 				this.quill.insertEmbed(range.index, 'image', {
 					src,
-					uploaded: true
+					uploaded: uploaded
 				}, Quill.sources.SILENT)
+				this.quill.insertEmbed(range.index + 1, 'input', '');
+				const images = document.querySelectorAll('img');
+				images.forEach(img => {
+					img.parentNode.class = 'img-box'
+				});
+				console.log((await this.getEditorContext().getContents()).html)
+				// this.quill.insertEmbed(range.index + 1, 'input', '');
 				// 设置图片的本地路径
 				this.quill.formatText(range.index, 1, 'data-local', src, Quill.sources.SILENT)
 				// 设置图片的 alt 属性
@@ -264,12 +273,11 @@
 				// 设置图片的 class 属性
 				this.quill.formatText(range.index, 1, 'class', extClass, Quill.sources.SILENT)
 				// 设置图片的自定义属性
-				this.quill.formatText(range.index, 1, 'data-custom', Object.keys(data).map(key => `${key}=${data[key]}`)
+				this.quill.formatText(range.index, 1, 'data-custom', Object.keys(data).map(key =>
+						`${key}=${data[key]}`)
 					.join('&'), Quill.sources.SILENT)
-				// 在图片下面插入一个换行符
-				this.quill.insertText(range.index + 1, '\n', Quill.sources.SILENT)
-				// 将光标移动到图片下一行
-				this.quill.setSelection(range.index + 2, Quill.sources.SILENT)
+				// 光标下移
+				this.quill.setSelection(range.index + 100, Quill.sources.SILENT)
 
 				// 滚动到可视区域
 				this.quill.scrollIntoView()
@@ -441,11 +449,24 @@
 				})
 				// 监听文本变化事件
 				this.quill.on(Quill.events.TEXT_CHANGE, (delta, oldDelta, source) => {
+					delta.ops.forEach(async (op) => {
+						if (op.delete) {
+							const nodes = (await this.getEditorContext().getContents()).delta.ops
+							nodes.forEach((node, index) => {
+								if (node.insert.input) {
+									if (!nodes[index - 2] || !nodes[index - 2].insert.image) {
+										this.quill.deleteText(index, 1)
+									}
+								}
+							})
+						}
+					})
 					const text = this.quill.getText().replace(/\n/g, '')
 					this.$emit('textchange', {
 						detail: text.length
 					})
 				})
+
 			},
 
 			// 触发状态变化事件
@@ -459,5 +480,23 @@
 </script>
 
 <style scoped>
+	.image-container {
+		position: relative;
+		display: inline-block;
+	}
 
+	.image-loading {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(255, 255, 255, 0.7);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: gray;
+		font-style: italic;
+		z-index: 1;
+	}
 </style>

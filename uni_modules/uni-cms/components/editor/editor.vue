@@ -13,8 +13,8 @@
 				@blur="onEditorBlur"></editor>
 			<!-- #endif -->
 		</view>
-		<view class="editor-toolbar pc">
-			<view class="editor-toolbar-box">
+		<view class="editor-toolbar">
+			<view class="editor-toolbar-box moto-flex-row-center">
 				<tool-undo @change="({type, value}) => format(type, value)" :disabled="!showFooterToolBar"></tool-undo>
 				<tool-redo @change="({type, value}) => format(type, value)" :disabled="!showFooterToolBar"></tool-redo>
 				<tool-format-clear @change="({type, value}) => format(type, value)"
@@ -36,9 +36,9 @@
 					:disabled="!showFooterToolBar"></tool-link>
 				<tool-align @change="({type, value}) => format(type, value)" :active="formats.align"
 					:disabled="!showFooterToolBar"></tool-align>
-				<tool-hr @change="({type, value}) => format(type, value)" :disabled="!showFooterToolBar"></tool-hr>
-				<tool-list @change="({type, value}) => format(type, value)" :active="formats.list"
-					:disabled="!showFooterToolBar"></tool-list>
+				<!-- <tool-hr @change="({type, value}) => format(type, value)" :disabled="!showFooterToolBar"></tool-hr> -->
+				<!-- <tool-list @change="({type, value}) => format(type, value)" :active="formats.list"
+					:disabled="!showFooterToolBar"></tool-list> -->
 				<tool-line-indent @change="({type, value}) => format(type, value)" :active="formats.textIndent"
 					:disabled="!showFooterToolBar"></tool-line-indent>
 				<tool-space-both @change="({type, value}) => format(type, value)"
@@ -54,7 +54,7 @@
 				<tool-color @change="({type, value}) => format(type, value)" :active="formats.color"
 					:disabled="!showFooterToolBar"></tool-color>
 				<view class="editor-toolbar-divider"></view>
-				<tool-image @change="({type, value}) => format(type, value)"
+				<tool-image :getEditorContent="getEditorContent" @change="({type, value}) => format(type, value)"
 					:disabled="!showFooterToolBar"></tool-image>
 				<tool-video @change="({type, value}) => format(type, value)"
 					:disabled="!showFooterToolBar"></tool-video>
@@ -221,7 +221,7 @@
 					<uni-icons type="closeempty" size="40rpx" class="icon"></uni-icons>
 				</view>
 			</view>
-			<uni-im-chat ref="uniImChat"></uni-im-chat>
+		<!-- 	<uni-im-chat ref="uniImChat"></uni-im-chat> -->
 		</view>
 
 		<uni-drawer class="insert-image-drawer" v-if="drawerWidth" ref="insertImageDrawer" mode="right"
@@ -233,6 +233,9 @@
 </template>
 
 <script>
+	import request from '@/api/http.js'
+	const http = request.http
+	import * as imageConversion from 'image-conversion'
 	// 导入编辑器相关组件
 	// 导入工具栏中的空格、行高、字间距、背景、图片、清除格式、解锁内容、AI等组件。同时导入WebEditor组件。
 	import ToolColor from "./tools/color.vue";
@@ -257,7 +260,7 @@
 	// import ToolUnlockContent from "./tools/unlock-content.vue";
 	// import ToolAi from "./tools/ai.vue";
 	import ToolVideo from "./tools/video.vue";
-	import uniImChat from '../ai/chat.vue';
+	// import uniImChat from '../ai/chat.vue';
 	import ToolFontSize from './tools/font-size.vue'
 
 	// #ifdef H5
@@ -290,7 +293,7 @@
 			// ToolUnlockContent,
 			// ToolAi,
 			ToolVideo,
-			uniImChat,
+			// uniImChat,
 			ToolFontSize,
 			// #ifdef H5
 			WebEditor,
@@ -300,7 +303,7 @@
 			return {
 				formats: {}, // 编辑器格式状态
 				keyboardHeight: 0, // 键盘高度
-				showFooterToolBar: false, // 是否显示底部工具栏
+				showFooterToolBar: true, // 是否显示底部工具栏
 				showToolSettingMask: false, // 是否显示工具栏设置遮罩层
 				showInsertBlockToolSetting: false, // 是否显示插入块工具栏
 				showToolPopup: '', // 当前工具栏弹出的工具名称，为空则表示没有弹出的工具
@@ -324,9 +327,9 @@
 				if (this.showToolPopup !== '') {
 					toolHeight = 50
 				}
+				
 				// 如果键盘高度大于0，返回窗口高度减去键盘高度减去工具栏高度减去工具栏弹出框高度，否则返回0。
-				return this.keyboardHeight > 0 ? (this.systemInfo.windowHeight - this.keyboardHeight - toolbarHeight -
-					toolHeight) : 0
+				return 0
 			}
 		},
 		watch: {
@@ -343,8 +346,19 @@
 			this.systemInfo = uni.getSystemInfoSync()
 			// 设置插入图片抽屉宽度为窗口宽度的80%
 			this.drawerWidth = this.systemInfo.windowWidth * .8
+			uni.$on('parstImage', (src) => {
+				this.format('image', {
+					src: src,
+					data: {
+						source: src
+					}
+				})
+			})
 		},
 		methods: {
+			getEditorContent() {
+				return this.$refs.webEditor.getEditorContext()
+			},
 			parseHtml(htmlContent) {
 				this.$refs.webEditor.parseHtml(htmlContent)
 			},
@@ -413,26 +427,26 @@
 			showToolPopupView(id) {
 				uni.createSelectorQuery().in(this).select('#' + id).boundingClientRect(btnData => {
 					uni.createSelectorQuery().in(this).select('#' + id + '-popup').boundingClientRect(
-					popupData => {
-						const center = popupData.width / 2
+						popupData => {
+							const center = popupData.width / 2
 
-						// 根据位置信息计算出工具栏弹出层的位置，始终将弹出层显示在最中间，将位置信息保存到组件的 `toolPopupRect` 属性中
-						if (btnData.left > center) {
-							this.toolPopupRect.left = (btnData.left - center) + btnData.width / 2
-						} else {
-							this.toolPopupRect.left = 10
-						}
-						if (popupData.width > this.systemInfo.windowWidth) {
-							this.toolPopupRect.right = 10
-						}
+							// 根据位置信息计算出工具栏弹出层的位置，始终将弹出层显示在最中间，将位置信息保存到组件的 `toolPopupRect` 属性中
+							if (btnData.left > center) {
+								this.toolPopupRect.left = (btnData.left - center) + btnData.width / 2
+							} else {
+								this.toolPopupRect.left = 10
+							}
+							if (popupData.width > this.systemInfo.windowWidth) {
+								this.toolPopupRect.right = 10
+							}
 
-						// 根据传递的id参数，设置组件的 `showToolPopup` 属性的值，如果 `showToolPopup` 属性的值等于传递的id参数，则将其设置为空字符串（隐藏工具栏弹出层），否则将其设置为传递的id参数（显示工具栏弹出层）。
-						this.showToolPopup = this.showToolPopup !== id ? id : ''
-						// 如果 `showToolPopup` 属性的值为空字符串，则将组件的 `toolPopupRect` 属性设置为空对象，清空工具栏弹出层位置信息。
-						if (this.showToolPopup === '') {
-							this.toolPopupRect = {}
-						}
-					}).exec();
+							// 根据传递的id参数，设置组件的 `showToolPopup` 属性的值，如果 `showToolPopup` 属性的值等于传递的id参数，则将其设置为空字符串（隐藏工具栏弹出层），否则将其设置为传递的id参数（显示工具栏弹出层）。
+							this.showToolPopup = this.showToolPopup !== id ? id : ''
+							// 如果 `showToolPopup` 属性的值为空字符串，则将组件的 `toolPopupRect` 属性设置为空对象，清空工具栏弹出层位置信息。
+							if (this.showToolPopup === '') {
+								this.toolPopupRect = {}
+							}
+						}).exec();
 				}).exec();
 			},
 			// 显示插入块元素工具栏
@@ -557,23 +571,26 @@
 				size
 			}, el) {
 				// 返回一个 Promise 对象，以便在上传成功后，将图片的 URL 插入到编辑器中。
-				return new Promise((resolve, reject) => {
-					this.uploadEditorImage({
-						filePath: blob,
-						fileExt: ext,
-						size
-					}).then(fileID => {
-						resolve(fileID)
-					}).catch(error => {
-						// 防止万一，只要检测失败就删除图片
+				return new Promise(async (resolve, reject) => {
+					// const imgBlob = await fetch(blob).then(r => r.blob())
+					// console.log(imgBlob)
+					// const imgFile = new File([imgBlob], 'a.png', {
+					// 	type: 'image/png'
+					// })
+					// const compressBlob = await imageConversion.compressAccurately(imgFile, 200)
+					// const compressUrl = URL.createObjectURL(compressBlob)
+					http.upload('common/imageUpload', {
+						name: 'file',
+						filePath: blob
+					}).then(res => {
+						console.log(res)
+						const result = JSON.parse(res.data)
+						if (result.code === 200) {
+							console.log(result.data.url)
+							resolve(result.data.url)
+						}
+					}).catch(err => {
 						Quill && Quill.find(el).deleteAt(0)
-						uni.showModal({
-							content: error.message,
-							showCancel: false
-						})
-						reject()
-					}).finally(() => {
-						uni.hideLoading()
 					})
 				})
 			},
@@ -727,6 +744,7 @@
 	.uni-im-chat-components {
 		width: 450px;
 		position: fixed;
+		top: 50px;
 		right: 50px;
 		bottom: 70px;
 		z-index: 999;
@@ -856,23 +874,6 @@
 				background: rgba(0, 0, 0, .5);
 				z-index: -1;
 			}
-
-			//
-			//::v-deep {
-			//  .page {
-			//    height: 75vh;
-			//  }
-			//
-			//  .foot-box {
-			//    width: 100%;
-			//  }
-			//  .foot-box-content {
-			//    width: 100%;
-			//    display: flex;
-			//    align-items: center;
-			//    gap: 10px;
-			//  }
-			//}
 		}
 	}
 </style>

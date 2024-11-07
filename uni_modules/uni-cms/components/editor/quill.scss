@@ -103,7 +103,18 @@
     border-style: solid;
     border-color: transparent transparent black transparent;
   }
-
+	.ql-image-overlay .ql-image-toolbar span.triangle-up2{
+		padding: 0;
+		position: absolute;
+		top: -12px;
+		left: 50%;
+		transform: translatex(-40%);
+		width: 0;
+		height: 0;
+		border-width: 6px;
+		border-style: solid;
+		border-color: transparent transparent black transparent;
+	}
   .ql-image-overlay .ql-image-handle {
     position: absolute;
     height: 12px;

@@ -70,7 +70,6 @@ export default {
   },
   methods: {
     onUploadMediaEvent () {
-		console.log(111111)
       uniCloud.chooseAndUploadFile({
         type: this.mediaType,
         extension: extnameMap[this.mediaType],

@@ -8,63 +8,32 @@
 				</view>
 				<editor-component ref="editorComponents" @textchange="onTextChange"
 					@ready="onEditorReady"></editor-component>
-				<view class="settings">
-					<uni-forms-item name="excerpt" label="文章摘要">
-						<textarea class="excerpt" placeholder="文章摘要" auto-height v-model="formData.excerpt"
-							@input="() => autoSaveContent && autoSaveContent()"></textarea>
-					</uni-forms-item>
-					<uni-forms-item name="thumbnail" label="封面">
-						<view class="thumb-mode">
-							<radio-group @change="thumbModeChange">
-								<radio value="1" class="mode" :checked="thumbMode === 1">单图</radio>
-								<radio value="3" class="mode" :checked="thumbMode === 3">三图</radio>
-								<radio value="0" class="mode" :checked="thumbMode === 0">无封面图</radio>
-							</radio-group>
-						</view>
-						<view class="thumbnail-list" v-if="thumbMode > 0">
-							<view class="thumbnail" v-for="(thumbnail, index) in formData.thumbnail"
-								:key="thumbnail.source">
-								<template v-if="thumbnail.source">
-									<view class="remove-thumbnail" @click="() => removeThumbnail(index)">
-										<uni-icons type="closeempty" size="16" color="#fff"></uni-icons>
-									</view>
-									<image :src="thumbnail.src" mode="aspectFill" style="width: 150px; height: 150px;">
-									</image>
-								</template>
-								<template v-else>
-									<uni-icons @click="() => openImageUpload(index)" class="placeholder"
-										type="plusempty" size="60" color="#e8e8e8">
-									</uni-icons>
-								</template>
+				<view class="link-item-group">
+					<view class="line"></view>
+					<view class="moto-flex-row-left">
+						<text class="iconv2 link-item-icon">&#xe785;</text>
+						<el-tooltip class="box-item" effect="dark" content="点击查看更多圈子" placement="top">
+							<text class="link-item-title" @click="openCicleSelect">添加圈子</text>
+						</el-tooltip>
+						<scroll-view class="cirlce-list-scroll" style="white-space: nowrap;" scroll-x
+							:show-scrollbar="false">
+							<view class="moto-flex-row-left">
+								<view class="recommend-circle-item" v-for="(item ,index) in recommendCircle">
+									{{item.circleName}}
+								</view>
 							</view>
-						</view>
-						<view v-if="thumbMode > 0" style="color: #999; font-size: 13px; margin-top: 10px;">
-							<text>为了保证最佳效果展示；请上传16:9的封面图片</text>
-						</view>
-					</uni-forms-item>
+						</scroll-view>
+					</view>
 				</view>
+
 				<view style="display: flex;">
-					<button type="primary" style="width: 100px;" @click="submit(0)">发布</button>
-					<button type="primary" style="width: 100px;" @click="submit(1)">更新</button>
+					<button type="primary" class="confirm-button" @click="submit(0)">发布</button>
 				</view>
 			</view>
 		</uni-forms>
-		<view class="footer">
-			<view class="wrap">
-				<view class="left">
-					<text class="auto-save">
-
-					</text>
-					<text class="word-count" v-if="wordCount !== null">共 {{ wordCount }} 字</text>
-				</view>
-				<view class="right">
-					<view class="uni-button-group">
-					</view>
-				</view>
-			</view>
-		</view>
+		<dialog-circle-select ref="circle-select"></dialog-circle-select>
 		<!-- #ifdef H5 -->
-		<uni-popup ref="popup" type="dialog" v-if="formDataId">
+		<uni-popup ref="popup" v-if="formDataId">
 			<article-preview :id="formDataId" @close="() => $refs.popup.close()"></article-preview>
 		</uni-popup>
 		<!-- #endif -->
@@ -77,11 +46,6 @@
 	import * as imageConversion from 'image-conversion'
 	// 引入编辑器组件
 	import EditorComponent from "@/uni_modules/uni-cms/components/editor/editor.vue"
-	// 引入Delta转换函数
-	import {
-		translateInputContent,
-		translateOutputContent
-	} from '@/uni_modules/uni-cms/common/translate-content'
 	// 引入表单验证器
 	import {
 		validator
@@ -90,12 +54,15 @@
 	import {
 		parseImageUrl
 	} from "@/uni_modules/uni-cms/common/parse-image-url";
-
+	import {
+		translateInputContent,
+		translateOutputContent
+	} from '@/uni_modules/uni-cms/common/translate-content'
 	// 引入文章预览组件
 	// #ifdef H5
 	import ArticlePreview from "@/uni_modules/uni-cms/components/preview/preview.vue";
 	// #endif
-
+	import dialogCircleSelect from '@/components/moto-cms/dialog-circle-select.vue'
 	// 根据字段获取验证器
 	function getValidator(fields) {
 		let result = {}
@@ -109,10 +76,11 @@
 
 	export default {
 		components: {
+			dialogCircleSelect,
 			EditorComponent,
 			// #ifdef H5
 			ArticlePreview
-			// #endif
+			// #endif,
 		},
 		data() {
 			// 初始化表单数据
@@ -127,35 +95,20 @@
 				"publish_date": null
 			}
 			return {
+				systemInfo: uni.getSystemInfoSync(),
 				// 初始化表单数据的id
 				formDataId: '',
 				// 表单数据
 				formData,
-				// 表单选项
-				formOptions: {
-					"comment_status_localdata": [{
-							"value": 0,
-							"text": "关闭"
-						},
-						{
-							"value": 1,
-							"text": "开放"
-						}
-					]
-				},
 				// 表单验证规则
 				rules: {
 					...getValidator(Object.keys(formData))
 				},
-				// 编辑器格式
-				formats: {},
 				// 字数统计
 				wordCount: null,
 				// 插入图片抽屉宽度
-				drawerWidth: 0,
-				// 封面图展示方式
-				thumbMode: 1,
-				articleId: null
+				articleId: null,
+				recommendCircle: null,
 			}
 		},
 		// 当页面准备好时，设置表单验证规则
@@ -170,28 +123,33 @@
 				this.formDataId = id
 				this.getArticleDetail(id)
 			}
+			
+			this.getCircleRecommend()
+			uni.$on('openTitleInput', this.showImgTitleInput)
 		},
 		mounted() {
 			const sysinfo = uni.getSystemInfoSync()
-			this.drawerWidth = sysinfo.windowWidth * .8
+			this.formData.title = 'title'
+			const html = ''
+				// '<p><em style="font-size: 17px;">编程语言，它是 JavaS</em><strong style="font-size: 17px;"><em>cript 的一个超集，这意</em></strong><em style="font-size: 17px;">味着任何</em><em style="font-size: 20px;">有效的 JavaScript 代码都是有</em><em style="font-size: 17px;">效的 TypeScript 代码。然而，TypeScript 增加了许多额外的特<u>性，包括类型注解和编译</u></em><u style="font-size: 17px;">时类型检查</u><span style="font-size: 17px;">，这使得开发者能够编写更清晰、更健壮的代</span></p><p><em style="font-size: 17px;">编程语言，它是</em><em style="font-size: 17px; color: rgb(19, 86, 189);"> JavaScript 的一个超集，这意味着任何有效</em><em style="font-size: 17px;">的 JavaScrip<u>t 代码都是有效的 TypeS</u>cript 代码。</em><strong style="font-size: 17px;"><em>然而，TypeScript 增加</em></strong><em style="font-size: 17px;">了许多额外的特<u>性，包括类型注解和编译</u></em><u style="font-size: 17px;">时类型检查</u><span style="font-size: 17px;">，这使得开发者能够编写更清晰、更健壮的代</span></p><p><em style="font-size: 17px;">编程语言，它</em><em style="font-size: 24px;">是 JavaScript 的一</em><em style="font-size: 17px;">个超集，这意</em><em style="font-size: 17px; color: rgb(204, 149, 14);">味着任何有效的 JavaScript 代码</em><em style="font-size: 17px;">都是有效的 TypeScript 代码。然而，TypeScript 增加了许多额外的特<u>性，包括类型注解和编译</u></em><u style="font-size: 17px;">时类型检查</u><span style="font-size: 17px;">，这使得开发者能够编写更清晰、更健壮的代</span></p><p style="text-indent: 1em;"><em style="font-size: 17px;">编程语言，它是 JavaScrip<s>t 的一个超集，这意</s>味着任何有效的 JavaScript 代码都是有效的 TypeScript 代码。然而，TypeScript 增加了许多额外的特<u>性，包括类型注解和编译</u></em><u style="font-size: 17px;">时类型检查</u><span style="font-size: 17px;">，这使得开发者能够编写更清晰、更健壮的代</span></p>'
+			this.$refs.editorComponents.parseHtml(html)
 		},
 		methods: {
-			// 封面图展示方式改变
-			thumbModeChange(e) {
-				const coverCount = Number(e.detail.value)
-				this.formData.thumbnail = Array.from(new Array(coverCount)).map((item, index) => {
-					if (this.formData.thumbnail[index]) {
-						return this.formData.thumbnail[index]
-					} else {
-						return {}
+			openCicleSelect() {
+				this.$refs['circle-select'].dialogVisible = true
+			},
+			getCircleRecommend() {
+				const postData = {
+					page: 1,
+					size: 10,
+					select: 'RECOMMEND'
+				}
+				getApp().$openApi.motoCms.getCircleList(postData).then(res => {
+					if (res.data.code === 200) {
+						this.recommendCircle = res.data.data.dataList
 					}
 				})
-				this.thumbMode = coverCount
 			},
-			/**
-			 * 获取表单数据
-			 * @param {String} id - 文章id
-			 */
 			getArticleDetail(id) {
 				getApp().$openApi.motoCms.getCircleArticleInfo({
 					articleId: id
@@ -201,14 +159,12 @@
 						const data = res.data.data
 						this.formData.user_id = data.author.openId
 						this.formData.title = data.articleTitle
+						const html = data.articleContextList[0].context.replaceAll('<img',
+							'<img crossorigin="anonymous"')
 						this.$refs.editorComponents.parseHtml(data.articleContextList[0].context)
 					}
 				})
 			},
-			/**
-			 * 当编辑器准备好时，设置编辑器内容
-			 * @param {Object} editorCtx - 编辑器上下文
-			 */
 			onEditorReady(editorCtx) {
 				if (!editorCtx) return
 
@@ -218,24 +174,10 @@
 				// 设置编辑器内容
 				this.setContents()
 			},
-
-			/**
-			 * 设置编辑器内容
-			 */
 			setContents() {
 				// 检查编辑器上下文是否存在
 				if (this.editorCtx && this.formData.content) {
-					// #ifdef H5
-					// 如果是H5平台，则直接使用formData中的内容
 					const content = this.formData.content
-					// #endif
-
-					// #ifndef H5
-					// 如果不是H5平台，则需要将formData中的内容转换为编辑器所需的格式
-					const content = translateInputContent(this.formData.content)
-					// #endif
-
-					// 设置编辑器内容
 					this.editorCtx.setContents({
 						delta: content
 					})
@@ -253,51 +195,37 @@
 					})
 				}
 
-				if (this.formData.thumbnail) {
-					for (const thumbnail of this.formData.thumbnail) {
-						if (!thumbnail.source) {
-							// 如果封面图为空，提示用户
-							uni.hideLoading()
-							return uni.showToast({
-								icon: 'none',
-								title: '封面图必填',
-							})
-						}
-					}
-				}
-
 				return new Promise(resolve => {
 					// 验证表单
 					this.$refs.form.validate().then((res) => {
 						// 获取编辑器内容
 						this.editorCtx.getContents({
 							success: async (e) => {
+								console.log(e.html)
+								console.log(JSON.stringify(e))
+								const contentList = translateOutputContent(e.delta.ops)
+								console.log(JSON.stringify(contentList))
 								let postData = {
-									'type': 2,
-									"contentList": [{
-										contextClass: 1,
-										context: e.html
-									}, {
-										contextClass: 2,
-										context: 'https://image2.hzmodi.cn/avatar/a8a089ad499617ccab10a177d45e8b41.jpeg'
-									}],
-									"title": this.formData.title
+									type: 2,
+									contentList: contentList,
+									title: this.formData.title
 								}
 								if (this.articleId) {
 									postData.articleId = this.articleId
 								}
-								uni.showLoading({
-									title: '发布中'
-								})
-								getApp().$openApi.motoCms.pushCircleArticle(postData).then(
-									res => {
-										if (res.data.code == 200) {
-											uni.showToast({
-												title: '发布成功',
-												icon: 'none'
-											})
-										}
-									})
+								// uni.showLoading({
+								// 	title: '发布中'
+								// })
+								// console.log(postData)
+								// getApp().$openApi.motoCms.pushCircleArticle(postData).then(
+								// 	res => {
+								// 		if (res.data.code == 200) {
+								// 			uni.showToast({
+								// 				title: '发布成功',
+								// 				icon: 'none'
+								// 			})
+								// 		}
+								// 	})
 
 								resolve()
 							}
@@ -353,7 +281,7 @@
 							filePath: res.tempFilePaths[0]
 						}).then(res => {
 							const result = JSON.parse(res.data)
-							if(result.code === 200){
+							if (result.code === 200) {
 								this.formData.thumbnail[index].source = result.data.url
 							}
 						})
@@ -391,4 +319,48 @@
 
 <style lang="scss">
 	@import '@/uni_modules/uni-cms/common/style/article-detail.scss';
+
+	.link-item-group {
+		margin-bottom: 20px;
+	}
+
+	.link-item-icon {
+		font-size: 24px;
+	}
+
+	.link-item-title {
+		margin-left: 10px;
+		font-size: 18px;
+		font-weight: 400;
+	}
+
+	.cirlce-list-scroll {
+		flex: 1;
+		width: 400px;
+		height: 36px;
+		margin-left: 10px;
+	}
+
+	.line {
+		width: 100%;
+		height: 0.5px;
+		background-color: #f2f2f2;
+		margin-bottom: 20px;
+	}
+
+	.recommend-circle-item {
+		height: 36px;
+		line-height: 36px;
+		background: #F6F7FC;
+		border-radius: 4px;
+		font-size: 16px;
+		color: #474E62;
+		padding: 0 10px;
+		margin-right: 10px;
+	}
+
+	.confirm-button {
+		width: 100px;
+		margin-right: 370px;
+	}
 </style>

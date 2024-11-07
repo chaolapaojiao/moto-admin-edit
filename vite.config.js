@@ -9,7 +9,7 @@ export default defineConfig({
 	server: {
 		proxy: {
 			'/devHost': {
-				target: 'http://qjxwork.w1.luyouxia.net/',
+				target: 'http://test-api.hzmodi.cn/',
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/devHost/, '')
 			}

@@ -6,8 +6,10 @@ import font from './font'
 import text from './text'
 import image from './image'
 import link from './link'
+import input from './input'
 import unlockContent from "./unlock-content"
 import mediaVideo from "./media-video"
+import equipt from './equipt'
 
 export function register (Quill) {
 	const formats = {
@@ -20,7 +22,9 @@ export function register (Quill) {
 		image,
 		link,
 		unlockContent,
-		mediaVideo
+		input,
+		mediaVideo,
+		equipt
 	}
 	const options = {}
 	Object.values(formats).forEach(value => Object.assign(options, value(Quill)))

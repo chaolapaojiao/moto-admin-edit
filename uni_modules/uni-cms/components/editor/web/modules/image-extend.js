@@ -27,7 +27,6 @@ export default function (Quill) {
 
 			// 插入粘贴的文件图片
 			quill.root.addEventListener('paste', (e) => {
-
 				const files = Array.from(e.clipboardData.files || []);
 
 				if (files.length > 0) {
@@ -127,19 +126,6 @@ export default function (Quill) {
 				size: 0,
 			}
 
-			// if (!/^blob:/.test(imageUrl)) {
-				const image = await fetch(imageUrl)
-				const blob = await image.blob()
-				const mimeType = this.getBlobImageMimeType(blob, imageUrl)
-				const ext = mimeType.replace('image/', '')
-				const filename = `image.${ext}`
-				const file = new File([blob], filename, {type: mimeType})
-
-				result.blob = this.file2blob(file)
-				result.ext = ext
-				result.size = file.size
-			// }
-
 			return result
 		}
 
@@ -181,15 +167,7 @@ export default function (Quill) {
 		insertFileImage(file) {
 			const range = this.quill.getSelection(true)
 			const url = this.file2blob(file)
-			if (range.index > 0 && this.quill.getText(range.index - 1, 1) !== '\n') {
-				this.quill.insertText(range.index, '\n', Quill.sources.SILENT)
-				range.index += 1
-			}
-			this.quill.insertEmbed(range.index, 'image', url, Quill.sources.SILENT)
-			this.quill.formatText(range.index, 1, 'data-local', url, Quill.sources.SILENT)
-			this.quill.insertText(range.index + 1, '\n', Quill.sources.SILENT)
-			this.quill.setSelection(range.index + 2, Quill.sources.SILENT)
-			this.quill.scrollIntoView()
+			uni.$emit('parstImage', url)
 		}
 	}
 
