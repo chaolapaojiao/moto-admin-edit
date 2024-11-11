@@ -1,4 +1,5 @@
 import Request from '@/utils/luch-request/index.js'
+import store from '../store';
 const http = new Request();
 const host = "/devHost"
 let requestConfig = {
@@ -41,11 +42,8 @@ let requestConfig = {
 http.config = requestConfig
 
 
-let t = uni.getStorageSync('token')
-if (t !== undefined && t !== '') {
-	http.config.header.token = t
-}
-http.config.header.token = 'bHJcasEXFAd0wfnkixS2YA=='
+http.config.header.token = store.state.userInfo?.token
+http.config.header.token = ''
 
 
 http.interceptors.response.use((response) => {

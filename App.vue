@@ -16,6 +16,8 @@
 	page {
 		height: 100%;
 		width: 100%;
+		background-color: #f5f5f5;
 	}
+
 	/*每个页面公共css */
 </style>

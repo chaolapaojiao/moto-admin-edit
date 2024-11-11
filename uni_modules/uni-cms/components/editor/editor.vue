@@ -1,17 +1,9 @@
 <template>
 	<view class="editor-container">
 		<view class="editor" :style="{height: editorHeight <= 0 ? 'auto': `${editorHeight}px`}">
-			<!-- #ifdef H5 -->
 			<web-editor ref="webEditor" id="editor" @ready="onEditorReady" @statuschange="onStatusChange"
 				@textchange="(e) => $emit('textchange', e)" showImgSize showImgToolbar showImgResize
 				:upload-handler="uploadHandlerForH5" @focus="onEditorFocus" @blur="onEditorBlur"></web-editor>
-			<!-- #endif -->
-
-			<!-- #ifndef H5 -->
-			<editor id="editor" class="ql-container" placeholder="输入内容" @ready="onEditorReady"
-				@statuschange="onStatusChange" showImgSize showImgToolbar showImgResize @focus="onEditorFocus"
-				@blur="onEditorBlur"></editor>
-			<!-- #endif -->
 		</view>
 		<view class="editor-toolbar">
 			<view class="editor-toolbar-box moto-flex-row-center">
@@ -221,7 +213,7 @@
 					<uni-icons type="closeempty" size="40rpx" class="icon"></uni-icons>
 				</view>
 			</view>
-		<!-- 	<uni-im-chat ref="uniImChat"></uni-im-chat> -->
+			<!-- 	<uni-im-chat ref="uniImChat"></uni-im-chat> -->
 		</view>
 
 		<uni-drawer class="insert-image-drawer" v-if="drawerWidth" ref="insertImageDrawer" mode="right"
@@ -327,7 +319,7 @@
 				if (this.showToolPopup !== '') {
 					toolHeight = 50
 				}
-				
+
 				// 如果键盘高度大于0，返回窗口高度减去键盘高度减去工具栏高度减去工具栏弹出框高度，否则返回0。
 				return 0
 			}

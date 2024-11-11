@@ -1,5 +1,5 @@
-import motoCms from './requests/motoCms.js'
-import user from './requests/user.js'
+import motoCms from './modules/motoCms.js'
+import user from './modules/user.js'
 
 export default {
 	motoCms,

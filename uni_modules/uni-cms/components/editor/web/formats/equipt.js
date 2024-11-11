@@ -3,7 +3,6 @@ export default function(Quill) {
 	const BlockEmbed = Quill.import('blots/block/embed');
 	class CustomElement extends BlockEmbed {
 		static create(value) {
-			console.log(value)
 			// 创建自定义的 DOM 元素
 			const node = document.createElement('div');
 			node.classList.add('custom-element'); // 添加自定义类

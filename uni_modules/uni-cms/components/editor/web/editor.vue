@@ -89,9 +89,6 @@
 
 				// 创建编辑器实例
 				this.quill = new Quill('#' + this.id, options)
-				setTimeout(() => {
-					this.quill.insertEmbed(0, 'equipt', 1111);
-				},500)
 				// 添加 Quill 事件监听器
 				this.addQuillListeners()
 
@@ -260,7 +257,6 @@
 				images.forEach(img => {
 					img.parentNode.class = 'img-box'
 				});
-				console.log((await this.getEditorContext().getContents()).html)
 				// this.quill.insertEmbed(range.index + 1, 'input', '');
 				// 设置图片的本地路径
 				this.quill.formatText(range.index, 1, 'data-local', src, Quill.sources.SILENT)

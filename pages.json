@@ -1,31 +1,39 @@
 {
 	"pages": [{
-			"path": "pages/index",
+			"path": "pages/moto-cms/article-list",
 			"style": {
 				"navigationBarTitleText": ""
 			}
-		},
-		{
+		}, {
 			"path": "pages/moto-cms/article-editor",
 			"style": {
 				"navigationBarTitleText": "文章编辑"
 			}
 		},
 		{
-			"path" : "pages/moto-cms/pub-list",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
-			}
-		},
-		{
-			"path" : "pages/login/login",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
+			"path": "pages/login/login",
+			"style": {
+				"topWindow": false,
+				"leftWindow": false,
+				"navigationBarTitleText": ""
 			}
 		}
 	],
+	"topWindow": {
+		"path": "windows/topWindow",
+		"style": {
+			"height": "60px"
+		},
+		"matchMedia": {
+			"minWidth": 0
+		}
+	},
+	"leftWindow": {
+		"path": "windows/leftWindow",
+		"style": {
+			"width": "240px"
+		}
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

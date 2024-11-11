@@ -10,11 +10,11 @@
 .editor-toolbar {
 	background: #fafafa;
 	position: fixed;
-	top: 0;
-	left: 0;
+	top: 60px;
+	left: 240px;
 	right: 0;
 	z-index: 999;
-	height: 54px;
+	height: 58px;
 	border-bottom: #ebebeb solid 1px;
 	&.pc {
 		display: block;

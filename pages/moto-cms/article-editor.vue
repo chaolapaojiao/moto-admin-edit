@@ -111,11 +111,9 @@
 				recommendCircle: null,
 			}
 		},
-		// 当页面准备好时，设置表单验证规则
 		onReady() {
 			this.$refs.form.setRules(this.rules)
 		},
-		// 当页面加载时，如果有id则获取表单数据
 		onLoad(e) {
 			if (e.id) {
 				this.articleId = e.id
@@ -213,6 +211,7 @@
 								if (this.articleId) {
 									postData.articleId = this.articleId
 								}
+								console.log(postData)
 								// uni.showLoading({
 								// 	title: '发布中'
 								// })
@@ -235,29 +234,11 @@
 					})
 				})
 			},
-
-			/**
-			 * 提交表单
-			 * @param {Object} value - 表单数据
-			 */
-			submitForm(value) {
-
-			},
-
-			/**
-			 * 文本内容变化时更新字数统计
-			 * @param {Object} e - 文本内容变化事件
-			 */
 			onTextChange(e) {
 				this.wordCount = e.detail
-
 				// 自动保存
 				this.autoSaveContent && this.autoSaveContent()
 			},
-
-			/**
-			 * 返回上一页或跳转到文章列表页
-			 */
 			navigateBack() {
 				const pages = getCurrentPages()
 

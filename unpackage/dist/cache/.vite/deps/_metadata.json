@@ -1,31 +1,43 @@
 {
-  "hash": "09c2d912",
+  "hash": "5778c1ef",
   "configHash": "9265c7be",
-  "lockfileHash": "34695d26",
-  "browserHash": "30f3fd9d",
+  "lockfileHash": "1493f2d3",
+  "browserHash": "80453b17",
   "optimized": {
-    "crypto-js/sha256": {
-      "src": "../../../../../node_modules/crypto-js/sha256.js",
-      "file": "crypto-js_sha256.js",
-      "fileHash": "8c84585c",
+    "crypto-js/crypto-js": {
+      "src": "../../../../../node_modules/crypto-js/crypto-js.js",
+      "file": "crypto-js_crypto-js.js",
+      "fileHash": "91b80375",
       "needsInterop": true
     },
     "element-plus": {
       "src": "../../../../../node_modules/element-plus/es/index.mjs",
       "file": "element-plus.js",
-      "fileHash": "920af530",
+      "fileHash": "41a176ee",
       "needsInterop": false
     },
     "jsencrypt": {
       "src": "../../../../../node_modules/jsencrypt/lib/index.js",
       "file": "jsencrypt.js",
-      "fileHash": "1fb5286f",
+      "fileHash": "f64cb773",
+      "needsInterop": false
+    },
+    "image-conversion": {
+      "src": "../../../../../node_modules/image-conversion/index.js",
+      "file": "image-conversion.js",
+      "fileHash": "08100aa7",
+      "needsInterop": true
+    },
+    "@gowiny/uni-router": {
+      "src": "../../../../../node_modules/@gowiny/uni-router/dist/index.esm.js",
+      "file": "@gowiny_uni-router.js",
+      "fileHash": "a0c0201a",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-POHSPSYC": {
-      "file": "chunk-POHSPSYC.js"
+    "chunk-JFD4OJSJ": {
+      "file": "chunk-JFD4OJSJ.js"
     }
   }
 }
