@@ -1,43 +1,55 @@
 {
-  "hash": "5778c1ef",
+  "hash": "6647e91e",
   "configHash": "9265c7be",
-  "lockfileHash": "1493f2d3",
-  "browserHash": "80453b17",
+  "lockfileHash": "e0018bc2",
+  "browserHash": "12147ebf",
   "optimized": {
-    "crypto-js/crypto-js": {
-      "src": "../../../../../node_modules/crypto-js/crypto-js.js",
-      "file": "crypto-js_crypto-js.js",
-      "fileHash": "91b80375",
-      "needsInterop": true
-    },
     "element-plus": {
       "src": "../../../../../node_modules/element-plus/es/index.mjs",
       "file": "element-plus.js",
-      "fileHash": "41a176ee",
+      "fileHash": "d5f60cd0",
       "needsInterop": false
     },
-    "jsencrypt": {
-      "src": "../../../../../node_modules/jsencrypt/lib/index.js",
-      "file": "jsencrypt.js",
-      "fileHash": "f64cb773",
-      "needsInterop": false
-    },
-    "image-conversion": {
-      "src": "../../../../../node_modules/image-conversion/index.js",
-      "file": "image-conversion.js",
-      "fileHash": "08100aa7",
+    "vue-amap": {
+      "src": "../../../../../node_modules/vue-amap/dist/index.js",
+      "file": "vue-amap.js",
+      "fileHash": "a05e6b47",
       "needsInterop": true
     },
     "@gowiny/uni-router": {
       "src": "../../../../../node_modules/@gowiny/uni-router/dist/index.esm.js",
       "file": "@gowiny_uni-router.js",
-      "fileHash": "a0c0201a",
+      "fileHash": "e48d09d9",
       "needsInterop": false
+    },
+    "js-md5": {
+      "src": "../../../../../node_modules/js-md5/src/md5.js",
+      "file": "js-md5.js",
+      "fileHash": "c832f79b",
+      "needsInterop": true
+    },
+    "jsencrypt": {
+      "src": "../../../../../node_modules/jsencrypt/lib/index.js",
+      "file": "jsencrypt.js",
+      "fileHash": "2d605c03",
+      "needsInterop": false
+    },
+    "image-conversion": {
+      "src": "../../../../../node_modules/image-conversion/index.js",
+      "file": "image-conversion.js",
+      "fileHash": "03e6e539",
+      "needsInterop": true
+    },
+    "lodash": {
+      "src": "../../../../../node_modules/lodash/lodash.js",
+      "file": "lodash.js",
+      "fileHash": "1bc92750",
+      "needsInterop": true
     }
   },
   "chunks": {
-    "chunk-JFD4OJSJ": {
-      "file": "chunk-JFD4OJSJ.js"
+    "chunk-KX4S3TY3": {
+      "file": "chunk-KX4S3TY3.js"
     }
   }
 }

@@ -7,8 +7,8 @@ const router = createRouter({
 	pageData: PAGE_DATA
 })
 const needLogin = [
-	'/pages/moto-cms/pub-list',
-	'/pages/moto-cms/article-editor'
+	// '/pages/moto-cms/pub-list',
+	// '/pages/moto-cms/article-editor'
 ]
 router.beforeEach((to, from) => {
 	if (needLogin.includes(to.path)) {

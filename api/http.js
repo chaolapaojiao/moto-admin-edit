@@ -42,8 +42,8 @@ let requestConfig = {
 http.config = requestConfig
 
 
-http.config.header.token = store.state.userInfo?.token
-http.config.header.token = ''
+// http.config.header.token = store.state.userInfo?.token
+http.config.header.token = 'sd0tfJUM25L2tCwhQNgiGg=='
 
 
 http.interceptors.response.use((response) => {

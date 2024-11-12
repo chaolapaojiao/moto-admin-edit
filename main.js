@@ -17,6 +17,7 @@ import {
 import openApi from '@/api/openApi.js'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import VueAMap from "vue-amap";
 import store from './store'
 import router from './router'
 
@@ -26,6 +27,7 @@ export function createApp() {
 	app.use(store)
 	app.use(router)
 	app.use(ElementPlus)
+	app.use(VueAMap)
 	return {
 		app
 	}

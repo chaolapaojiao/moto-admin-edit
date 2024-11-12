@@ -40,11 +40,29 @@ function getCircleList(data) {
 		params: data
 	})
 }
-
+// 搜索
+function globalSearch(data) {
+	let {
+		timestamp,
+		signature
+	} = paramsEncryption({
+		data: data
+	})
+	signature = signature.replace(/\+/g, '%2B')
+	return http.post(`search/globalSearchV3?timestamp=${timestamp}&signature=${signature}`, data)
+}
+// 获取附近位置
+function getNearbyPoiList(data) {
+	return http.get('location/getNearbyPoiListV2', {
+		params: data
+	})
+}
 export default {
 	getPubArticleList,
 	getCircleArticleInfo,
 	pushCircleArticle,
 	uploadImg,
-	getCircleList
+	getCircleList,
+	globalSearch,
+	getNearbyPoiList
 }

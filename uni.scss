@@ -157,6 +157,13 @@ $uni-font-size-paragraph:30rpx;
 	align-items: flex-end;
 }
 
+.moto-lines-1{
+	overflow: hidden;
+	display: -webkit-box; //将元素设为盒子伸缩模型显示
+	-webkit-box-orient: vertical; //伸缩方向设为垂直方向
+	-webkit-line-clamp: 1; //超出2行隐藏，并显示省略号
+}
+
 .iconv2{
 	font-family: iconfontv2;
 }

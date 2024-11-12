@@ -10,19 +10,19 @@
 					@ready="onEditorReady"></editor-component>
 				<view class="link-item-group">
 					<view class="line"></view>
+					<!-- 添加圈子 -->
 					<view class="moto-flex-row-left">
 						<text class="iconv2 link-item-icon">&#xe785;</text>
-						<el-tooltip class="box-item" effect="dark" content="点击查看更多圈子" placement="top">
-							<text class="link-item-title" @click="openCicleSelect">添加圈子</text>
-						</el-tooltip>
-						<scroll-view class="cirlce-list-scroll" style="white-space: nowrap;" scroll-x
-							:show-scrollbar="false">
-							<view class="moto-flex-row-left">
-								<view class="recommend-circle-item" v-for="(item ,index) in recommendCircle">
-									{{item.circleName}}
-								</view>
-							</view>
-						</scroll-view>
+						<text class="link-item-title">添加圈子</text>
+						<view class="circle-slect" :style="{color: linkCircle ? '#141E34' : '#848B9E'}"
+							@click="openCicleSelect">{{linkCircle ? linkCircle.circleName : '选择圈子'}}</view>
+					</view>
+					<!-- 添加打地点 -->
+					<view class="moto-flex-row-left" style="margin-top: 20px;">
+						<text class="iconv2 link-item-icon">&#xe784;</text>
+						<text class="link-item-title">添加打卡点/位置</text>
+						<view class="circle-slect" :style="{color: linkLocation ? '#141E34' : '#848B9E'}"
+							@click="openLocationSelect">{{linkLocation ? linkLocation.name : '选择打卡点/位置'}}</view>
 					</view>
 				</view>
 
@@ -31,12 +31,9 @@
 				</view>
 			</view>
 		</uni-forms>
-		<dialog-circle-select ref="circle-select"></dialog-circle-select>
-		<!-- #ifdef H5 -->
-		<uni-popup ref="popup" v-if="formDataId">
-			<article-preview :id="formDataId" @close="() => $refs.popup.close()"></article-preview>
-		</uni-popup>
-		<!-- #endif -->
+		<dialog-circle-select @circleSelect="onCircleSelect" ref="circle-select"></dialog-circle-select>
+		<dialog-location-select @locationSelect="onLocatonSelect" ref="location-select"></dialog-location-select>
+		<dialog-topic-select ref="topic-select"></dialog-topic-select>
 	</view>
 </template>
 
@@ -58,11 +55,9 @@
 		translateInputContent,
 		translateOutputContent
 	} from '@/uni_modules/uni-cms/common/translate-content'
-	// 引入文章预览组件
-	// #ifdef H5
-	import ArticlePreview from "@/uni_modules/uni-cms/components/preview/preview.vue";
-	// #endif
 	import dialogCircleSelect from '@/components/moto-cms/dialog-circle-select.vue'
+	import dialogLocationSelect from '@/components/moto-cms/dialog-location-select.vue'
+	import dialogTopicSelect from '@/components/moto-cms/dialog-topic-select.vue'
 	// 根据字段获取验证器
 	function getValidator(fields) {
 		let result = {}
@@ -76,11 +71,10 @@
 
 	export default {
 		components: {
-			dialogCircleSelect,
 			EditorComponent,
-			// #ifdef H5
-			ArticlePreview
-			// #endif,
+			dialogCircleSelect,
+			dialogLocationSelect,
+			dialogTopicSelect
 		},
 		data() {
 			// 初始化表单数据
@@ -109,6 +103,8 @@
 				// 插入图片抽屉宽度
 				articleId: null,
 				recommendCircle: null,
+				linkCircle: null,
+				linkLocation: null
 			}
 		},
 		onReady() {
@@ -121,7 +117,7 @@
 				this.formDataId = id
 				this.getArticleDetail(id)
 			}
-			
+
 			this.getCircleRecommend()
 			uni.$on('openTitleInput', this.showImgTitleInput)
 		},
@@ -129,10 +125,19 @@
 			const sysinfo = uni.getSystemInfoSync()
 			this.formData.title = 'title'
 			const html = ''
-				// '<p><em style="font-size: 17px;">编程语言，它是 JavaS</em><strong style="font-size: 17px;"><em>cript 的一个超集，这意</em></strong><em style="font-size: 17px;">味着任何</em><em style="font-size: 20px;">有效的 JavaScript 代码都是有</em><em style="font-size: 17px;">效的 TypeScript 代码。然而，TypeScript 增加了许多额外的特<u>性，包括类型注解和编译</u></em><u style="font-size: 17px;">时类型检查</u><span style="font-size: 17px;">，这使得开发者能够编写更清晰、更健壮的代</span></p><p><em style="font-size: 17px;">编程语言，它是</em><em style="font-size: 17px; color: rgb(19, 86, 189);"> JavaScript 的一个超集，这意味着任何有效</em><em style="font-size: 17px;">的 JavaScrip<u>t 代码都是有效的 TypeS</u>cript 代码。</em><strong style="font-size: 17px;"><em>然而，TypeScript 增加</em></strong><em style="font-size: 17px;">了许多额外的特<u>性，包括类型注解和编译</u></em><u style="font-size: 17px;">时类型检查</u><span style="font-size: 17px;">，这使得开发者能够编写更清晰、更健壮的代</span></p><p><em style="font-size: 17px;">编程语言，它</em><em style="font-size: 24px;">是 JavaScript 的一</em><em style="font-size: 17px;">个超集，这意</em><em style="font-size: 17px; color: rgb(204, 149, 14);">味着任何有效的 JavaScript 代码</em><em style="font-size: 17px;">都是有效的 TypeScript 代码。然而，TypeScript 增加了许多额外的特<u>性，包括类型注解和编译</u></em><u style="font-size: 17px;">时类型检查</u><span style="font-size: 17px;">，这使得开发者能够编写更清晰、更健壮的代</span></p><p style="text-indent: 1em;"><em style="font-size: 17px;">编程语言，它是 JavaScrip<s>t 的一个超集，这意</s>味着任何有效的 JavaScript 代码都是有效的 TypeScript 代码。然而，TypeScript 增加了许多额外的特<u>性，包括类型注解和编译</u></em><u style="font-size: 17px;">时类型检查</u><span style="font-size: 17px;">，这使得开发者能够编写更清晰、更健壮的代</span></p>'
+			// '<p><em style="font-size: 17px;">编程语言，它是 JavaS</em><strong style="font-size: 17px;"><em>cript 的一个超集，这意</em></strong><em style="font-size: 17px;">味着任何</em><em style="font-size: 20px;">有效的 JavaScript 代码都是有</em><em style="font-size: 17px;">效的 TypeScript 代码。然而，TypeScript 增加了许多额外的特<u>性，包括类型注解和编译</u></em><u style="font-size: 17px;">时类型检查</u><span style="font-size: 17px;">，这使得开发者能够编写更清晰、更健壮的代</span></p><p><em style="font-size: 17px;">编程语言，它是</em><em style="font-size: 17px; color: rgb(19, 86, 189);"> JavaScript 的一个超集，这意味着任何有效</em><em style="font-size: 17px;">的 JavaScrip<u>t 代码都是有效的 TypeS</u>cript 代码。</em><strong style="font-size: 17px;"><em>然而，TypeScript 增加</em></strong><em style="font-size: 17px;">了许多额外的特<u>性，包括类型注解和编译</u></em><u style="font-size: 17px;">时类型检查</u><span style="font-size: 17px;">，这使得开发者能够编写更清晰、更健壮的代</span></p><p><em style="font-size: 17px;">编程语言，它</em><em style="font-size: 24px;">是 JavaScript 的一</em><em style="font-size: 17px;">个超集，这意</em><em style="font-size: 17px; color: rgb(204, 149, 14);">味着任何有效的 JavaScript 代码</em><em style="font-size: 17px;">都是有效的 TypeScript 代码。然而，TypeScript 增加了许多额外的特<u>性，包括类型注解和编译</u></em><u style="font-size: 17px;">时类型检查</u><span style="font-size: 17px;">，这使得开发者能够编写更清晰、更健壮的代</span></p><p style="text-indent: 1em;"><em style="font-size: 17px;">编程语言，它是 JavaScrip<s>t 的一个超集，这意</s>味着任何有效的 JavaScript 代码都是有效的 TypeScript 代码。然而，TypeScript 增加了许多额外的特<u>性，包括类型注解和编译</u></em><u style="font-size: 17px;">时类型检查</u><span style="font-size: 17px;">，这使得开发者能够编写更清晰、更健壮的代</span></p>'
 			this.$refs.editorComponents.parseHtml(html)
 		},
 		methods: {
+			openLocationSelect(){
+				this.$refs['location-select'].dialogVisible = true
+			},	
+			onLocatonSelect(item){
+				this.linkLocation = item
+			},
+			onCircleSelect(item) {
+				this.linkCircle = item
+			},
 			openCicleSelect() {
 				this.$refs['circle-select'].dialogVisible = true
 			},
@@ -306,12 +311,13 @@
 	}
 
 	.link-item-icon {
-		font-size: 24px;
+		font-size: 22px;
 	}
 
 	.link-item-title {
+		width: 130px;
 		margin-left: 10px;
-		font-size: 18px;
+		font-size: 16px;
 		font-weight: 400;
 	}
 
@@ -343,5 +349,19 @@
 	.confirm-button {
 		width: 100px;
 		margin-right: 370px;
+	}
+
+	.circle-slect {
+		margin-left: 12px;
+		width: 150px;
+		border: 1px solid #eee;
+		border-radius: 4px;
+		font-size: 14px;
+		color: #848B9E;
+		padding: 8px 0 8px 12px;
+	}
+
+	.circle-slect:hover {
+		border: 1px solid blue;
 	}
 </style>
