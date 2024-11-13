@@ -35,7 +35,7 @@
 						</view>
 					</view>
 					<scroll-view @scrolltolower="onScrolltolower" :show-scrollbar="false" scroll-y
-						style="height:350px;width: 400px;margin-left: 20px;">
+						style="height:350px;width: 350px;margin-left: 20px;">
 						<view style="white-space:">
 							<view v-for="item in tabs[currentTab].data" class="moto-flex-row-between"
 								style="margin-bottom: 10px;;">
@@ -114,9 +114,6 @@
 				]
 			}
 		},
-		created() {
-			this.getCircleList()
-		},
 		methods: {
 			selectCircle(item) {
 				this.$emit('circleSelect', item)
@@ -134,6 +131,7 @@
 					select: tab.select
 				}
 				getApp().$openApi.motoCms.getCircleList(postData).then(res => {
+					console.log(res)
 					setTimeout(() => {
 						this.loading = false
 						if (res.data.code === 200) {

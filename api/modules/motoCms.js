@@ -57,6 +57,25 @@ function getNearbyPoiList(data) {
 		params: data
 	})
 }
+
+// 获取话题列表
+function getTopicList(data) {
+	return http.get('/motorCircle/getTopicTagList', {
+		params: data
+	})
+}
+
+// 获取话题名称列表(区分有奖活动和热门话题)
+function getTagListAct(data) {
+	return http.get('/motorCircle/getTagListAct', {
+		params: data
+	})
+}
+
+// 创建话题
+function createTopic(data) {
+	return http.post('/motorCircle/createTopicTag', data)
+}
 export default {
 	getPubArticleList,
 	getCircleArticleInfo,
@@ -64,5 +83,8 @@ export default {
 	uploadImg,
 	getCircleList,
 	globalSearch,
-	getNearbyPoiList
+	getNearbyPoiList,
+	getTopicList,
+	getTagListAct,
+	createTopic
 }

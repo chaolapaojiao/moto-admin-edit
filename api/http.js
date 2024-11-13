@@ -43,7 +43,7 @@ http.config = requestConfig
 
 
 // http.config.header.token = store.state.userInfo?.token
-http.config.header.token = 'sd0tfJUM25L2tCwhQNgiGg=='
+http.config.header.token = 'ZSYd47ddXcuY/rCY2YT0cg=='
 
 
 http.interceptors.response.use((response) => {

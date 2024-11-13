@@ -151,7 +151,7 @@ function renderKey2(list) {
 }
 
 function renderKey3(list) {
-	const key = ''
+	let key = ''
 	list.forEach((item, index) => {
 		if (index % 3 === 0) {
 			item.split('').map(item => {

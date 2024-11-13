@@ -64,10 +64,7 @@
 						if (data.status === 2) {
 							clearInterval(this.loginInterval)
 							this.setUserInfo(res.data.data.userInfo)
-							uni.showToast({
-								title: '登录成功',
-								icon: 'none'
-							})
+							getApp().$message.success('登录成功')
 							setTimeout(() => {
 								uni.navigateTo({
 									url: '/pages/index'

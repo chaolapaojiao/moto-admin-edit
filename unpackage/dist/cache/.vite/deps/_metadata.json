@@ -1,49 +1,43 @@
 {
-  "hash": "6647e91e",
+  "hash": "aa33a9a9",
   "configHash": "9265c7be",
-  "lockfileHash": "e0018bc2",
-  "browserHash": "12147ebf",
+  "lockfileHash": "81586414",
+  "browserHash": "7c6eb6aa",
   "optimized": {
-    "element-plus": {
-      "src": "../../../../../node_modules/element-plus/es/index.mjs",
-      "file": "element-plus.js",
-      "fileHash": "d5f60cd0",
-      "needsInterop": false
-    },
-    "vue-amap": {
-      "src": "../../../../../node_modules/vue-amap/dist/index.js",
-      "file": "vue-amap.js",
-      "fileHash": "a05e6b47",
-      "needsInterop": true
-    },
     "@gowiny/uni-router": {
       "src": "../../../../../node_modules/@gowiny/uni-router/dist/index.esm.js",
       "file": "@gowiny_uni-router.js",
-      "fileHash": "e48d09d9",
+      "fileHash": "4671d227",
+      "needsInterop": false
+    },
+    "element-plus": {
+      "src": "../../../../../node_modules/element-plus/es/index.mjs",
+      "file": "element-plus.js",
+      "fileHash": "37aced25",
       "needsInterop": false
     },
     "js-md5": {
       "src": "../../../../../node_modules/js-md5/src/md5.js",
       "file": "js-md5.js",
-      "fileHash": "c832f79b",
+      "fileHash": "44751e87",
       "needsInterop": true
     },
     "jsencrypt": {
       "src": "../../../../../node_modules/jsencrypt/lib/index.js",
       "file": "jsencrypt.js",
-      "fileHash": "2d605c03",
+      "fileHash": "6e513978",
       "needsInterop": false
     },
     "image-conversion": {
       "src": "../../../../../node_modules/image-conversion/index.js",
       "file": "image-conversion.js",
-      "fileHash": "03e6e539",
+      "fileHash": "768ecf6c",
       "needsInterop": true
     },
     "lodash": {
       "src": "../../../../../node_modules/lodash/lodash.js",
       "file": "lodash.js",
-      "fileHash": "1bc92750",
+      "fileHash": "e3067302",
       "needsInterop": true
     }
   },

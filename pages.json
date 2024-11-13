@@ -7,6 +7,8 @@
 		}, {
 			"path": "pages/moto-cms/article-editor",
 			"style": {
+				"topWindow": false,
+				"leftWindow": false,
 				"navigationBarTitleText": "文章编辑"
 			}
 		},

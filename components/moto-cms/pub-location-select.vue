@@ -43,7 +43,7 @@
 					</view>
 					<view style="height: 50px;">
 						<view v-if="searchInfo.loading" class="status">加载中...</view>
-						<view class="status" v-if="searchInfo.noMore">没有更多了</view>
+						<view class="status" v-if="searchInfo.nomore">没有更多了</view>
 						<view class="status" v-if="searchInfo.empty">暂无内容</view>
 					</view>
 				</view>
@@ -77,7 +77,7 @@
 				</view>
 				<view style="height: 50px;">
 					<view v-if="listInfo.loading" class="status">加载中...</view>
-					<view class="status" v-if="listInfo.noMore">没有更多了</view>
+					<view class="status" v-if="listInfo.nomore">没有更多了</view>
 					<view class="status" v-if="listInfo.empty">暂无内容</view>
 				</view>
 			</view>
@@ -100,7 +100,7 @@
 					page: 1,
 					size: 20,
 					loading: false,
-					noMore: false,
+					nomore: false,
 					empty: false,
 					data: [],
 				},
@@ -109,7 +109,7 @@
 					size: 20,
 					searchKeyword: '',
 					loading: false,
-					noMore: false,
+					nomore: false,
 					empty: false,
 					data: []
 				},
@@ -123,20 +123,25 @@
 			}
 		},
 		created() {
-			this.mapContext = uni.createMapContext("map", this);
-			uni.getLocation({
-				type: 'wgs84',
-				success: (res) => {
-					this.latitude = res.latitude
-					this.longitude = res.longitude
-					this.targetLocation.latitude = this.latitude
-					this.targetLocation.longitude = this.longitude
-					this.getNearbyPoiList()
-				}
-			});
+			this.mapContext = uni.createMapContext("map", this);	
 		},
 		methods: {
-			selectLocation(item){
+			initLocation(){
+				uni.getLocation({
+					type: 'wgs84',
+					success: (res) => {
+						this.latitude = res.latitude
+						this.longitude = res.longitude
+						this.targetLocation.latitude = this.latitude
+						this.targetLocation.longitude = this.longitude
+						this.getNearbyPoiList()
+					},
+					fail: (err) => {
+						console.log(err)
+					}
+				});
+			},
+			selectLocation(item) {
 				this.$emit('locationSelect', item)
 				this.dialogVisible = false
 			},
@@ -144,7 +149,7 @@
 				this.dialogVisible = false
 			},
 			getNearbyPoiList() {
-				if (this.listInfo.noMore) {
+				if (this.listInfo.nomore) {
 					return
 				}
 				this.listInfo.loading = true
@@ -168,7 +173,7 @@
 							return
 						}
 						if (!data.length || data.length < this.listInfo.size) {
-							this.listInfo.noMore = true
+							this.listInfo.nomore = true
 						}
 					}
 				})
@@ -189,7 +194,7 @@
 				this.search()
 			}, 500),
 			search() {
-				if (this.searchInfo.noMore) {
+				if (this.searchInfo.nomore) {
 					return
 				}
 				const params = {
@@ -213,7 +218,7 @@
 							return
 						}
 						if (!data.length || data.length < this.listInfo.size) {
-							this.searchInfo.noMore = true
+							this.searchInfo.nomore = true
 						}
 					}
 				})
@@ -234,7 +239,7 @@
 					page: 1,
 					size: 20,
 					loading: false,
-					noMore: false,
+					nomore: false,
 					data: []
 				}
 				this.getMapCenterLocation()
