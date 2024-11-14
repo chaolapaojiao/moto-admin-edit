@@ -1,28 +1,52 @@
 <template>
 	<view>
-		<el-row :gutter="40">
-			<el-col :span="6">
-
+		<el-row :gutter="20">
+			<el-col :span="7">
+				<pub-preview :vote="linkVote" :circle="linkCircle" :title="articleTitle" :images="articleImageList"
+					:content="articleContent"></pub-preview>
 			</el-col>
 			<el-col :span="16">
 				<view class="forms-container">
 					<view style="padding: 30px 40px 0 40px">
 						<view class="title">
 							<textarea style="font-size: 18px;color: #141E34;font-weight: 400;"
-								placeholder-style="font-size: 18px" v-model="formData.title" auto-height
+								placeholder-style="font-size: 18px" v-model="articleTitle" auto-height
 								placeholder="请输入文章标题"></textarea>
 							<view class="line"></view>
 						</view>
 						<view class="moto-flex-row-left" style="flex-wrap: wrap;">
 							<view v-for="(item,index) in linkTopicList" class="moto-flex-row-left topic-item">
 								<view class="topic-name">#{{item.topicTagName}}</view>
-								<view class="iconv2 topic-delete-icon" @click="removeTopic(item.topicTagId)">&#xe671;</view>
+								<view class="iconv2 delete-icon" @click="removeTopic(item.topicTagId)">&#xe671;</view>
 							</view>
 						</view>
 						<view v-if="!linkTopicList.length" style="height: 10px;"></view>
 						<editor-component ref="editorComponents" @textchange="onTextChange"
 							@ready="onEditorReady"></editor-component>
 					</view>
+					<view class="moto-flex-row-left" style="padding: 0 34px;margin-bottom: 12px;">
+						<view v-if="linkClass" class="moto-flex-row-left" style="margin-right: 20px;">
+							<view class="iconv2 link-icon" style="margin-right: 8px;font-size: 17px;">&#xe697;</view>
+							<view class="link-name">{{linkClass.name}}</view>
+							<view class="iconv2 delete-icon" @click="linkClass = null">&#xe671;</view>
+						</view>
+						<view v-if="linkVote" class="moto-flex-row-left">
+							<view class="iconv2 link-icon" style="margin-right: 8px;font-size: 17px;">&#xe789;</view>
+							<view class="link-name">{{linkVote.voteTitle}}</view>
+							<view class="iconv2 delete-icon" @click="linkVote = null">&#xe671;</view>
+						</view>
+					</view>
+					<scroll-view :show-scrollbar="false" v-if="linkModifyList.length" class="modify-scroll" scroll-x>
+						<view class="moto-flex-row-left" style="white-space: nowrap;">
+							<view class="link-name" style="margin-right: 20px;">改装清单: </view>
+							<view v-for="(item,index) in linkModifyList" class="modify-item moto-flex-row-left">
+								<image v-if="item.itemUrl" mode="aspectFill" class="modify-item-image"
+									:src="item.itemUrl"></image>
+								<view class="link-name">{{item.itemName}}</view>
+								<view class="iconv2 delete-icon" @click="removeModifyItem(index)">&#xe671;</view>
+							</view>
+						</view>
+					</scroll-view>
 					<view class="tool-container">
 						<view class="moto-flex-row-between">
 							<view class="moto-flex-row-left">
@@ -58,7 +82,8 @@
 		</el-row>
 		<pub-circle-select @circleSelect="onCircleSelect" ref="circle-select"></pub-circle-select>
 		<pub-location-select @locationSelect="onLocatonSelect" ref="location-select"></pub-location-select>
-		<pub-topic-select :seleted="linkTopicList.map(item => item.topicTagId)" @topicSelect="onTopicSelect" ref="topic-select"></pub-topic-select>
+		<pub-topic-select :seleted="linkTopicList.map(item => item.topicTagId)" @topicSelect="onTopicSelect"
+			ref="topic-select"></pub-topic-select>
 		<pub-class-select @classSelect="onClassSelect" ref="class-select"></pub-class-select>
 		<pub-vote-edit @voteEdit="onVoteEdit" ref="vote-edit"></pub-vote-edit>
 		<pub-modify-edit @modifyEdit="onModifyEdit" ref="modify-edit"></pub-modify-edit>
@@ -84,6 +109,7 @@
 	import pubClassSelect from '@/components/moto-cms/pub-class-select.vue';
 	import pubVoteEdit from '@/components/moto-cms/pub-vote-edit.vue';
 	import pubModifyEdit from '@/components/moto-cms/pub-modify-edit.vue';
+	import pubPreview from '@/components/moto-cms/pub-preview.vue';
 	export default {
 		components: {
 			editorComponent,
@@ -92,7 +118,8 @@
 			pubTopicSelect,
 			pubClassSelect,
 			pubVoteEdit,
-			pubModifyEdit
+			pubModifyEdit,
+			pubPreview
 		},
 		data() {
 			// 初始化表单数据
@@ -110,6 +137,7 @@
 				systemInfo: uni.getSystemInfoSync(),
 				formData,
 				wordCount: 0,
+				articleTitle: '',
 				articleId: null,
 				recommendCircle: null,
 				linkCircle: null,
@@ -118,6 +146,8 @@
 				linkTopicList: [],
 				linkVote: null,
 				linkModifyList: [],
+				articleImageList: [],
+				articleContent: '',
 				toolList: [{
 						name: '话题',
 						icon: '\ue787',
@@ -147,9 +177,7 @@
 				const id = e.id
 				this.getArticleDetail(id)
 			}
-
 			this.getCircleRecommend()
-			uni.$on('openTitleInput', this.showImgTitleInput)
 		},
 		mounted() {
 			const sysinfo = uni.getSystemInfoSync()
@@ -175,6 +203,9 @@
 					this.$refs['modify-edit'].dialogVisible = true
 				}
 			},
+			removeModifyItem(index) {
+				this.linkModifyList.splice(index, 1)
+			},
 			onModifyEdit(item) {
 				this.linkModifyList.push(item)
 			},
@@ -184,7 +215,7 @@
 			onClassSelect(item) {
 				this.linkClass = item
 			},
-			removeTopic(id){
+			removeTopic(id) {
 				this.linkTopicList = this.linkTopicList.filter(item => item.topicTagId !== id)
 			},
 			onTopicSelect(item) {
@@ -250,59 +281,54 @@
 				}
 			},
 			submit(status) {
-				// 检查文章标题是否存在
-				if (!this.formData.title) {
-					// 隐藏加载中
-					uni.hideLoading()
-					// 显示文章标题必填的提示
-					return uni.showToast({
-						icon: 'none',
-						title: '文章标题必填',
-					})
+				if (!this.articleTitle) {
+					getApp().$message.warning('请输入文章标题')
+					return
 				}
-
-				return new Promise(resolve => {
-					// 验证表单
-					this.$refs.form.validate().then((res) => {
-						// 获取编辑器内容
-						this.editorCtx.getContents({
-							success: async (e) => {
-								console.log(e.html)
-								console.log(JSON.stringify(e))
-								const contentList = translateOutputContent(e.delta.ops)
-								console.log(JSON.stringify(contentList))
-								let postData = {
-									type: 2,
-									contentList: contentList,
-									title: this.formData.title
-								}
-								if (this.articleId) {
-									postData.articleId = this.articleId
-								}
-								console.log(postData)
-								// uni.showLoading({
-								// 	title: '发布中'
-								// })
-								// console.log(postData)
-								// getApp().$openApi.motoCms.pushCircleArticle(postData).then(
-								// 	res => {
-								// 		if (res.data.code == 200) {
-								// 			uni.showToast({
-								// 				title: '发布成功',
-								// 				icon: 'none'
-								// 			})
-								// 		}
-								// 	})
-
-								resolve()
-							}
+				this.editorCtx.getContents({
+					success: async (e) => {
+						const contentList = translateOutputContent(e.delta.ops)
+						const haveText = contentList.find(item => {
+							return item.contextClass === 1 && item.context && item.context !== '\n'
 						})
-					}).catch((e) => {
-						console.error(e)
-					})
+						if (!haveText) {
+							getApp().$message.warning('至少输入一段文本')
+							return
+						}
+						const haveImage = contentList.find(item => {
+							return item.contextClass === 2 && item.context
+						})
+						if (!haveImage) {
+							getApp().$message.warning('至少上传一张照片')
+							return
+						}
+						let postData = {
+							type: 2,
+							contentList: contentList,
+							title: this.formData.title
+						}
+						if (this.articleId) {
+							postData.articleId = this.articleId
+						}
+						// uni.showLoading({
+						// 	title: '发布中'
+						// })
+						// console.log(postData)
+						// getApp().$openApi.motoCms.pushCircleArticle(postData).then(
+						// 	res => {
+						// 		if (res.data.code == 200) {
+						// 			uni.showToast({
+						// 				title: '发布成功',
+						// 				icon: 'none'
+						// 			})
+						// 		}
+						// 	})
+					}
 				})
 			},
 			onTextChange(e) {
+				this.articleImageList = e.images
+				this.articleContent = e.content
 				this.wordCount = e.detail
 				// 自动保存
 				this.autoSaveContent && this.autoSaveContent()
@@ -502,9 +528,30 @@
 		font-size: 17px;
 	}
 
-	.topic-delete-icon {
-		margin-left: 4px;
+	.delete-icon {
+		margin-left: 5px;
 		font-size: 14px;
 		color: #BFC4CF;
+	}
+
+	.modify-scroll {
+		width: 95%;
+		padding: 0 34px;
+		margin-bottom: 12px;
+	}
+
+	.modify-item {
+		height: 40px;
+		padding: 0 14px;
+		border: 1px solid #F1F2F5;
+		border-radius: 4px;
+		margin-right: 12px;
+	}
+
+	.modify-item-image {
+		height: 30px;
+		width: 30px;
+		border-radius: 4px;
+		margin-right: 10px;
 	}
 </style>

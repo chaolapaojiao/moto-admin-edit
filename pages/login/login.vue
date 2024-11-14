@@ -1,16 +1,22 @@
 <template>
-	<view class="moto-flex-row-center login-container">
-		<el-card style="width: 480px" shadow="always">
-			<view class="moto-flex-column-center">
-				<view class="title">登录</view>
-				<view class="qr-code-box">
+	<view class="login-container">
+		<view class="logo-container">
+			<view class="moto-flex-row-left">
+				<image class="logo-image" src="/static/image/logo.png"></image>
+				<view class="logo-title">机车圈 | 创作者平台</view>
+			</view>
+		</view>
+		<el-card shadow="always">
+			<view class="moto-flex-column-center" style="width: 100%">
+				<view class="card-title">扫码登录</view>
+				<view style="width: 190px;height: 180px;">
 					<img v-if="qrCodeImg" :src="qrCodeImg" class="qr-code" />
 				</view>
 				<view v-if="codeExpire" class="moto-flex-row-left" style="margin-left: 20px;" @click="getLoginQrCode">
-					<view>二维码已过期，请</view>
-					<view style="color: blue;">刷新</view>
+					<view class="login-hint">二维码已过期，请</view>
+					<view class="login-hint" style="color: blue;margin-right: 20px;">刷新</view>
 				</view>
-				<text>请使用机车圈app扫码登录</text>
+				<text class="login-hint">请使用机车圈app扫一扫登录</text>
 			</view>
 		</el-card>
 	</view>
@@ -67,7 +73,7 @@
 							getApp().$message.success('登录成功')
 							setTimeout(() => {
 								uni.navigateTo({
-									url: '/pages/index'
+									url: '/pages/moto-cms/article-list'
 								})
 							}, 500)
 						} else if (data.status === 3) {
@@ -81,30 +87,64 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.login-container {
 		width: 100%;
 		height: 100%;
+		overflow: hidden;
 		align-items: flex-start;
-		padding-top: 200px;
+		background-image: url('/static/image/login-bg.jpg');
+		background-size: 100% 100%;
 	}
 
-	.title {
-		font-size: 22px;
+	.logo-container {
+		margin: 25px;
+	}
+
+	.logo-image {
+		width: 40px;
+		height: 40px;
+		border-radius: 8px;
+		margin-right: 7px;
+	}
+
+	.logo-title {
+		font-size: 14px;
+		font-weight: 500;
+		color: #ff6100;
+	}
+
+	.logo-sub-title {
+		margin-top: 8px;
+		margin-left: 10px;
+		font-size: 12px;
+		font-weight: 400;
+		color: #141E34;
+	}
+
+	.card-title {
+		font-size: 14px;
 		font-weight: 400;
 	}
 
 	.el-card__body {
-		padding: 20px 0;
+		padding: 10px 0;
 	}
 
-	.qr-code-box {
-		width: 200px;
-		height: 200px;
+	.el-card {
+		position: absolute;
+		top: 210px;
+		right: 150px;
+		width: 220px;
 	}
 
 	.qr-code {
-		width: 200px;
-		height: 200px;
+		width: 190px;
+		height: 180px;
+		margin-bottom: -10px;
+	}
+
+	.login-hint {
+		font-size: 12px;
 	}
 </style>

@@ -444,10 +444,12 @@
 					this.emitStatusChange(range)
 				})
 				// 监听文本变化事件
-				this.quill.on(Quill.events.TEXT_CHANGE, (delta, oldDelta, source) => {
-					delta.ops.forEach(async (op) => {
+				this.quill.on(Quill.events.TEXT_CHANGE, async (delta, oldDelta, source) => {
+					const nodes = (await this.getEditorContext().getContents()).delta.ops
+					const images = nodes.filter(item => item.insert.image).map(item => item.insert.image)
+					const content = nodes.find(item => item.insert && typeof item.insert === 'string').insert
+					delta.ops.forEach((op) => {
 						if (op.delete) {
-							const nodes = (await this.getEditorContext().getContents()).delta.ops
 							nodes.forEach((node, index) => {
 								if (node.insert.input) {
 									if (!nodes[index - 2] || !nodes[index - 2].insert.image) {
@@ -459,7 +461,9 @@
 					})
 					const text = this.quill.getText().replace(/\n/g, '')
 					this.$emit('textchange', {
-						detail: text.length
+						detail: text.length,
+						images: images,
+						content: content
 					})
 				})
 

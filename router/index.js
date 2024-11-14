@@ -7,17 +7,14 @@ const router = createRouter({
 	pageData: PAGE_DATA
 })
 const needLogin = [
-	// '/pages/moto-cms/pub-list',
-	// '/pages/moto-cms/article-editor'
+	'/pages/moto-cms/article-list',
+	'/pages/moto-cms/article-editor'
 ]
 router.beforeEach((to, from) => {
 	if (needLogin.includes(to.path)) {
 		const token = uni.getStorageSync('moto-pc-token')
 		if (!token) {
-			uni.showToast({
-				title: '需要登录后才能完成相应操作哦',
-				icon: 'none'
-			})
+			getApp().$message.warning('需要登录后才能执行相应操作')
 			return new Promise((resolve) => {
 				setTimeout(() => {
 					resolve({

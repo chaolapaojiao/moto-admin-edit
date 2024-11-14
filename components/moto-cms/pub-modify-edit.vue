@@ -68,11 +68,14 @@
 					return
 				}
 				const data = {
-					itemName: '',
-					itemPrice: '',
-					itemUrl: '',
+					itemName: this.modifyName,
+					itemPrice: this.modifyPrice ? this.modifyPrice : 0,
+					itemUrl: this.imageUrl,
 					type: 1
 				}
+				this.modifyName = ''
+				this.modifyPrice = '' 
+				this.imageUrl = ''
 				this.$emit('modifyEdit', data)
 				this.dialogVisible = false
 			}

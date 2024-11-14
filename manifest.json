@@ -83,6 +83,9 @@
                     "serviceHost" : ""
                 }
             }
+        },
+        "devServer" : {
+            "port" : 8080
         }
     }
 }

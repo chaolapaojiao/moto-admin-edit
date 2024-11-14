@@ -1,49 +1,64 @@
 {
-  "hash": "aa33a9a9",
+  "hash": "6665ba08",
   "configHash": "9265c7be",
-  "lockfileHash": "81586414",
-  "browserHash": "7c6eb6aa",
+  "lockfileHash": "f2cd6a7c",
+  "browserHash": "1ed6f3c6",
   "optimized": {
     "@gowiny/uni-router": {
       "src": "../../../../../node_modules/@gowiny/uni-router/dist/index.esm.js",
       "file": "@gowiny_uni-router.js",
-      "fileHash": "4671d227",
+      "fileHash": "a9f38baf",
       "needsInterop": false
     },
     "element-plus": {
       "src": "../../../../../node_modules/element-plus/es/index.mjs",
       "file": "element-plus.js",
-      "fileHash": "37aced25",
+      "fileHash": "3100e089",
       "needsInterop": false
     },
     "js-md5": {
       "src": "../../../../../node_modules/js-md5/src/md5.js",
       "file": "js-md5.js",
-      "fileHash": "44751e87",
+      "fileHash": "4ff0b5de",
       "needsInterop": true
     },
     "jsencrypt": {
       "src": "../../../../../node_modules/jsencrypt/lib/index.js",
       "file": "jsencrypt.js",
-      "fileHash": "6e513978",
+      "fileHash": "e2f7ade3",
       "needsInterop": false
     },
     "image-conversion": {
       "src": "../../../../../node_modules/image-conversion/index.js",
       "file": "image-conversion.js",
-      "fileHash": "768ecf6c",
+      "fileHash": "d78342ee",
       "needsInterop": true
     },
     "lodash": {
       "src": "../../../../../node_modules/lodash/lodash.js",
       "file": "lodash.js",
-      "fileHash": "e3067302",
+      "fileHash": "22e29cd3",
       "needsInterop": true
+    },
+    "crypto-js/crypto-js": {
+      "src": "../../../../../node_modules/crypto-js/crypto-js.js",
+      "file": "crypto-js_crypto-js.js",
+      "fileHash": "b6534c52",
+      "needsInterop": true
+    },
+    "moment": {
+      "src": "../../../../../node_modules/moment/dist/moment.js",
+      "file": "moment.js",
+      "fileHash": "fd8df785",
+      "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-KX4S3TY3": {
-      "file": "chunk-KX4S3TY3.js"
+    "chunk-JXZKWJEE": {
+      "file": "chunk-JXZKWJEE.js"
+    },
+    "chunk-JFD4OJSJ": {
+      "file": "chunk-JFD4OJSJ.js"
     }
   }
 }

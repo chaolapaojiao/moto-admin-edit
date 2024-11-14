@@ -49,21 +49,21 @@
 		methods: {
 			getPubList() {
 				getApp().$openApi.motoCms.getPubArticleList(this.pageInfo).then(res => {
-					console.log(res)
 					if (res.data.code === 200) {
 						this.tabelData = res.data.data.releaseList
 					}
 				})
 			},
 			openEdit(id) {
+				const host= window.location.host
+				console.log(host)
 				if (id) {
 					uni.navigateTo({
 						url: '/pages/moto-cms/article-editor?id=' + id
 					})
 				} else {
-					uni.navigateTo({
-						url: '/pages/moto-cms/article-editor?'
-					})
+					
+					window.open(`http://${host}/pages/moto-cms/article-editor`, '_blank')
 				}
 			}
 		}

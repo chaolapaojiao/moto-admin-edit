@@ -3,7 +3,7 @@ import {
   __export,
   __reExport,
   __toESM
-} from "./chunk-KX4S3TY3.js";
+} from "./chunk-JFD4OJSJ.js";
 
 // ../../../../../../Users/yuan/Desktop/study_ materials/moto-edit/node_modules/dayjs/dayjs.min.js
 var require_dayjs_min = __commonJS({

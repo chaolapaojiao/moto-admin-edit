@@ -261,7 +261,7 @@
 
 	export default {
 		name: "editor",
-		emits: ['change', 'textchange'],
+		emits: ['change', 'textchange', 'ready'],
 		components: {
 			ToolBackground,
 			ToolLetterSpace,
@@ -564,13 +564,14 @@
 			}, el) {
 				// 返回一个 Promise 对象，以便在上传成功后，将图片的 URL 插入到编辑器中。
 				return new Promise(async (resolve, reject) => {
-					// const imgBlob = await fetch(blob).then(r => r.blob())
-					// console.log(imgBlob)
-					// const imgFile = new File([imgBlob], 'a.png', {
-					// 	type: 'image/png'
-					// })
-					// const compressBlob = await imageConversion.compressAccurately(imgFile, 200)
-					// const compressUrl = URL.createObjectURL(compressBlob)
+					const imgBlob = await fetch(blob).then(r => r.blob())
+					console.log(imgBlob)
+					const imgFile = new File([imgBlob], 'a.png', {
+						type: 'image/png'
+					})
+					const compressBlob = await imageConversion.compressAccurately(imgFile, 200)
+					const compressUrl = URL.createObjectURL(compressBlob)
+					console.log(compressUrl)
 					http.upload('common/imageUpload', {
 						name: 'file',
 						filePath: blob
