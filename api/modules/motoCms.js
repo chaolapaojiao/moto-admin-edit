@@ -23,6 +23,12 @@ function getCircleArticleInfo(data) {
 
 // 发布圈子文章
 function pushCircleArticle(data) {
+	const {
+		timestamp,
+		signature
+	} = paramsEncryption(data)
+	data.timestamp = timestamp
+	data.signature = signature
 	return http.post('motorCircle/pubArticleV3', data)
 }
 
@@ -36,6 +42,12 @@ function uploadImg(data) {
 
 // 获取圈子列表
 function getCircleList(data) {
+	const {
+		timestamp,
+		signature
+	} = paramsEncryption(data)
+	data.timestamp = timestamp
+	data.signature = signature
 	return http.get('/motorCircle/getCircleListV2', {
 		params: data
 	})
@@ -53,6 +65,12 @@ function globalSearch(data) {
 }
 // 获取附近位置
 function getNearbyPoiList(data) {
+	const {
+		timestamp,
+		signature
+	} = paramsEncryption(data)
+	data.timestamp = timestamp
+	data.signature = signature
 	return http.get('location/getNearbyPoiListV2', {
 		params: data
 	})
@@ -60,6 +78,12 @@ function getNearbyPoiList(data) {
 
 // 获取话题列表
 function getTopicList(data) {
+	const {
+		timestamp,
+		signature
+	} = paramsEncryption(data)
+	data.timestamp = timestamp
+	data.signature = signature
 	return http.get('/motorCircle/getTopicTagList', {
 		params: data
 	})
@@ -67,6 +91,13 @@ function getTopicList(data) {
 
 // 获取话题名称列表(区分有奖活动和热门话题)
 function getTagListAct(data) {
+	data = {}
+	const {
+		timestamp,
+		signature
+	} = paramsEncryption(data)
+	data.timestamp = timestamp
+	data.signature = signature
 	return http.get('/motorCircle/getTagListAct', {
 		params: data
 	})
@@ -74,6 +105,12 @@ function getTagListAct(data) {
 
 // 创建话题
 function createTopic(data) {
+	const {
+		timestamp,
+		signature
+	} = paramsEncryption(data)
+	data.timestamp = timestamp
+	data.signature = signature
 	return http.post('/motorCircle/createTopicTag', data)
 }
 export default {

@@ -164,6 +164,26 @@ $uni-font-size-paragraph:30rpx;
 	-webkit-line-clamp: 1; //超出2行隐藏，并显示省略号
 }
 
+.moto-lines-2{
+	overflow: hidden;
+	display: -webkit-box; //将元素设为盒子伸缩模型显示
+	-webkit-box-orient: vertical; //伸缩方向设为垂直方向
+	-webkit-line-clamp: 2; //超出2行隐藏，并显示省略号
+}
+
+.moto-lines-3{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	
+}
+
+.card-shadow{
+	box-shadow: -4rpx 8rpx 8rpx 0 rgba(0, 0, 0, 0.05);
+}
+
 .iconv2{
 	font-family: iconfontv2;
 }

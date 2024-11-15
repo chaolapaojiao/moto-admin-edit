@@ -107,7 +107,7 @@
 
 <style lang="scss">
 	.el-dialog__title {
-		font-size: 17px !important;
+		font-size: 34rpx !important;
 	}
 
 	.class-container {
@@ -115,25 +115,25 @@
 	}
 
 	.class-item {
-		width: 100px;
-		height: 40px;
+		width: 200rpx;
+		height: 80rpx;
 		text-align: center;
-		line-height: 40px;
+		line-height: 80rpx;
 		background-color: #F8F9FB;
 		color: #141E34;
-		font-size: 14px;
-		margin-bottom: 14px;
+		font-size: 28rpx;
+		margin-bottom: 28rpx;
 	}
 
 	.modify-text {
-		font-size: 13px;
+		font-size: 26rpx;
 		color: #848B9E;
-		margin-bottom: 14px;
+		margin-bottom: 28rpx;
 	}
 
 	.class-item-select {
 		background-color: #FFF6F0 !important;
-		border: 1px solid #FF6100;
+		border: 2rpx solid #FF6100;
 
 	}
 </style>

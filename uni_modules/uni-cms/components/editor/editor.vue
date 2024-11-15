@@ -225,11 +225,6 @@
 </template>
 
 <script>
-	import request from '@/api/http.js'
-	const http = request.http
-	import * as imageConversion from 'image-conversion'
-	// 导入编辑器相关组件
-	// 导入工具栏中的空格、行高、字间距、背景、图片、清除格式、解锁内容、AI等组件。同时导入WebEditor组件。
 	import ToolColor from "./tools/color.vue";
 	import ToolBold from "./tools/bold.vue";
 	import ToolItalic from "./tools/italic.vue";
@@ -254,11 +249,12 @@
 	import ToolVideo from "./tools/video.vue";
 	// import uniImChat from '../ai/chat.vue';
 	import ToolFontSize from './tools/font-size.vue'
-
 	// #ifdef H5
 	import WebEditor from "./web/editor.vue";
 	// #endif
-
+	import {
+		imageUpload
+	} from '@/utils/imageTool.js';
 	export default {
 		name: "editor",
 		emits: ['change', 'textchange', 'ready'],
@@ -564,27 +560,12 @@
 			}, el) {
 				// 返回一个 Promise 对象，以便在上传成功后，将图片的 URL 插入到编辑器中。
 				return new Promise(async (resolve, reject) => {
-					const imgBlob = await fetch(blob).then(r => r.blob())
-					console.log(imgBlob)
-					const imgFile = new File([imgBlob], 'a.png', {
-						type: 'image/png'
-					})
-					const compressBlob = await imageConversion.compressAccurately(imgFile, 200)
-					const compressUrl = URL.createObjectURL(compressBlob)
-					console.log(compressUrl)
-					http.upload('common/imageUpload', {
-						name: 'file',
-						filePath: blob
-					}).then(res => {
-						console.log(res)
-						const result = JSON.parse(res.data)
-						if (result.code === 200) {
-							console.log(result.data.url)
-							resolve(result.data.url)
-						}
-					}).catch(err => {
-						Quill && Quill.find(el).deleteAt(0)
-					})
+					const result = await imageUpload(blob)
+					if (result) {
+						resolve(result)
+					} else {
+						reject(result)
+					}
 				})
 			},
 			onInsertImage(selectMediaItems) {

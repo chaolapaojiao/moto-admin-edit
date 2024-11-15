@@ -210,53 +210,53 @@
 
 <style lang="scss" scoped>
 	.el-dialog__title {
-		font-size: 17px;
+		font-size: 34rpx;
 	}
 
 	.search-btn {
-		width: 60px;
-		height: 30px;
+		width: 120rpx;
+		height: 60rpx;
 		text-align: center;
-		line-height: 30px;
+		line-height: 60rpx;
 		color: #141E34;
 		background-color: #ff6100;
-		border-radius: 4px;
-		margin-left: 10px;
+		border-radius: 8rpx;
+		margin-left: 20rpx;
 		color: #FFFFFF;
 	}
 
 	.scroll-container {
-		width: 470px;
-		height: 500px;
+		width: 940rpx;
+		height: 1000rpx;
 	}
 
 	.class-title {
-		font-size: 12px;
+		font-size: 24rpx;
 		color: #848B9E;
-		margin-bottom: 5px;
+		margin-bottom: 10rpx;
 	}
 
 	.topic-name {
-		font-size: 13px;
+		font-size: 26rpx;
 		color: #141E34;
-		margin-left: 6px;
+		margin-left: 12rpx;
 	}
 
 	.tag {
-		width: 24px;
-		height: 15px;
-		line-height: 15px;
-		font-size: 10px;
+		width: 48rpx;
+		height: 30rpx;
+		line-height: 30rpx;
+		font-size: 20rpx;
 		text-align: center;
 		color: #FFFFFF;
-		border-radius: 2px;
-		margin-left: 5px
+		border-radius: 4rpx;
+		margin-left: 10rpx
 	}
 
 	.status {
-		height: 50px;
-		line-height: 50px;
-		width: 450px;
+		height: 100rpx;
+		line-height: 100rpx;
+		width: 900rpx;
 		text-align: center;
 	}
 </style>

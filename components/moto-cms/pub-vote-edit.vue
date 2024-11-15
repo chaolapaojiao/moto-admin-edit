@@ -74,61 +74,61 @@
 
 <style lang="scss">
 	.el-dialog__title {
-		font-size: 17px !important;
+		font-size: 34rpx !important;
 	}
 
 	.line {
 		width: 100%;
-		height: 1px;
-		margin: 10px 0;
+		height: 2rpx;
+		margin: 20rpx 0;
 		background-color: #EBECEF;
 	}
 
 	.block-item {
 		color: #141E34;
-		font-size: 13px;
-		margin: 10px 0;
+		font-size: 26rpx;
+		margin: 20rpx 0;
 	}
 
 	.option-title {
-		width: 50px;
-		font-size: 14px;
+		width: 100rpx;
+		font-size: 28rpx;
 		color: #141E34;
 	}
 
 	.add-btn {
-		width: 90px;
-		height: 40px;
+		width: 180rpx;
+		height: 80rpx;
 		text-align: center;
-		line-height: 40px;
+		line-height: 80rpx;
 		background: #F7F8FB;
-		font-size: 13px;
+		font-size: 26rpx;
 		color: #141E34;
-		border-radius: 4px;
-		margin-right: 20px;
+		border-radius: 8rpx;
+		margin-right: 40rpx;
 	}
 
 	.confirm-btn {
-		width: 90px;
-		height: 40px;
+		width: 180rpx;
+		height: 80rpx;
 		text-align: center;
-		line-height: 40px;
+		line-height: 80rpx;
 		background: #ff6100;
-		font-size: 13px;
+		font-size: 26rpx;
 		color: #FFFFFF;
-		border-radius: 4px;
+		border-radius: 8rpx;
 	}
 
 	.input-title {
-		font-size: 16px;
+		font-size: 32rpx;
 		color: #141E34;
 		width: 100%
 	}
 
 	.input-item {
-		width: 400px;
-		height: 38px;
-		font-size: 14px;
+		width: 800rpx;
+		height: 76rpx;
+		font-size: 28rpx;
 		color: #141E34;
 	}
 </style>

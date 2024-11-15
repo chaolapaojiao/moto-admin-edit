@@ -28,6 +28,9 @@
 
 <script>
 	import request from '@/api/http.js'
+	import {
+		imageUpload
+	} from '@/utils/imageTool'
 	const http = request.http
 	export default {
 		data() {
@@ -44,21 +47,16 @@
 				uni.chooseImage({
 					count: 1, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					success: (res) => {
+					success: async (res) => {
 						this.imageUrl = res.tempFilePaths[0]
 						this.imageStatus = 'loading'
-						http.upload('common/imageUpload', {
-							name: 'file',
-							filePath: res.tempFilePaths[0]
-						}).then(res => {
-							const result = JSON.parse(res.data)
-							if (result.code === 200) {
-								this.imageUrl = result.data.url
-								this.imageStatus = ''
-							} else {
-								this.imageStatus = 'fail'
-							}
-						})
+						const result = await imageUpload(res.tempFilePaths[0])
+						if (result) {
+							this.imageUrl = result
+							this.imageStatus = ''
+						} else {
+							this.imageStatus = 'fail'
+						}
 					}
 				});
 			},
@@ -74,7 +72,7 @@
 					type: 1
 				}
 				this.modifyName = ''
-				this.modifyPrice = '' 
+				this.modifyPrice = ''
 				this.imageUrl = ''
 				this.$emit('modifyEdit', data)
 				this.dialogVisible = false
@@ -85,62 +83,62 @@
 
 <style lang="scss" scoped>
 	.image-upload {
-		width: 100px;
-		height: 100px;
+		width: 200rpx;
+		height: 200rpx;
 		text-align: center;
-		line-height: 100px;
-		font-size: 20px;
+		line-height: 200rpx;
+		font-size: 40rpx;
 		color: #999;
-		border: 1.5px dashed #eaeaea;
+		border: 3rpx dashed #eaeaea;
 	}
 
 	.option-title {
-		width: 50px;
-		font-size: 14px;
+		width: 100rpx;
+		font-size: 28rpx;
 		color: #141E34;
 	}
 
 	.line {
 		width: 100%;
-		height: 1px;
-		margin: 4px 0;
+		height: 2rpx;
+		margin: 8rpx 0;
 		background-color: #EBECEF;
 	}
 
 	.input-item {
-		width: 400px;
-		height: 30px;
-		font-size: 14px;
+		width: 800rpx;
+		height: 60rpx;
+		font-size: 28rpx;
 		color: #141E34;
 	}
 
 	.confirm-btn {
-		width: 90px;
-		height: 40px;
+		width: 180rpx;
+		height: 80rpx;
 		text-align: center;
-		line-height: 40px;
+		line-height: 80rpx;
 		background-color: #ff6100;
-		border-radius: 4px;
+		border-radius: 8rpx;
 		color: #FFFFFF;
 		font-weight: 400;
-		margin-top: 20px;
+		margin-top: 40rpx;
 	}
 
 	.modify-image {
-		width: 100px;
-		height: 100px;
-		border-radius: 4px;
+		width: 200rpx;
+		height: 200rpx;
+		border-radius: 8rpx;
 	}
 
 	.status {
 		position: absolute;
 		top: 0;
 		left: 0;
-		height: 100px;
-		width: 100px;
+		height: 200rpx;
+		width: 200rpx;
 		color: #FFFFFF;
 		text-align: center;
-		line-height: 100px;
+		line-height: 200rpx;
 		background-color: rgba(0, 0, 0, 0.4);
 	}
 </style>

@@ -1,11 +1,11 @@
 <template>
 	<view>
 		<el-row :gutter="20">
-			<el-col :span="7">
+			<el-col :span="6">
 				<pub-preview :vote="linkVote" :circle="linkCircle" :title="articleTitle" :images="articleImageList"
 					:content="articleContent"></pub-preview>
 			</el-col>
-			<el-col :span="16">
+			<el-col :span="17">
 				<view class="forms-container">
 					<view style="padding: 30px 40px 0 40px">
 						<view class="title">
@@ -177,7 +177,6 @@
 				const id = e.id
 				this.getArticleDetail(id)
 			}
-			this.getCircleRecommend()
 		},
 		mounted() {
 			const sysinfo = uni.getSystemInfoSync()
@@ -234,18 +233,6 @@
 			openCicleSelect() {
 				this.$refs['circle-select'].getCircleList()
 				this.$refs['circle-select'].dialogVisible = true
-			},
-			getCircleRecommend() {
-				const postData = {
-					page: 1,
-					size: 10,
-					select: 'RECOMMEND'
-				}
-				getApp().$openApi.motoCms.getCircleList(postData).then(res => {
-					if (res.data.code === 200) {
-						this.recommendCircle = res.data.data.dataList
-					}
-				})
 			},
 			getArticleDetail(id) {
 				getApp().$openApi.motoCms.getCircleArticleInfo({
@@ -392,166 +379,167 @@
 	@import '@/uni_modules/uni-cms/common/style/article-detail.scss';
 
 	.link-item-group {
-		margin-bottom: 20px;
+		margin-bottom: 40rpx;
 	}
 
 	.link-item-icon {
-		font-size: 22px;
+		font-size: 44rpx;
 	}
 
 	.link-item-title {
-		width: 130px;
-		margin-left: 10px;
-		font-size: 16px;
+		width: 260rpx;
+		margin-left: 20rpx;
+		font-size: 32rpx;
 		font-weight: 400;
 	}
 
 	.cirlce-list-scroll {
 		flex: 1;
-		width: 400px;
-		height: 36px;
-		margin-left: 10px;
+		width: 800rpx;
+		height: 72rpx;
+		margin-left: 20rpx;
 	}
 
 	.line {
 		width: 100%;
-		height: 1px;
+		height: 2rpx;
 		background-color: #f2f2f2;
-		margin-top: 15px;
+		margin-top: 30rpx;
 	}
 
 	.recommend-circle-item {
-		height: 36px;
-		line-height: 36px;
+		height: 72rpx;
+		line-height: 72rpx;
 		background: #F6F7FC;
-		border-radius: 4px;
-		font-size: 16px;
+		border-radius: 8rpx;
+		font-size: 32rpx;
 		color: #474E62;
-		padding: 0 10px;
-		margin-right: 10px;
+		padding: 0 20rpx;
+		margin-right: 20rpx;
 	}
 
 	.confirm-button {
-		width: 100px;
-		margin-right: 370px;
+		width: 200rpx;
+		margin-right: 740rpx;
 	}
 
 	.circle-slect {
-		margin-left: 12px;
-		width: 150px;
-		border: 1px solid #eee;
-		border-radius: 4px;
-		font-size: 14px;
+		margin-left: 24rpx;
+		width: 300rpx;
+		border: 2rpx solid #eee;
+		border-radius: 8rpx;
+		font-size: 28rpx;
 		color: #848B9E;
-		padding: 8px 0 8px 12px;
+		padding: 16rpx 0 16rpx 24rpx;
 	}
 
 	.circle-slect:hover {
-		border: 1px solid blue;
+		border: 2rpx solid blue;
 	}
 
 	.content-preview {
-		width: 380px;
-		height: 100px;
+		width: 760rpx;
+		height: 200rpx;
 		background-color: blue;
-		margin-right: 40px;
+		margin-right: 80rpx;
 	}
 
 	.forms-container {
-		margin-top: 60px;
+		margin-top: 120rpx;
 		background-color: #FFFFFF;
-		box-shadow: -2px 4px 5px 0px rgba(0, 0, 0, 0.05);
+		box-shadow: -4rpx 8rpx 10rpx 0 rgba(0, 0, 0, 0.05);
 	}
 
 	.tool-container {
-		box-shadow: 0px -2px 3px 0px rgba(0, 0, 0, 0.05);
-		height: 140px;
-		padding: 14px 34px 0 34px;
+		box-shadow: 0 -4rpx 3rpx 0 rgba(0, 0, 0, 0.05);
+		height: 280rpx;
+		padding: 28rpx 68rpx 0 68rpx;
 		box-sizing: border-box;
 	}
 
 	.link-icon {
-		font-size: 18px;
+		font-size: 36rpx;
 		color: #141E34;
-		margin-right: 5px;
+		margin-right: 10rpx;
 	}
 
 	.link-name {
-		font-size: 16px;
+		font-size: 32rpx;
 		color: #141E34;
 	}
 
 	.tool-item {
-		margin-right: 24px;
-		width: 50px;
+		margin-right: 48rpx;
+		width: 100rpx;
 	}
 
 	.tool-icon {
-		font-size: 20px;
+		font-size: 40rpx;
 		color: #141E34;
-		margin-bottom: 2px;
+		margin-bottom: 4rpx;
 	}
 
 	.tool-name {
-		font-size: 16px;
+		font-size: 32rpx;
 		color: #141E34;
 	}
 
 	.save-btn {
-		width: 100px;
-		height: 40px;
-		line-height: 40px;
+		width: 200rpx;
+		height: 80rpx;
+		line-height: 80rpx;
 		text-align: center;
-		font-size: 15px;
-		border: 1px solid #e8e8e8;
-		border-radius: 4px;
-		margin-right: 20px;
+		font-size: 30rpx;
+		border: 2rpx solid #e8e8e8;
+		border-radius: 8rpx;
+		margin-right: 40rpx;
 	}
 
 	.pub-btn {
-		width: 100px;
-		height: 40px;
-		line-height: 40px;
+		width: 200rpx;
+		height: 80rpx;
+		line-height: 80rpx;
 		text-align: center;
-		font-size: 15px;
+		font-size: 30rpx;
 		color: #FFFFFF;
 		background-color: #ff6100;
-		border-radius: 4px;
+		border-radius: 8rpx;
+		margin-top: 20rpx;
 	}
 
 	.topic-item {
-		margin: 2px 20px 2px 0;
+		margin: 4rpx 40rpx 4rpx 0;
 	}
 
 	.topic-name {
 		color: #3459AE;
-		font-size: 17px;
+		font-size: 34rpx;
 	}
 
 	.delete-icon {
-		margin-left: 5px;
-		font-size: 14px;
+		margin-left: 10rpx;
+		font-size: 28rpx;
 		color: #BFC4CF;
 	}
 
 	.modify-scroll {
 		width: 95%;
-		padding: 0 34px;
-		margin-bottom: 12px;
+		padding: 0 68rpx;
+		margin-bottom: 24rpx;
 	}
 
 	.modify-item {
-		height: 40px;
-		padding: 0 14px;
-		border: 1px solid #F1F2F5;
-		border-radius: 4px;
-		margin-right: 12px;
+		height: 80rpx;
+		padding: 0 28rpx;
+		border: 2rpx solid #F1F2F5;
+		border-radius: 8rpx;
+		margin-right: 24rpx;
 	}
 
 	.modify-item-image {
-		height: 30px;
-		width: 30px;
-		border-radius: 4px;
-		margin-right: 10px;
+		height: 60rpx;
+		width: 60rpx;
+		border-radius: 8rpx;
+		margin-right: 20rpx;
 	}
 </style>

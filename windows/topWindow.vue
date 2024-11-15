@@ -1,17 +1,16 @@
 <template>
-	<view>
+	<view style="height: 100%;">
 		<view class="nav-container moto-flex-row-between">
 			<view class="moto-flex-row-left">
 				<image class="logo-img" src="/static/image/logo.png"></image>
-				<view class="title">机车圈</view>
+				<view class="title">机车圈APP | 创作者中心</view>
 			</view>
-			<view class="moto-flex-row-left">
+			<view class="moto-flex-row-left" style="margin-right: 32rpx;">
 				<image class="user-avatar" :src="userInfo.avatarUrl"></image>
 				<view class="nick-name">{{userInfo.nickName}}</view>
 				<view class="iconv2">&#xe652;</view>
 			</view>
 		</view>
-		<view class="line"></view>
 	</view>
 </template>
 
@@ -36,37 +35,31 @@
 
 <style lang="scss">
 	.nav-container {
-		padding: 0 20px;
-		height: 60px;
+		padding: 0 40rpx;
+		height: 120rpx;
 		width: 100%;
-		background-color: #FFFFFF;
 		box-sizing: border-box;
 	}
-
-	.line {
-		width: 100%;
-		height: 2px;
-		background-color: #ebebeb;
-	}
-
 	.logo-img {
-		width: 36px;
-		height: 36px;
+		width: 64rpx;
+		height: 64rpx;
+		border-radius: 12rpx;
 	}
 
 	.title {
-		margin-left: 10px;
-		font-size: 16px;
+		margin-left: 20rpx;
+		font-size: 26rpx;
 		font-weight: 500;
 	}
 	.user-avatar{
-		width: 30px;
-		height: 30px;
-		border-radius: 15px;
+		width: 60rpx;
+		height: 60rpx;
+		border-radius: 30rpx;
 	}
 	
 	.nick-name{
-		font-size: 14px;
-		margin-left: 6px;
+		font-size: 24rpx;
+		margin-left: 10rpx;
+		color: #141E34;
 	}
 </style>

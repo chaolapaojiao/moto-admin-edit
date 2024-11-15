@@ -1,8 +1,18 @@
 {
 	"pages": [{
+			"path": "pages/moto-cms/home",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		}, {
 			"path": "pages/moto-cms/article-list",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "文章列表"
+			}
+		}, {
+			"path": "pages/moto-cms/article-draft",
+			"style": {
+				"navigationBarTitleText": "草稿列表"
 			}
 		}, {
 			"path": "pages/moto-cms/article-editor",
@@ -24,7 +34,7 @@
 	"topWindow": {
 		"path": "windows/topWindow",
 		"style": {
-			"height": "60px"
+			"height": "70px"
 		},
 		"matchMedia": {
 			"minWidth": 0
@@ -33,7 +43,7 @@
 	"leftWindow": {
 		"path": "windows/leftWindow",
 		"style": {
-			"width": "240px"
+			"width": "220px"
 		}
 	},
 	"globalStyle": {

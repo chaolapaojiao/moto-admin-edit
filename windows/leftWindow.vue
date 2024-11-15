@@ -1,14 +1,30 @@
 <template>
-	<view class="moto-flex-row-left sidebar-container">
-		<el-menu class="sidebar" default-active="0">
-			<template v-for="(item, index) in menuList">
-				<el-menu-item :index="String(index)">
-					<view class="iconv2 menu-icon">&#xe758;</view>
-					<view class="menu-title">{{item.title}}</view>
-				</el-menu-item>
-			</template>
-		</el-menu>
-		<view class="split-line"></view>
+	<view class="sidebar-container moto-flex-row-left">
+		<view class="moto-flex-column-center" style="margin-left: 25px;">
+			<view class="pub-btn" @click="openArticleEdit">创作内容</view>
+			<el-menu class="sidebar" default-active="1-1" @select="onSelect" active-text-color="#ff6100">
+				<template v-for="(item, index) in menuList">
+					<el-sub-menu :index="item.index" v-if="item.isGroup">
+						<template #title>
+							<view class="moto-flex-row-left">
+								<view class="iconv2 menu-icon">{{item.icon}}</view>
+								<view class="group-name">{{item.name}}</view>
+							</view>
+						</template>
+						<el-menu-item-group style="background-color: transparent;">
+							<el-menu-item v-for="menu in item.childrenMenu" :index="item.index + '-' + menu.index">
+								<view style="font-size: 26rpx"
+									:style="{color: activeMenu === (item.index + '-' + menu.index) ? '#ff6100' : '#717171'}"
+									@click="openLinkUrl(menu)">
+									{{menu.name}}
+								</view>
+							</el-menu-item>
+						</el-menu-item-group>
+					</el-sub-menu>
+				</template>
+			</el-menu>
+			<view style="width: 20px;"></view>
+		</view>
 	</view>
 </template>
 
@@ -16,29 +32,78 @@
 	export default {
 		data() {
 			return {
+				activeMenu: '1-1',
 				menuList: [{
-					title: '文章管理',
-					linkUrl: '/pages/moto-cms/pub-list',
-
-				}]
+						name: '内容管理',
+						isGroup: true,
+						index: '1',
+						icon: '\ue75c',
+						childrenMenu: [{
+								name: '首页',
+								index: '1',
+								linkUrl: '/pages/moto-cms/home'
+							}, {
+								name: '发布记录',
+								index: '2',
+								linkUrl: '/pages/moto-cms/article-list'
+							},
+							{
+								name: '草稿箱',
+								index: '3',
+								linkUrl: '/pages/moto-cms/article-draft'
+							}
+						]
+					},
+					{
+						name: '互动管理',
+						icon: '\ue619',
+						isGroup: true,
+						index: '2',
+						childrenMenu: [{
+								name: '评论',
+								index: '1',
+								linkUrl: '/pages/moto-cms/article-draft'
+							},
+							{
+								name: '点赞',
+								index: '2'
+							},
+							{
+								name: '关注',
+								index: '3'
+							}
+						]
+					},
+				]
 			}
 		},
 		methods: {
-
+			onSelect(e) {
+				this.activeMenu = e
+			},
+			openLinkUrl(menu) {
+				uni.navigateTo({
+					url: menu.linkUrl
+				})
+			},
+			openArticleEdit(id) {
+				const host = window.location.host
+				window.open(`http://${host}/pages/moto-cms/article-editor`, '_blank')
+			}
 		}
 	}
 </script>
 
-<style>
-	@import '/uni.scss';
-	.sidebar-container{
+<style lang="scss">
+	.sidebar-container {
 		height: 100%;
+		width: 100%;
 	}
+
 	.sidebar {
-		position: fixed;
-		width: 238px;
-		height: 100vh;
-		background-color: #FFFFFF;
+		width: 280rpx;
+		height: 80%;
+		background-color: blue;
 		border: 0 !important;
 	}
 
@@ -51,13 +116,49 @@
 		font-size: 15px;
 	}
 
+	.el-sub-menu__title {
+		height: 90rpx !important;
+	}
+
 	.el-menu-item {
-		border-bottom: 1px solid #f5f5f5;
+		height: 80rpx !important;
+		width: 100%;
+		background-color: #f8f8f8;
 	}
 
 	.menu-icon {
-		margin: 0 4px 0 30px;
-		font-size: 16px;
+		font-size: 32rpx;
+		color: #717171;
 	}
-	
+
+	.el-menu {
+		background-color: transparent !important;
+	}
+
+	.pub-btn {
+		width: 270rpx;
+		height: 80rpx;
+		background-color: #ff6100;
+		border-radius: 8rpx;
+		color: #FFFFFF;
+		text-align: center;
+		line-height: 80rpx;
+		font-size: 24rpx;
+		font-weight: bold;
+		margin-bottom: 20rpx;
+	}
+
+	.group-name {
+		color: #717171;
+		margin-left: 20rpx;
+	}
+
+	::v-deep .el-menu-item-group__title {
+		display: none !important;
+		padding: 0 !important;
+	}
+
+	.el-menu-item-group__title {
+		padding: 0 !important;
+	}
 </style>

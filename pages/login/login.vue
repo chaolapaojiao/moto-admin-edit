@@ -73,7 +73,7 @@
 							getApp().$message.success('登录成功')
 							setTimeout(() => {
 								uni.navigateTo({
-									url: '/pages/moto-cms/article-list'
+									url: '/pages/moto-cms/home'
 								})
 							}, 500)
 						} else if (data.status === 3) {
@@ -98,53 +98,53 @@
 	}
 
 	.logo-container {
-		margin: 25px;
+		margin: 50rpx;
 	}
 
 	.logo-image {
-		width: 40px;
-		height: 40px;
-		border-radius: 8px;
-		margin-right: 7px;
+		width: 80rpx;
+		height: 80rpx;
+		border-radius: 16rpx;
+		margin-right: 14rpx;
 	}
 
 	.logo-title {
-		font-size: 14px;
+		font-size: 28rpx;
 		font-weight: 500;
 		color: #ff6100;
 	}
 
 	.logo-sub-title {
-		margin-top: 8px;
-		margin-left: 10px;
-		font-size: 12px;
+		margin-top: 16rpx;
+		margin-left: 20rpx;
+		font-size: 24rpx;
 		font-weight: 400;
 		color: #141E34;
 	}
 
 	.card-title {
-		font-size: 14px;
+		font-size: 28rpx;
 		font-weight: 400;
 	}
 
 	.el-card__body {
-		padding: 10px 0;
+		padding: 20rpx 0;
 	}
 
 	.el-card {
 		position: absolute;
-		top: 210px;
-		right: 150px;
-		width: 220px;
+		top: 420rpx;
+		right: 300rpx;
+		width: 440rpx;
 	}
 
 	.qr-code {
-		width: 190px;
-		height: 180px;
-		margin-bottom: -10px;
+		width: 380rpx;
+		height: 360rpx;
+		margin-bottom: -20rpx;
 	}
 
 	.login-hint {
-		font-size: 12px;
+		font-size: 24rpx;
 	}
 </style>

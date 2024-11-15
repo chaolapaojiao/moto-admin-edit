@@ -131,7 +131,6 @@
 					select: tab.select
 				}
 				getApp().$openApi.motoCms.getCircleList(postData).then(res => {
-					console.log(res)
 					setTimeout(() => {
 						this.loading = false
 						if (res.data.code === 200) {
@@ -211,9 +210,9 @@
 
 <style lang="scss">
 	.tab-item {
-		width: 100px;
-		height: 50px;
-		line-height: 50px;
+		width: 200rpx;
+		height: 100rpx;
+		line-height: 100rpx;
 		text-align: center;
 		color: #141E34;
 	}
@@ -224,48 +223,48 @@
 	}
 
 	.card-circle-image {
-		width: 50px;
-		height: 50px;
-		border: 1px solid #f7f8f9;
-		border-radius: 4px;
+		width: 100rpx;
+		height: 100rpx;
+		border: 2rpx solid #f7f8f9;
+		border-radius: 8rpx;
 	}
 
 	.select-btn {
-		width: 70px;
-		height: 30px;
+		width: 140rpx;
+		height: 60rpx;
 		text-align: center;
-		line-height: 30px;
+		line-height: 60rpx;
 		background: #F7F8FB;
 		color: #141E34;
-		font-size: 14px;
-		border-radius: 4px;
+		font-size: 28rpx;
+		border-radius: 8rpx;
 	}
 
 	.status {
-		height: 50px;
-		line-height: 50px;
-		width: 350px;
+		height: 100rpx;
+		line-height: 100rpx;
+		width: 700rpx;
 		text-align: center;
 	}
 
 	.search-btn {
-		width: 60px;
-		height: 30px;
+		width: 120rpx;
+		height: 60rpx;
 		text-align: center;
-		line-height: 30px;
+		line-height: 60rpx;
 		color: #141E34;
 		background-color: #ff6100;
-		border-radius: 4px;
-		margin-left: 10px;
+		border-radius: 8rpx;
+		margin-left: 20rpx;
 		color: #FFFFFF;
 	}
 
 	.seach-container {
-		width: 450px;
-		height: 400px;
+		width: 900rpx;
+		height: 800rpx;
 	}
 
 	.el-dialog__title {
-		font-size: 17px !important;
+		font-size: 34rpx !important;
 	}
 </style>

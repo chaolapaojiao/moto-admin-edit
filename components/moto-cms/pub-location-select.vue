@@ -123,10 +123,10 @@
 			}
 		},
 		created() {
-			this.mapContext = uni.createMapContext("map", this);	
+			this.mapContext = uni.createMapContext("map", this);
 		},
 		methods: {
-			initLocation(){
+			initLocation() {
 				uni.getLocation({
 					type: 'wgs84',
 					success: (res) => {
@@ -162,6 +162,7 @@
 					targetLongitude: this.targetLocation.longitude
 				}
 				getApp().$openApi.motoCms.getNearbyPoiList(params).then(res => {
+					console.log(res)
 					this.listInfo.loading = false
 					if (res.data.code === 200) {
 						const data = res.data.data
@@ -267,87 +268,87 @@
 
 <style lang="scss">
 	.search-btn {
-		width: 60px;
-		height: 30px;
+		width: 120rpx;
+		height: 60rpx;
 		text-align: center;
-		line-height: 30px;
+		line-height: 60rpx;
 		color: #141E34;
 		background-color: #ff6100;
-		border-radius: 4px;
-		margin-left: 10px;
+		border-radius: 8rpx;
+		margin-left: 20rpx;
 		color: #FFFFFF;
 	}
 
 	.list-scrollview {
-		height: 400px;
+		height: 800rpx;
 		width: 100%;
 	}
 
 	.location-card {}
 
 	.map {
-		width: 500px;
-		height: 250px;
-		margin-left: -16px;
+		width: 1000rpx;
+		height: 500rpx;
+		margin-left: -32rpx;
 	}
 
 	.map-btn-center {
 		position: absolute;
-		left: 225px;
-		bottom: 100px;
-		width: 50px;
-		height: 50px;
+		left: 450rpx;
+		bottom: 200rpx;
+		width: 100rpx;
+		height: 100rpx;
 	}
 
 	.map-btn-my {
 		position: absolute;
-		bottom: 10px;
-		right: 10px;
-		width: 35px;
-		height: 35px;
+		bottom: 20rpx;
+		right: 20rpx;
+		width: 70rpx;
+		height: 70rpx;
 	}
 
 	.location-item {
-		height: 50px;
-		margin-bottom: 8px;
+		height: 100rpx;
+		margin-bottom: 16rpx;
 	}
 
 	.line {
-		width: 500px;
+		width: 1000rpx;
 		background-color: #f1f1f1;
-		height: 1px;
-		margin: 10px 0;
+		height: 2rpx;
+		margin: 20rpx 0;
 	}
 
 	.point-icon {
-		width: 24px;
-		height: 24px;
-		margin-right: 10px;
+		width: 48rpx;
+		height: 48rpx;
+		margin-right: 20rpx;
 	}
 
 	.location-point {
-		font-size: 24px;
-		margin-right: 10px;
+		font-size: 48rpx;
+		margin-right: 20rpx;
 	}
 
 	.location-name {
 		color: #141E34;
-		font-size: 14px;
+		font-size: 28rpx;
 	}
 
 	.sub-info {
-		font-size: 12px;
+		font-size: 24rpx;
 		color: #999;
 	}
 
 	.el-dialog__title {
-		font-size: 17px;
+		font-size: 34rpx;
 	}
 
 	.status {
-		height: 50px;
-		line-height: 50px;
-		width: 450px;
+		height: 100rpx;
+		line-height: 100rpx;
+		width: 900rpx;
 		text-align: center;
 	}
 </style>

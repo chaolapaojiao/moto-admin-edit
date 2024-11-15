@@ -99,20 +99,68 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
 }
+.moto-lines-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.moto-lines-3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.card-shadow {
+  box-shadow: -0.125rem 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.05);
+}
 .iconv2 {
   font-family: iconfontv2;
 }
-.page-header {
-  position: fixed;
-  left: 240px;
-  height: 50px;
+.article-count-card {
+  width: 20.3125rem;
+  height: 9.375rem;
   background-color: #FFFFFF;
-  width: calc(100% - 240px);
-  z-index: 999;
-  padding: 14px 20px;
+  margin-right: 1.5625rem;
+  border-radius: 0.25rem;
+  align-items: flex-start;
+  padding-left: 3.125rem;
   box-sizing: border-box;
 }
-.image-preview {
-  width: 100px;
-  height: 100px;
+.acount-count-card {
+  width: 48.4375rem;
+  height: 9.375rem;
+  background-color: #FFFFFF;
+  margin-right: 3.125rem;
+  border-radius: 0.25rem;
+  padding: 0 6.25rem;
+  box-sizing: border-box;
+}
+.article-list-card {
+  height: 34.375rem;
+  width: 70.3125rem;
+  margin-top: 1.5625rem;
+  border-radius: 0.25rem;
+  background-color: #FFFFFF;
+}
+.article-card-title {
+  font-size: 0.875rem;
+  color: #666666;
+  margin-right: 3.125rem;
+}
+.article-card-count {
+  font-size: 1.0625rem;
+  font-weight: bold;
+  color: #141E34;
+}
+.account-card-title {
+  font-size: 0.9375rem;
+  color: #666666;
+  margin-bottom: 0.625rem;
+}
+.account-card-count {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #141E34;
 }
