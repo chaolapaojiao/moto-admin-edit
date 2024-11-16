@@ -42,7 +42,7 @@
 		methods: {
 			addOption() {
 				if (this.voteItemList.length >= 5) {
-					getApp().$message.warning('最多只能添加5个选项')
+					getApp().$Message.warning('最多只能添加5个选项')
 					return
 				}
 				this.voteItemList.push({
@@ -54,11 +54,11 @@
 			},
 			confirmEdit() {
 				if (!this.voteTitle) {
-					getApp().$message.warning('请输入投票标题')
+					getApp().$Message.warning('请输入投票标题')
 					return
 				}
 				if (!this.voteItemList[0].itemText && !this.thisvoteItemList[1].itemText) {
-					getApp().$message.warning('至少需要设置两个选项')
+					getApp().$Message.warning('至少需要设置两个选项')
 					return
 				}
 				const voteInfo = {

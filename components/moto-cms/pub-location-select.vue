@@ -142,7 +142,7 @@
 				});
 			},
 			selectLocation(item) {
-				this.$emit('locationSelect', item)
+				this.$emit('locationSelect', {...item, type: 3})
 				this.dialogVisible = false
 			},
 			onDialogClose() {

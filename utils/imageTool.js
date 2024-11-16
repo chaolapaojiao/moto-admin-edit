@@ -106,7 +106,6 @@ export async function imageUpload(url) {
 				name: 'file',
 				filePath: result.url
 			}).then(res => {
-			console.log(res)
 			const result = JSON.parse(res.data)
 			if (result.code === 200) {
 				resolve(result.data.url)

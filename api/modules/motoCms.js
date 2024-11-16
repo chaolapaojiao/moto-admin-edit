@@ -23,13 +23,15 @@ function getCircleArticleInfo(data) {
 
 // 发布圈子文章
 function pushCircleArticle(data) {
-	const {
+	let {
 		timestamp,
 		signature
-	} = paramsEncryption(data)
-	data.timestamp = timestamp
-	data.signature = signature
-	return http.post('motorCircle/pubArticleV3', data)
+	} = paramsEncryption(data, 'post')
+	signature = signature.replace(/\+/g, '%2B')
+	const jsonStr = JSON.stringify(data)
+	return http.post(`motorCircle/pubCircleArticle?timestamp=${timestamp}&signature=${signature}`,
+		jsonStr
+	)
 }
 
 // 上传图片
@@ -57,11 +59,10 @@ function globalSearch(data) {
 	let {
 		timestamp,
 		signature
-	} = paramsEncryption({
-		data: data
-	})
+	} = paramsEncryption(data, 'post')
 	signature = signature.replace(/\+/g, '%2B')
-	return http.post(`search/globalSearchV3?timestamp=${timestamp}&signature=${signature}`, data)
+	const jsonStr = JSON.stringify(data)
+	return http.post(`search/globalSearch?timestamp=${timestamp}&signature=${signature}`, jsonStr)
 }
 // 获取附近位置
 function getNearbyPoiList(data) {
@@ -105,13 +106,24 @@ function getTagListAct(data) {
 
 // 创建话题
 function createTopic(data) {
-	const {
+	let {
 		timestamp,
 		signature
-	} = paramsEncryption(data)
-	data.timestamp = timestamp
-	data.signature = signature
-	return http.post('/motorCircle/createTopicTag', data)
+	} = paramsEncryption(data, 'post')
+	const jsonStr = JSON.stringify(data)
+	signature = signature.replace(/\+/g, '%2B')
+	return http.post(`/motorCircle/createTopicTag?timestamp=${timestamp}&signature=${signature}`, jsonStr)
+}
+
+// 保存草稿
+function saveDraft(data) {
+	let {
+		timestamp,
+		signature
+	} = paramsEncryption(data, 'post')
+	const jsonStr = JSON.stringify(data)
+	signature = signature.replace(/\+/g, '%2B')
+	return http.post(`common/pubDraft?timestamp=${timestamp}&signature=${signature}`, jsonStr)
 }
 export default {
 	getPubArticleList,
@@ -123,5 +135,6 @@ export default {
 	getNearbyPoiList,
 	getTopicList,
 	getTagListAct,
-	createTopic
+	createTopic,
+	saveDraft
 }

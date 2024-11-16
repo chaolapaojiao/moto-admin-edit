@@ -14,7 +14,7 @@ router.beforeEach((to, from) => {
 	if (needLogin.includes(to.path)) {
 		const token = uni.getStorageSync('moto-pc-token')
 		if (!token) {
-			getApp().$message.warning('需要登录后才能执行相应操作')
+			getApp().$Message.warning('需要登录后才能执行相应操作')
 			return new Promise((resolve) => {
 				setTimeout(() => {
 					resolve({

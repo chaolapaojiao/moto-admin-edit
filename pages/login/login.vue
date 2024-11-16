@@ -70,7 +70,7 @@
 						if (data.status === 2) {
 							clearInterval(this.loginInterval)
 							this.setUserInfo(res.data.data.userInfo)
-							getApp().$message.success('登录成功')
+							getApp().$Message.success('登录成功')
 							setTimeout(() => {
 								uni.navigateTo({
 									url: '/pages/moto-cms/home'

@@ -111,7 +111,7 @@
 		methods: {
 			selectTopic(item) {
 				if(this.seleted.includes(item.topicTagId)){
-					getApp().$message.warning('已添加该话题')
+					getApp().$Message.warning('已添加该话题')
 					return
 				}
 				this.$emit('topicSelect', item)
@@ -188,12 +188,13 @@
 					topicTagId: '',
 					topicTagName: this.searchInfo.searchKeyword
 				}).then(res => {
+					console.log(res)
 					if (res.data.code === 200) {
 						this.$emit('topicSelect', {
 							topicId: res.data.data.topicTagId,
 							topicName: this.searchInfo.searchKeyword
 						})
-						getApp().$message.success('创建成功')
+						getApp().$Message.success('创建成功')
 						this.dialogVisible = false
 					}
 				})

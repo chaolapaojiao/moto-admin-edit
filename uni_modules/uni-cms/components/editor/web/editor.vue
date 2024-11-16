@@ -257,7 +257,6 @@
 				images.forEach(img => {
 					img.parentNode.class = 'img-box'
 				});
-				// this.quill.insertEmbed(range.index + 1, 'input', '');
 				// 设置图片的本地路径
 				this.quill.formatText(range.index, 1, 'data-local', src, Quill.sources.SILENT)
 				// 设置图片的 alt 属性
@@ -446,6 +445,7 @@
 				// 监听文本变化事件
 				this.quill.on(Quill.events.TEXT_CHANGE, async (delta, oldDelta, source) => {
 					const nodes = (await this.getEditorContext().getContents()).delta.ops
+					console.log(nodes)
 					const images = nodes.filter(item => item.insert.image).map(item => item.insert.image)
 					const content = nodes.find(item => item.insert && typeof item.insert === 'string').insert
 					delta.ops.forEach((op) => {

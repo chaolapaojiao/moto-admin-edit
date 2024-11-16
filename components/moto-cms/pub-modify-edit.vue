@@ -62,7 +62,7 @@
 			},
 			confirmEdit() {
 				if (!this.modifyName) {
-					getApp().$message.warning('请输入改件名称')
+					getApp().$Message.warning('请输入改件名称')
 					return
 				}
 				const data = {

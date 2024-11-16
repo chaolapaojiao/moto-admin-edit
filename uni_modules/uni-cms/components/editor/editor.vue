@@ -48,8 +48,8 @@
 				<view class="editor-toolbar-divider"></view>
 				<tool-image :getEditorContent="getEditorContent" @change="({type, value}) => format(type, value)"
 					:disabled="!showFooterToolBar"></tool-image>
-				<tool-video @change="({type, value}) => format(type, value)"
-					:disabled="!showFooterToolBar"></tool-video>
+				<!-- <tool-video @change="({type, value}) => format(type, value)"
+					:disabled="!showFooterToolBar"></tool-video> -->
 				<!-- <tool-unlock-content @change="({type, value}) => format(type, value)"
 					:disabled="!showFooterToolBar"></tool-unlock-content> -->
 				<!-- <tool-ai @change="({type, value}) => format(type, value)" :active="showImChat"

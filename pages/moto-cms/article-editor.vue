@@ -2,7 +2,7 @@
 	<view>
 		<el-row :gutter="20">
 			<el-col :span="6">
-				<pub-preview :vote="linkVote" :circle="linkCircle" :title="articleTitle" :images="articleImageList"
+				<pub-preview :vote="linkVoteInfo" :circle="linkCircle" :title="articleTitle" :images="articleImageList"
 					:content="articleContent"></pub-preview>
 			</el-col>
 			<el-col :span="17">
@@ -14,7 +14,7 @@
 								placeholder="请输入文章标题"></textarea>
 							<view class="line"></view>
 						</view>
-						<view class="moto-flex-row-left" style="flex-wrap: wrap;">
+						<view class="moto-flex-row-left" style="flex-wrap: wrap;margin-top: 10px;">
 							<view v-for="(item,index) in linkTopicList" class="moto-flex-row-left topic-item">
 								<view class="topic-name">#{{item.topicTagName}}</view>
 								<view class="iconv2 delete-icon" @click="removeTopic(item.topicTagId)">&#xe671;</view>
@@ -30,16 +30,18 @@
 							<view class="link-name">{{linkClass.name}}</view>
 							<view class="iconv2 delete-icon" @click="linkClass = null">&#xe671;</view>
 						</view>
-						<view v-if="linkVote" class="moto-flex-row-left">
+						<view v-if="linkVoteInfo.voteItemList.length" class="moto-flex-row-left">
 							<view class="iconv2 link-icon" style="margin-right: 8px;font-size: 17px;">&#xe789;</view>
-							<view class="link-name">{{linkVote.voteTitle}}</view>
-							<view class="iconv2 delete-icon" @click="linkVote = null">&#xe671;</view>
+							<view class="link-name">{{linkVoteInfo.voteTitle}}</view>
+							<view class="iconv2 delete-icon" @click="linkVoteInfo.voteItemList = []">&#xe671;</view>
 						</view>
 					</view>
-					<scroll-view :show-scrollbar="false" v-if="linkModifyList.length" class="modify-scroll" scroll-x>
+					<scroll-view :show-scrollbar="false" v-if="linkModifyInfo.modifyList.length" class="modify-scroll"
+						scroll-x>
 						<view class="moto-flex-row-left" style="white-space: nowrap;">
 							<view class="link-name" style="margin-right: 20px;">改装清单: </view>
-							<view v-for="(item,index) in linkModifyList" class="modify-item moto-flex-row-left">
+							<view v-for="(item,index) in linkModifyInfo.modifyList"
+								class="modify-item moto-flex-row-left">
 								<image v-if="item.itemUrl" mode="aspectFill" class="modify-item-image"
 									:src="item.itemUrl"></image>
 								<view class="link-name">{{item.itemName}}</view>
@@ -72,7 +74,7 @@
 								</view>
 							</view>
 							<view class="moto-flex-row-left">
-								<view class="save-btn">保存草稿</view>
+								<view class="save-btn" @click="saveDraft">保存草稿</view>
 								<view class="pub-btn" @click="submit">发布</view>
 							</view>
 						</view>
@@ -139,13 +141,21 @@
 				wordCount: 0,
 				articleTitle: '',
 				articleId: null,
+				draftId: null,
 				recommendCircle: null,
 				linkCircle: null,
 				linkLocation: null,
 				linkClass: null,
 				linkTopicList: [],
-				linkVote: null,
-				linkModifyList: [],
+				linkVoteInfo: {
+					editFlag: '',
+					voteTitle: '',
+					voteItemList: []
+				},
+				linkModifyInfo: {
+					editFlag: false,
+					modifyList: []
+				},
 				articleImageList: [],
 				articleContent: '',
 				toolList: [{
@@ -188,7 +198,7 @@
 			onToolsClick(item) {
 				if (item.type === 'topic') {
 					if (this.linkTopicList.length >= 5) {
-						getApp().$message.warning('最多添加5个话题')
+						getApp().$Message.warning('最多添加5个话题')
 						return
 					}
 					this.$refs['topic-select'].getTopicList()
@@ -203,13 +213,17 @@
 				}
 			},
 			removeModifyItem(index) {
-				this.linkModifyList.splice(index, 1)
+				this.linkModifyInfo.modifyList.splice(index, 1)
+				this.linkModifyInfo.editFlag = true
 			},
 			onModifyEdit(item) {
-				this.linkModifyList.push(item)
+				this.linkModifyInfo.modifyList.push(item)
+				this.linkModifyInfo.editFlag = true
 			},
 			onVoteEdit(item) {
-				this.linkVote = item
+				this.linkVoteInfo.voteTitle = item.voteTitle
+				this.linkVoteInfo.voteItemList = item.voteItemList
+				this.linkVoteInfo.editFlag = true
 			},
 			onClassSelect(item) {
 				this.linkClass = item
@@ -269,52 +283,101 @@
 			},
 			submit(status) {
 				if (!this.articleTitle) {
-					getApp().$message.warning('请输入文章标题')
+					getApp().$Message.warning('请输入文章标题')
 					return
 				}
 				this.editorCtx.getContents({
 					success: async (e) => {
+						console.log(e.html)
 						const contentList = translateOutputContent(e.delta.ops)
 						const haveText = contentList.find(item => {
 							return item.contextClass === 1 && item.context && item.context !== '\n'
 						})
 						if (!haveText) {
-							getApp().$message.warning('至少输入一段文本')
+							getApp().$Message.warning('至少输入一段文本')
 							return
 						}
 						const haveImage = contentList.find(item => {
 							return item.contextClass === 2 && item.context
 						})
 						if (!haveImage) {
-							getApp().$message.warning('至少上传一张照片')
+							getApp().$Message.warning('至少上传一张照片')
 							return
 						}
 						let postData = {
 							type: 2,
 							contentList: contentList,
-							title: this.formData.title
+							title: this.articleTitle
 						}
 						if (this.articleId) {
 							postData.articleId = this.articleId
 						}
+						if (this.linkCircle) {
+							postData.circleId = this.linkCircle.circleId
+						}
+						if (this.linkLocation) {
+							postData.location = this.linkLocation
+						}
+						if (this.linkClass) {
+							postData.articleClass = this.linkClass.articleClass
+						}
+						if (this.linkTopicList && this.linkTopicList.length) {
+							postData.topicTagIdList = this.linkTopicList.map(item => item.topicTagId)
+						}
+						if (this.linkVoteInfo.voteItemList.length) {
+							postData.voteInfo = this.linkVoteInfo
+						}
+						if (this.linkModifyInfo.modifyList.length) {
+							this.postData.modifyInfo = this.linkModifyInfo
+						}
 						// uni.showLoading({
 						// 	title: '发布中'
 						// })
-						// console.log(postData)
 						// getApp().$openApi.motoCms.pushCircleArticle(postData).then(
 						// 	res => {
+						// 		uni.hideLoading()
 						// 		if (res.data.code == 200) {
-						// 			uni.showToast({
-						// 				title: '发布成功',
-						// 				icon: 'none'
-						// 			})
+						// 			getApp().$Message.success('发布成功')
 						// 		}
 						// 	})
 					}
 				})
 			},
+			saveDraft() {
+				this.editorCtx.getContents({
+					success: (e) => {
+						const contentList = translateOutputContent(e.delta.ops)
+						const content = {
+							type: 2,
+							linkCircle: this.linkCircle,
+							contentList: contentList,
+							linkLocation: this.linkLocation,
+							articleTitle: this.articleTitle,
+							linkClass: this.linkClass,
+							linkTopicList: this.linkTopicList,
+							linkVoteInfo: this.linkVoteInfo,
+							linkModifyInfo: this.linkModifyInfo
+						}
+						const postData = {
+							articleType: "CIRCLE_BIG_ARTICLE",
+							draftData: JSON.stringify(content),
+							draftId: this.draftId
+						}
+						uni.showLoading({
+							title: '发布中'
+						})
+						getApp().$openApi.motoCms.saveDraft(postData).then(res=>{
+							uni.hideLoading()
+							if(res.data.code === 200){
+								getApp().$Message.success('保存草稿成功')
+								this.draftId = res.data.data.draftId
+							}
+						})
+					}
+				})
+			},
 			onTextChange(e) {
-				this.articleImageList = e.images
+				// this.articleImageList = e.images
 				this.articleContent = e.content
 				this.wordCount = e.detail
 				// 自动保存
@@ -504,7 +567,6 @@
 		color: #FFFFFF;
 		background-color: #ff6100;
 		border-radius: 8rpx;
-		margin-top: 20rpx;
 	}
 
 	.topic-item {

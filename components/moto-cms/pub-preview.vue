@@ -15,7 +15,7 @@
 			<view v-if="articleData.images.length <= 2">
 				<image mode="widthFix" class="image-item-single" :src="articleData.images[0]"></image>
 			</view>
-			<view class="vote-container" v-if="vote">
+			<view class="vote-container" v-if="vote.voteItemList.length">
 				<view class="moto-flex-row-left" style="margin-bottom: 5px;">
 					<image class="vote-icon" src="/static/image/font_icon_vote.png"></image>
 					<view class="vote-title">{{vote.voteTitle}}</view>
