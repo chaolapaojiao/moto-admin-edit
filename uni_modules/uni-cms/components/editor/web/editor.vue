@@ -89,12 +89,14 @@
 
 				// 创建编辑器实例
 				this.quill = new Quill('#' + this.id, options)
+				// setTimeout(()=>{
+				// 	 this.quill.insertEmbed(0, 'equipt', Quill.sources.USER);
+				// }, 200)
 				// 添加 Quill 事件监听器
 				this.addQuillListeners()
 
 				// 获取编辑器上下文
 				const context = this.getEditorContext()
-
 				// 触发 ready 事件并传递编辑器上下文
 				this.$emit('ready', context)
 			},
@@ -252,11 +254,7 @@
 					src,
 					uploaded: uploaded
 				}, Quill.sources.SILENT)
-				this.quill.insertEmbed(range.index + 1, 'input', '');
-				const images = document.querySelectorAll('img');
-				images.forEach(img => {
-					img.parentNode.class = 'img-box'
-				});
+
 				// 设置图片的本地路径
 				this.quill.formatText(range.index, 1, 'data-local', src, Quill.sources.SILENT)
 				// 设置图片的 alt 属性
@@ -271,6 +269,7 @@
 				this.quill.formatText(range.index, 1, 'data-custom', Object.keys(data).map(key =>
 						`${key}=${data[key]}`)
 					.join('&'), Quill.sources.SILENT)
+				this.quill.insertText(range.index + 2, '\n', Quill.sources.USER)
 				// 光标下移
 				this.quill.setSelection(range.index + 100, Quill.sources.SILENT)
 
@@ -450,13 +449,15 @@
 					const content = nodes.find(item => item.insert && typeof item.insert === 'string').insert
 					delta.ops.forEach((op) => {
 						if (op.delete) {
-							nodes.forEach((node, index) => {
-								if (node.insert.input) {
-									if (!nodes[index - 2] || !nodes[index - 2].insert.image) {
-										this.quill.deleteText(index, 1)
+							oldDelta.ops.forEach((oldOp) => {
+								if (oldOp.insert && oldOp.insert.image) {
+									if(oldOp.attributes?.id){
+										const parent = document.querySelector('#editor')
+										const imageDesc = parent.querySelector('#' + oldOp.attributes?.id)
+										parent.removeChild(imageDesc)
 									}
 								}
-							})
+							});
 						}
 					})
 					const text = this.quill.getText().replace(/\n/g, '')

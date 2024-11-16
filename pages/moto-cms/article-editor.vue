@@ -330,16 +330,16 @@
 						if (this.linkModifyInfo.modifyList.length) {
 							this.postData.modifyInfo = this.linkModifyInfo
 						}
-						// uni.showLoading({
-						// 	title: '发布中'
-						// })
-						// getApp().$openApi.motoCms.pushCircleArticle(postData).then(
-						// 	res => {
-						// 		uni.hideLoading()
-						// 		if (res.data.code == 200) {
-						// 			getApp().$Message.success('发布成功')
-						// 		}
-						// 	})
+						uni.showLoading({
+							title: '发布中'
+						})
+						getApp().$openApi.motoCms.pushCircleArticle(postData).then(
+							res => {
+								uni.hideLoading()
+								if (res.data.code == 200) {
+									getApp().$Message.success('发布成功')
+								}
+							})
 					}
 				})
 			},

@@ -1,6 +1,6 @@
 import './image-uploading.css'
 
-export default function (Quill) {
+export default function(Quill) {
 	// const Delta = Quill.import('delta')
 
 	class ImageExtend {
@@ -16,10 +16,10 @@ export default function (Quill) {
 					if (element.classList.contains('uploaded')) {
 						element.removeAttribute('data-local')
 						element.classList.remove('uploaded')
-						if(element.classList.length <= 0) {
+						if (element.classList.length <= 0) {
 							element.removeAttribute('class')
 						}
- 					} else {
+					} else {
 						this.uploader(element)
 					}
 				})
@@ -38,7 +38,7 @@ export default function (Quill) {
 			}, false)
 
 			// 插入粘贴的网络图片
-			quill.clipboard.addMatcher('IMG', function (node, delta) {
+			quill.clipboard.addMatcher('IMG', function(node, delta) {
 				if (!delta.ops[0].attributes) {
 					delta.ops[0].attributes = {}
 				}
@@ -56,6 +56,30 @@ export default function (Quill) {
 			});
 		}
 
+		createInput(element, date) {
+			const inputNode = document.createElement('div')
+			const input = document.createElement('input')
+			input.type = 'text';
+			input.placeholder = '输入图片描述';
+			input.classList.add('image-desc-input')
+			inputNode.appendChild(input)
+			inputNode.style.position = 'absolute'
+			inputNode.setAttribute('id', date)
+			const parent = this.quill.root.parentNode
+			setTimeout(() => {
+				const elementRect = element.getBoundingClientRect()
+				const containerRect = parent.getBoundingClientRect()
+				inputNode.style.left = `${elementRect.left - containerRect.left - 1 + parent.scrollLeft}px`
+				inputNode.style.top =
+					`${elementRect.top - containerRect.top + elementRect.height + parent.scrollTop + 25}px`
+				inputNode.style.width = `${elementRect.width}px`
+				// 渲染到element上
+				parent.appendChild(inputNode)
+			}, 100)
+			input.addEventListener('input', (e) => {
+				element.setAttribute('image-describe', e.target.value)
+			});
+		}
 		async uploader(element) {
 			// 标记元素正在上传
 			element.classList.add('uploading')
@@ -99,19 +123,22 @@ export default function (Quill) {
 					}
 				}
 			}).then((url) => {
-				const customData = (element.getAttribute('data-custom') || '').split('&').filter(item => item).reduce((res, item) => {
+				const customData = (element.getAttribute('data-custom') || '').split('&').filter(item =>
+					item).reduce((res, item) => {
 					const [key, value] = item.split('=')
 					res[key] = value
 					return res
 				}, {})
-
+				const date = 'moto' +  Date.parse(new Date())
+				element.setAttribute('id', date)
 				customData.source = url
 
 				element.src = url
 				element.removeAttribute('data-local')
 				element.classList.remove('uploading')
-				element.setAttribute('data-custom', Object.keys(customData).map(key => `${key}=${customData[key]}`).join('&'))
-
+				element.setAttribute('data-custom', Object.keys(customData).map(key =>
+					`${key}=${customData[key]}`).join('&'))
+				this.createInput(element, date)
 				parent.removeChild(uploadNode)
 			}).catch((e) => {
 				parent.removeChild(uploadNode)

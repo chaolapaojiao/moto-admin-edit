@@ -7,7 +7,8 @@ const ATTRIBUTES = [
 	'data-custom',
 	'image-describe',
 	'class',
-	'data-local'
+	'data-local',
+	'id'
 ]
 
 export default function(Quill) {
@@ -26,7 +27,7 @@ export default function(Quill) {
 				uploaded
 			} = value
 			const node = super.create(src)
-			
+			node.style.marginBottom = '40px'
 			if (uploaded) {
 				node.classList.add('uploaded')
 			}
@@ -45,7 +46,6 @@ export default function(Quill) {
 		static sanitize(url) {
 			return url
 		}
-	
 		format(name, value) {
 			if (ATTRIBUTES.indexOf(name) > -1) {
 				if (value) {
