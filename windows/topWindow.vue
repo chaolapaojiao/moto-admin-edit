@@ -1,5 +1,5 @@
 <template>
-	<view style="height: 100%;">
+	<view style="height: 100%;background-color: #f8f8f8;">
 		<view class="nav-container moto-flex-row-between">
 			<view class="moto-flex-row-left">
 				<image class="logo-img" src="/static/image/logo.png"></image>

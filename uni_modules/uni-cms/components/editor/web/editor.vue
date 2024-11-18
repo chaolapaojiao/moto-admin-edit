@@ -426,6 +426,20 @@
 
 			// 添加 Quill 事件监听器
 			addQuillListeners() {
+				this.quill.clipboard.addMatcher('IMG', (node, delta) => {
+					const className = node.getAttribute('class');
+					const desc = node.getAttribute('image-describe');
+					if (className) {
+						delta.ops.forEach(op => {
+							if (op.insert && typeof op.insert === 'object' && op.insert.image) {
+								op.attributes = op.attributes || {};
+								op.attributes.class = className;
+								op.attributes['image-describe'] = desc
+							}
+						});
+					}
+					return delta;
+				});
 				// 监听光标位置变化事件
 				this.quill.on(Quill.events.SELECTION_CHANGE, (range) => {
 					this.emitStatusChange(range)
@@ -444,16 +458,16 @@
 				// 监听文本变化事件
 				this.quill.on(Quill.events.TEXT_CHANGE, async (delta, oldDelta, source) => {
 					const nodes = (await this.getEditorContext().getContents()).delta.ops
-					console.log(nodes)
 					const images = nodes.filter(item => item.insert.image).map(item => item.insert.image)
 					const content = nodes.find(item => item.insert && typeof item.insert === 'string').insert
 					delta.ops.forEach((op) => {
 						if (op.delete) {
 							oldDelta.ops.forEach((oldOp) => {
 								if (oldOp.insert && oldOp.insert.image) {
-									if(oldOp.attributes?.id){
+									if (oldOp.attributes?.id) {
 										const parent = document.querySelector('#editor')
-										const imageDesc = parent.querySelector('#' + oldOp.attributes?.id)
+										const imageDesc = parent.querySelector('#' + oldOp
+											.attributes?.id)
 										parent.removeChild(imageDesc)
 									}
 								}

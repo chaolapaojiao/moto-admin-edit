@@ -3,6 +3,12 @@ const http = request.http
 import paramsEncryption from '@/utils/encryption.js'
 // 获取用户文章列表
 function getPubArticleList(data) {
+	const {
+		timestamp,
+		signature
+	} = paramsEncryption(data)
+	data.timestamp = timestamp
+	data.signature = signature
 	return http.get('common/getReleaseListV2', {
 		params: data
 	})
@@ -16,7 +22,7 @@ function getCircleArticleInfo(data) {
 	} = paramsEncryption(data)
 	data.timestamp = timestamp
 	data.signature = signature
-	return http.get('motorCircle/getCircleArticleV2', {
+	return http.get('motorCircle/getCircleArticle', {
 		params: data
 	})
 }

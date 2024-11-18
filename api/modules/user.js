@@ -2,7 +2,7 @@ import request from '@/api/http.js'
 const http = request.http
 import paramsEncryption from '@/utils/encryption.js'
 
-// 获取用户接口
+// 二维码登录
 function getLoginQrCode(deviceId) {
 	let {
 		timestamp,
@@ -25,7 +25,23 @@ function checkQrLogin(data) {
 		params: data
 	})
 }
+
+// 获取用户作品数据
+function getUserPubStatistics() {
+	const data = {}
+	let {
+		timestamp,
+		signature
+	} = paramsEncryption(data)
+	data.timestamp = timestamp
+	data.signature = signature
+	return http.get('common/getUserPubStatistics', {
+		params: data
+	})
+}
+
 export default {
 	getLoginQrCode,
-	checkQrLogin
+	checkQrLogin,
+	getUserPubStatistics
 }

@@ -7,8 +7,48 @@ const hadeFontMap = {
 	6: 12
 }
 
-export function translateInputContent(list) {
-	console.log()
+export function translateInputContent(contextList) {
+	let htmlContent = ''
+	const contextListGroup = []
+	for (let index = 0; index <= contextList[contextList.length - 1].itemIndex; index++) {
+		const arr = contextList.filter(item => item.itemIndex === index)
+		contextListGroup.push(arr)
+	}
+	contextListGroup.forEach((item, index) => {
+		let htmlItem = '<p>'
+		if (item.length > 1) {
+			item.forEach(section => {
+				if (section.contextClass === 1) {
+					htmlItem +=
+						`<span style="${section.format.style}">${section.context}</span>`
+				} else {
+					htmlItem += `<p><img class="uploaded" image-describe="${section.format.imageDescribe}" src="${section.context}"></img><p>`
+				}
+			})
+		} else {
+			const data = item[0]
+			if (data.contextClass === 1) {
+				if (data.format.head) {
+					htmlItem +=
+						`<${data.format.head}>${data.context}</${data.format.head}>`
+				} else {
+					htmlItem +=
+						`<p style="${data.format.style}" >${data.context}</p>`
+				}
+			} else if (data.contextClass === 2) {
+				if (data.format.imageDescribe) {
+					htmlContent +=
+						`<p><img class="uploaded" image-describe="${data.format.imageDescribe}" src="${data.context}"></img>`
+				} else {
+					htmlContent +=
+						`<p class="uploaded"><img class="uploaded" src="${data.context}"></img><p><p>`
+				}
+			}
+		}
+		htmlItem += '</p>'
+		htmlContent += htmlItem
+	})
+	return htmlContent + '<p><span>\n<span></p>'
 }
 export function translateOutputContent(list) {
 	let contentList = []
@@ -83,6 +123,7 @@ export function translateOutputContent(list) {
 			})
 		} else {
 			if (item.insert.image) {
+				itemIndex++
 				const formatStr = JSON.stringify({
 					imageDescribe: item.attributes['image-describe'],
 				})
@@ -96,6 +137,5 @@ export function translateOutputContent(list) {
 		}
 	})
 	contentList = contentList.filter(item => item.context !== '\n')
-	console.log(contentList)
 	return contentList
 }

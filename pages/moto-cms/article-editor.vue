@@ -6,7 +6,7 @@
 					:content="articleContent"></pub-preview>
 			</el-col>
 			<el-col :span="17">
-				<view class="forms-container">
+				<view class="forms-container card-shadow">
 					<view style="padding: 30px 40px 0 40px">
 						<view class="title">
 							<textarea style="font-size: 18px;color: #141E34;font-weight: 400;"
@@ -36,11 +36,11 @@
 							<view class="iconv2 delete-icon" @click="linkVoteInfo.voteItemList = []">&#xe671;</view>
 						</view>
 					</view>
-					<scroll-view :show-scrollbar="false" v-if="linkModifyInfo.modifyList.length" class="modify-scroll"
+					<scroll-view :show-scrollbar="false" v-if="linkModifyInfo.modifyItemList.length" class="modify-scroll"
 						scroll-x>
 						<view class="moto-flex-row-left" style="white-space: nowrap;">
 							<view class="link-name" style="margin-right: 20px;">改装清单: </view>
-							<view v-for="(item,index) in linkModifyInfo.modifyList"
+							<view v-for="(item,index) in linkModifyInfo.modifyItemList"
 								class="modify-item moto-flex-row-left">
 								<image v-if="item.itemUrl" mode="aspectFill" class="modify-item-image"
 									:src="item.itemUrl"></image>
@@ -148,13 +148,13 @@
 				linkClass: null,
 				linkTopicList: [],
 				linkVoteInfo: {
-					editFlag: '',
+					editFlag: false,
 					voteTitle: '',
 					voteItemList: []
 				},
 				linkModifyInfo: {
 					editFlag: false,
-					modifyList: []
+					modifyItemList: []
 				},
 				articleImageList: [],
 				articleContent: '',
@@ -184,14 +184,12 @@
 		onLoad(e) {
 			if (e.id) {
 				this.articleId = e.id
-				const id = e.id
-				this.getArticleDetail(id)
+				this.getArticleDetail(this.articleId)
 			}
 		},
 		mounted() {
 			const sysinfo = uni.getSystemInfoSync()
 			const html = ''
-			// '<p><em style="font-size: 17px;">编程语言，它是 JavaS</em><strong style="font-size: 17px;"><em>cript 的一个超集，这意</em></strong><em style="font-size: 17px;">味着任何</em><em style="font-size: 20px;">有效的 JavaScript 代码都是有</em><em style="font-size: 17px;">效的 TypeScript 代码。然而，TypeScript 增加了许多额外的特<u>性，包括类型注解和编译</u></em><u style="font-size: 17px;">时类型检查</u><span style="font-size: 17px;">，这使得开发者能够编写更清晰、更健壮的代</span></p><p><em style="font-size: 17px;">编程语言，它是</em><em style="font-size: 17px; color: rgb(19, 86, 189);"> JavaScript 的一个超集，这意味着任何有效</em><em style="font-size: 17px;">的 JavaScrip<u>t 代码都是有效的 TypeS</u>cript 代码。</em><strong style="font-size: 17px;"><em>然而，TypeScript 增加</em></strong><em style="font-size: 17px;">了许多额外的特<u>性，包括类型注解和编译</u></em><u style="font-size: 17px;">时类型检查</u><span style="font-size: 17px;">，这使得开发者能够编写更清晰、更健壮的代</span></p><p><em style="font-size: 17px;">编程语言，它</em><em style="font-size: 24px;">是 JavaScript 的一</em><em style="font-size: 17px;">个超集，这意</em><em style="font-size: 17px; color: rgb(204, 149, 14);">味着任何有效的 JavaScript 代码</em><em style="font-size: 17px;">都是有效的 TypeScript 代码。然而，TypeScript 增加了许多额外的特<u>性，包括类型注解和编译</u></em><u style="font-size: 17px;">时类型检查</u><span style="font-size: 17px;">，这使得开发者能够编写更清晰、更健壮的代</span></p><p style="text-indent: 1em;"><em style="font-size: 17px;">编程语言，它是 JavaScrip<s>t 的一个超集，这意</s>味着任何有效的 JavaScript 代码都是有效的 TypeScript 代码。然而，TypeScript 增加了许多额外的特<u>性，包括类型注解和编译</u></em><u style="font-size: 17px;">时类型检查</u><span style="font-size: 17px;">，这使得开发者能够编写更清晰、更健壮的代</span></p>'
 			this.$refs.editorComponents.parseHtml(html)
 		},
 		methods: {
@@ -213,11 +211,11 @@
 				}
 			},
 			removeModifyItem(index) {
-				this.linkModifyInfo.modifyList.splice(index, 1)
+				this.linkModifyInfo.modifyItemList.splice(index, 1)
 				this.linkModifyInfo.editFlag = true
 			},
 			onModifyEdit(item) {
-				this.linkModifyInfo.modifyList.push(item)
+				this.linkModifyInfo.modifyItemList.push(item)
 				this.linkModifyInfo.editFlag = true
 			},
 			onVoteEdit(item) {
@@ -253,13 +251,38 @@
 					articleId: id
 				}).then(res => {
 					if (res.data.code === 200) {
-						this.formData.content = []
 						const data = res.data.data
-						this.formData.user_id = data.author.openId
-						this.formData.title = data.articleTitle
-						const html = data.articleContextList[0].context.replaceAll('<img',
-							'<img crossorigin="anonymous"')
-						this.$refs.editorComponents.parseHtml(data.articleContextList[0].context)
+						this.articleTitle = data.articleTitle
+						const contextList = data.articleContextList
+						const htmlContent = translateInputContent(contextList)
+						this.$refs.editorComponents.parseHtml(htmlContent)
+						if (data.linkCircle) {
+							this.linkCircle = data.linkCircle
+						}
+						if (data.location) {
+							data.linkLocation = data.location
+						}
+						if (data.linkClass) {
+							this.linkClass = {
+								articleClass: data.articleClass
+							}
+						}
+						if (data.topicTagList && data.topicTagList.length) {
+							this.linkTopicList = data.topicTagList
+						}
+						if (data.voteInfo) {
+							this.linkVoteInfo = {
+								editFlag: false,
+								voteTitle: data.voteInfo.voteTitle,
+								voteItemList: data.voteInfo.voteItemList
+							}
+						}
+						if (data.modifyInfo && data.modifyInfo.modifyItemList.length) {
+							this.linkModifyInfo = {
+								editFlag: false,
+								modifyItemList: data.modifyInfo.modifyItemList
+							}
+						}
 					}
 				})
 			},
@@ -288,7 +311,6 @@
 				}
 				this.editorCtx.getContents({
 					success: async (e) => {
-						console.log(e.html)
 						const contentList = translateOutputContent(e.delta.ops)
 						const haveText = contentList.find(item => {
 							return item.contextClass === 1 && item.context && item.context !== '\n'
@@ -327,8 +349,8 @@
 						if (this.linkVoteInfo.voteItemList.length) {
 							postData.voteInfo = this.linkVoteInfo
 						}
-						if (this.linkModifyInfo.modifyList.length) {
-							this.postData.modifyInfo = this.linkModifyInfo
+						if (this.linkModifyInfo.modifyItemList.length) {
+							postData.modifyInfo = this.linkModifyInfo
 						}
 						uni.showLoading({
 							title: '发布中'
@@ -338,6 +360,20 @@
 								uni.hideLoading()
 								if (res.data.code == 200) {
 									getApp().$Message.success('发布成功')
+									this.$refs.editorComponents.parseHtml('')
+									this.linkCircle = null
+									this.linkLocation = null
+									this.linkClass = null
+									this.linkTopicList = []
+									this.linkVoteInfo = {
+										editFlag: false,
+										voteTitle: '',
+										voteItemList: []
+									}
+									this.linkModifyInfo = {
+										editFlag: false,
+										modifyItemList: []
+									}
 								}
 							})
 					}
@@ -366,9 +402,9 @@
 						uni.showLoading({
 							title: '发布中'
 						})
-						getApp().$openApi.motoCms.saveDraft(postData).then(res=>{
+						getApp().$openApi.motoCms.saveDraft(postData).then(res => {
 							uni.hideLoading()
-							if(res.data.code === 200){
+							if (res.data.code === 200) {
 								getApp().$Message.success('保存草稿成功')
 								this.draftId = res.data.data.draftId
 							}
@@ -510,11 +546,10 @@
 	.forms-container {
 		margin-top: 120rpx;
 		background-color: #FFFFFF;
-		box-shadow: -4rpx 8rpx 10rpx 0 rgba(0, 0, 0, 0.05);
 	}
 
 	.tool-container {
-		box-shadow: 0 -4rpx 3rpx 0 rgba(0, 0, 0, 0.05);
+		box-shadow: 0 -2rpx 5rpx 0 rgba(0, 0, 0, 0.05);
 		height: 280rpx;
 		padding: 28rpx 68rpx 0 68rpx;
 		box-sizing: border-box;

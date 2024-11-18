@@ -1,3 +1,4 @@
+import image from '../formats/image'
 import './image-uploading.css'
 
 export default function(Quill) {
@@ -16,6 +17,12 @@ export default function(Quill) {
 					if (element.classList.contains('uploaded')) {
 						element.removeAttribute('data-local')
 						element.classList.remove('uploaded')
+						if (!element.id) {
+							const date = 'moto' + Date.parse(new Date())
+							element.setAttribute('id', date)
+							const inputText = element.getAttribute('image-describe')
+							this.createInput(element, date, inputText)
+						}
 						if (element.classList.length <= 0) {
 							element.removeAttribute('class')
 						}
@@ -56,12 +63,15 @@ export default function(Quill) {
 			});
 		}
 
-		createInput(element, date) {
+		createInput(element, date, inputText) {
 			const inputNode = document.createElement('div')
 			const input = document.createElement('input')
 			input.type = 'text';
 			input.placeholder = '输入图片描述';
 			input.classList.add('image-desc-input')
+			if (inputText) {
+				input.value = inputText
+			}
 			inputNode.appendChild(input)
 			inputNode.style.position = 'absolute'
 			inputNode.setAttribute('id', date)
@@ -83,7 +93,6 @@ export default function(Quill) {
 		async uploader(element) {
 			// 标记元素正在上传
 			element.classList.add('uploading')
-
 			// 检查是否配置了上传方法
 			if (typeof this.config.uploadHandler !== 'function') {
 				console.warn('没有配置图片上传方法，移除图片：' + element.src)
@@ -129,7 +138,7 @@ export default function(Quill) {
 					res[key] = value
 					return res
 				}, {})
-				const date = 'moto' +  Date.parse(new Date())
+				const date = 'moto' + Date.parse(new Date())
 				element.setAttribute('id', date)
 				customData.source = url
 
