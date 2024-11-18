@@ -111,7 +111,7 @@
 			},
 			openEdit(id) {
 				const host = window.location.host
-				window.open(`http://${host}/pages/moto-cms/article-editor?id=${id}`, '_blank')
+				window.open(`http://${host}/pages/moto-cms/rich-article-editor?id=${id}`, '_blank')
 			}
 		}
 	}

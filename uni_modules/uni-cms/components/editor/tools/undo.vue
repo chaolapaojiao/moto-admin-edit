@@ -1,6 +1,6 @@
 <template>
 	<toolbarTool type="button" @change="change" :active="active" :disabled="disabled" :tooltip="{content: '撤销', key: ['Ctrl', 'Z']}">
-		<uni-icons custom-prefix="editor-icon" type="icon-undo" size="24px"></uni-icons>
+		<uni-icons custom-prefix="editor-icon" type="icon-undo" size="20px"></uni-icons>
 	</toolbarTool>
 </template>
 

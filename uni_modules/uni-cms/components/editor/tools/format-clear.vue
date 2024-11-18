@@ -1,6 +1,6 @@
 <template>
 	<toolbarTool type="button" @change="change" :active="active" :disabled="disabled" :tooltip="{content: '清除格式'}">
-		<uni-icons custom-prefix="editor-icon" type="icon-format-clear" size="24px"></uni-icons>
+		<uni-icons custom-prefix="editor-icon" type="icon-format-clear" size="20px"></uni-icons>
 	</toolbarTool>
 </template>
 

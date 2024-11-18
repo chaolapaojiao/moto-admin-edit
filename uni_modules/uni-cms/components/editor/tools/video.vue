@@ -1,7 +1,7 @@
 <template>
 	<view>
     <toolbarTool type="button" @change="change" :tooltip="{content: '插入视频'}" :disabled="disabled" :active="active">
-      <uni-icons custom-prefix="editor-icon" type="icon-video" size="24px"></uni-icons>
+      <uni-icons custom-prefix="editor-icon" type="icon-video" size="20px"></uni-icons>
     </toolbarTool>
     <uni-drawer
         class="insert-image-drawer"

@@ -28,7 +28,7 @@ function getCircleArticleInfo(data) {
 }
 
 // 发布圈子文章
-function pushCircleArticle(data) {
+function pubCircleArticle(data) {
 	let {
 		timestamp,
 		signature
@@ -131,10 +131,21 @@ function saveDraft(data) {
 	signature = signature.replace(/\+/g, '%2B')
 	return http.post(`common/pubDraft?timestamp=${timestamp}&signature=${signature}`, jsonStr)
 }
+
+// 资讯文章发布
+function pubNews(data){
+	let {
+		timestamp,
+		signature
+	} = paramsEncryption(data, 'post')
+	const jsonStr = JSON.stringify(data)
+	signature = signature.replace(/\+/g, '%2B')
+	return http.post(`/motorArticle/pubArticle?timestamp=${timestamp}&signature=${signature}`,jsonStr)
+}
 export default {
 	getPubArticleList,
 	getCircleArticleInfo,
-	pushCircleArticle,
+	pubCircleArticle,
 	uploadImg,
 	getCircleList,
 	globalSearch,
@@ -142,5 +153,6 @@ export default {
 	getTopicList,
 	getTagListAct,
 	createTopic,
-	saveDraft
+	saveDraft,
+	pubNews
 }

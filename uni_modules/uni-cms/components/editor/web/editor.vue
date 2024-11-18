@@ -460,20 +460,6 @@
 					const nodes = (await this.getEditorContext().getContents()).delta.ops
 					const images = nodes.filter(item => item.insert.image).map(item => item.insert.image)
 					const content = nodes.find(item => item.insert && typeof item.insert === 'string').insert
-					delta.ops.forEach((op) => {
-						if (op.delete) {
-							oldDelta.ops.forEach((oldOp) => {
-								if (oldOp.insert && oldOp.insert.image) {
-									if (oldOp.attributes?.id) {
-										const parent = document.querySelector('#editor')
-										const imageDesc = parent.querySelector('#' + oldOp
-											.attributes?.id)
-										parent.removeChild(imageDesc)
-									}
-								}
-							});
-						}
-					})
 					const text = this.quill.getText().replace(/\n/g, '')
 					this.$emit('textchange', {
 						detail: text.length,

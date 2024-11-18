@@ -625,6 +625,11 @@
 		@import "h5.scss";
 	}
 
+	.editor-container {
+		height: 575px;
+		overflow: scroll;
+		scrollbar-width: none;
+	}
 
 	.popup-body {
 		background: #fff;

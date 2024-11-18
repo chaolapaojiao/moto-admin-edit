@@ -1,6 +1,6 @@
 <template>
 	<toolbarTool type="button" @change="change" :active="active" :disabled="disabled" :tooltip="{content: '加粗', key: ['Ctrl', 'B']}">
-		<uni-icons custom-prefix="editor-icon" type="icon-bold" size="24px"></uni-icons>
+		<uni-icons custom-prefix="editor-icon" type="icon-bold" size="20px"></uni-icons>
 	</toolbarTool>
 </template>
 

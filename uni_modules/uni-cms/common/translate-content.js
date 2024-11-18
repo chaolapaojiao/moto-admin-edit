@@ -8,6 +8,7 @@ const hadeFontMap = {
 }
 
 export function translateInputContent(contextList) {
+	console.log(contextList)
 	let htmlContent = ''
 	const contextListGroup = []
 	for (let index = 0; index <= contextList[contextList.length - 1].itemIndex; index++) {

@@ -1,6 +1,6 @@
 <template>
 	<toolbarTool type="button" @change="change" :tooltip="{content: 'AI助手'}" :active="active">
-		<uni-icons custom-prefix="editor-icon" type="icon-ai" size="24px" color="#b454ff"></uni-icons>
+		<uni-icons custom-prefix="editor-icon" type="icon-ai" size="20px" color="#b454ff"></uni-icons>
 	</toolbarTool>
 </template>
 

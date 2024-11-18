@@ -1,6 +1,6 @@
 <template>
 	<toolbarTool type="dropdown" @change="change" :items="items" :active="active" :disabled="disabled" popup-style="width: 170px;"  :tooltip="{content: '列表'}">
-		<uni-icons custom-prefix="editor-icon" :type="activeIcon" size="24px"></uni-icons>
+		<uni-icons custom-prefix="editor-icon" :type="activeIcon" size="20px"></uni-icons>
 	</toolbarTool>
 </template>
 

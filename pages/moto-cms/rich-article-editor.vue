@@ -24,7 +24,8 @@
 						<editor-component ref="editorComponents" @textchange="onTextChange"
 							@ready="onEditorReady"></editor-component>
 					</view>
-					<view class="moto-flex-row-left" style="padding: 0 34px;margin-bottom: 12px;">
+					<pub-keyword-input :relatedModelIdList.sync="relatedModelIdList" v-if="articleType === 'ARTICLE'"></pub-keyword-input>
+					<view class="moto-flex-row-left" style="padding: 0 34px;margin-bottom: 12px;" v-if="articleType === 'CIRCLE_BIG_ARTICLE'">
 						<view v-if="linkClass" class="moto-flex-row-left" style="margin-right: 20px;">
 							<view class="iconv2 link-icon" style="margin-right: 8px;font-size: 17px;">&#xe697;</view>
 							<view class="link-name">{{linkClass.name}}</view>
@@ -36,8 +37,8 @@
 							<view class="iconv2 delete-icon" @click="linkVoteInfo.voteItemList = []">&#xe671;</view>
 						</view>
 					</view>
-					<scroll-view :show-scrollbar="false" v-if="linkModifyInfo.modifyItemList.length" class="modify-scroll"
-						scroll-x>
+					<scroll-view :show-scrollbar="false" v-if="linkModifyInfo.modifyItemList.length"
+						class="modify-scroll" scroll-x>
 						<view class="moto-flex-row-left" style="white-space: nowrap;">
 							<view class="link-name" style="margin-right: 20px;">改装清单: </view>
 							<view v-for="(item,index) in linkModifyInfo.modifyItemList"
@@ -51,7 +52,7 @@
 					</scroll-view>
 					<view class="tool-container">
 						<view class="moto-flex-row-between">
-							<view class="moto-flex-row-left">
+							<view class="moto-flex-row-left" v-if="articleType === 'CIRCLE_BIG_ARTICLE'">
 								<view class="moto-flex-row-left" @click="openLocationSelect">
 									<view class="iconv2 link-icon">&#xe784;</view>
 									<view class="link-name">{{linkLocation ? linkLocation.name : '关联位置'}}</view>
@@ -62,16 +63,30 @@
 									</view>
 								</view>
 							</view>
-							<view style="color: #848B9E;">正文字数: {{wordCount}}</view>
+							<view class="moto-flex-row-left" v-else>
+								<view class="moto-flex-row-left" @click="onToolsClick({type: 'class'})">
+									<view class="iconv2 link-icon">&#xe71b;</view>
+									<view class="link-name">{{linkClass ? linkClass.name : '选择分类'}}</view>
+								</view>
+								<view class="moto-flex-row-left" style="margin-left: 20px;" @click="openModelSelect">
+									<view class="iconv2 link-icon" style="font-size: 34rpx;">&#xe73e;</view>
+									<view class="link-name">{{linkModel ? linkModel.modelName : '关联车型'}}
+									</view>
+								</view>
+							</view>
+							<view style="color: #848B9E;font-size: 26rpx;">正文字数: {{wordCount}}</view>
 						</view>
-						<view class="moto-flex-row-between" style="margin-top: 30px;margin-left: -10px;">
-							<view class="moto-flex-row-left">
+						<view class="moto-flex-row-between" style="margin-top: 10px;margin-left: -10px;">
+							<view class="moto-flex-row-left" v-if="articleType === 'CIRCLE_BIG_ARTICLE'">
 								<view v-for="item in toolList" @click="onToolsClick(item)">
 									<view class="moto-flex-column-center tool-item">
 										<view class="iconv2 tool-icon">{{item.icon}}</view>
 										<view class="tool-name">{{item.name}}</view>
 									</view>
 								</view>
+							</view>
+							<view v-else>
+								
 							</view>
 							<view class="moto-flex-row-left">
 								<view class="save-btn" @click="saveDraft">保存草稿</view>
@@ -89,6 +104,7 @@
 		<pub-class-select @classSelect="onClassSelect" ref="class-select"></pub-class-select>
 		<pub-vote-edit @voteEdit="onVoteEdit" ref="vote-edit"></pub-vote-edit>
 		<pub-modify-edit @modifyEdit="onModifyEdit" ref="modify-edit"></pub-modify-edit>
+		<pub-model-select ref="model-select"></pub-model-select>
 	</view>
 </template>
 
@@ -111,7 +127,9 @@
 	import pubClassSelect from '@/components/moto-cms/pub-class-select.vue';
 	import pubVoteEdit from '@/components/moto-cms/pub-vote-edit.vue';
 	import pubModifyEdit from '@/components/moto-cms/pub-modify-edit.vue';
+	import pubModelSelect from '@/components/moto-cms/pub-model-select.vue';
 	import pubPreview from '@/components/moto-cms/pub-preview.vue';
+	import pubKeywordInput from '@/components/moto-cms/pub-keyword-input.vue';
 	export default {
 		components: {
 			editorComponent,
@@ -121,7 +139,9 @@
 			pubClassSelect,
 			pubVoteEdit,
 			pubModifyEdit,
-			pubPreview
+			pubPreview,
+			pubModelSelect,
+			pubKeywordInput
 		},
 		data() {
 			// 初始化表单数据
@@ -138,6 +158,7 @@
 			return {
 				systemInfo: uni.getSystemInfoSync(),
 				formData,
+				articleType: 'ARTICLE',
 				wordCount: 0,
 				articleTitle: '',
 				articleId: null,
@@ -146,6 +167,7 @@
 				linkCircle: null,
 				linkLocation: null,
 				linkClass: null,
+				linkModel: null,
 				linkTopicList: [],
 				linkVoteInfo: {
 					editFlag: false,
@@ -156,6 +178,7 @@
 					editFlag: false,
 					modifyItemList: []
 				},
+				relatedModelIdList: [],
 				articleImageList: [],
 				articleContent: '',
 				toolList: [{
@@ -186,6 +209,9 @@
 				this.articleId = e.id
 				this.getArticleDetail(this.articleId)
 			}
+			if (e.type) {
+				this.articleType = e.type
+			}
 		},
 		mounted() {
 			const sysinfo = uni.getSystemInfoSync()
@@ -209,6 +235,9 @@
 				} else if (item.type === 'list') {
 					this.$refs['modify-edit'].dialogVisible = true
 				}
+			},
+			openModelSelect(){
+				this.$refs['model-select'].dialogVisible = true
 			},
 			removeModifyItem(index) {
 				this.linkModifyInfo.modifyItemList.splice(index, 1)
@@ -312,72 +341,92 @@
 				this.editorCtx.getContents({
 					success: async (e) => {
 						const contentList = translateOutputContent(e.delta.ops)
-						const haveText = contentList.find(item => {
-							return item.contextClass === 1 && item.context && item.context !== '\n'
-						})
-						if (!haveText) {
-							getApp().$Message.warning('至少输入一段文本')
-							return
+						if (this.articleType === 'CIRCLE_BIG_ARTICLE') {
+							this.pubCircleArticle(contentList)
+						} else {
+							this.pubNews(contentList)
 						}
-						const haveImage = contentList.find(item => {
-							return item.contextClass === 2 && item.context
-						})
-						if (!haveImage) {
-							getApp().$Message.warning('至少上传一张照片')
-							return
-						}
-						let postData = {
-							type: 2,
-							contentList: contentList,
-							title: this.articleTitle
-						}
-						if (this.articleId) {
-							postData.articleId = this.articleId
-						}
-						if (this.linkCircle) {
-							postData.circleId = this.linkCircle.circleId
-						}
-						if (this.linkLocation) {
-							postData.location = this.linkLocation
-						}
-						if (this.linkClass) {
-							postData.articleClass = this.linkClass.articleClass
-						}
-						if (this.linkTopicList && this.linkTopicList.length) {
-							postData.topicTagIdList = this.linkTopicList.map(item => item.topicTagId)
-						}
-						if (this.linkVoteInfo.voteItemList.length) {
-							postData.voteInfo = this.linkVoteInfo
-						}
-						if (this.linkModifyInfo.modifyItemList.length) {
-							postData.modifyInfo = this.linkModifyInfo
-						}
-						uni.showLoading({
-							title: '发布中'
-						})
-						getApp().$openApi.motoCms.pushCircleArticle(postData).then(
-							res => {
-								uni.hideLoading()
-								if (res.data.code == 200) {
-									getApp().$Message.success('发布成功')
-									this.$refs.editorComponents.parseHtml('')
-									this.linkCircle = null
-									this.linkLocation = null
-									this.linkClass = null
-									this.linkTopicList = []
-									this.linkVoteInfo = {
-										editFlag: false,
-										voteTitle: '',
-										voteItemList: []
-									}
-									this.linkModifyInfo = {
-										editFlag: false,
-										modifyItemList: []
-									}
-								}
-							})
 					}
 				})
+			},
+			pubNews(contentList) {
+				let postData = {
+					type: 1,
+					contentList: contentList,
+					title: this.articleTitle
+				}
+				if (this.linkClass) {
+					postData.articleClass = this.linkClass.articleClass
+				}
+				getApp().$openApi.motoCms.pubNews(postData).then(res => {
+					console.log(JSON.stringify(res))
+				})
+			},
+			pubCircleArticle(contentList) {
+				const haveText = contentList.find(item => {
+					return item.contextClass === 1 && item.context && item.context !== '\n'
+				})
+				if (!haveText) {
+					getApp().$Message.warning('至少输入一段文本')
+					return
+				}
+				const haveImage = contentList.find(item => {
+					return item.contextClass === 2 && item.context
+				})
+				if (!haveImage) {
+					getApp().$Message.warning('至少上传一张照片')
+					return
+				}
+				let postData = {
+					type: 2,
+					contentList: contentList,
+					title: this.articleTitle
+				}
+				if (this.articleId) {
+					postData.articleId = this.articleId
+				}
+				if (this.linkCircle) {
+					postData.circleId = this.linkCircle.circleId
+				}
+				if (this.linkLocation) {
+					postData.location = this.linkLocation
+				}
+				if (this.linkClass) {
+					postData.articleClass = this.linkClass.articleClass
+				}
+				if (this.linkTopicList && this.linkTopicList.length) {
+					postData.topicTagIdList = this.linkTopicList.map(item => item.topicTagId)
+				}
+				if (this.linkVoteInfo.voteItemList.length) {
+					postData.voteInfo = this.linkVoteInfo
+				}
+				if (this.linkModifyInfo.modifyItemList.length) {
+					postData.modifyInfo = this.linkModifyInfo
+				}
+				uni.showLoading({
+					title: '发布中'
+				})
+				getApp().$openApi.motoCms.pubCircleArticle(postData).then(
+					res => {
+						uni.hideLoading()
+						if (res.data.code == 200) {
+							getApp().$Message.success('发布成功')
+							this.$refs.editorComponents.parseHtml('')
+							this.linkCircle = null
+							this.linkLocation = null
+							this.linkClass = null
+							this.linkTopicList = []
+							this.linkVoteInfo = {
+								editFlag: false,
+								voteTitle: '',
+								voteItemList: []
+							}
+							this.linkModifyInfo = {
+								editFlag: false,
+								modifyItemList: []
+							}
+						}
+					})
 			},
 			saveDraft() {
 				this.editorCtx.getContents({
@@ -544,61 +593,61 @@
 	}
 
 	.forms-container {
-		margin-top: 120rpx;
+		margin-top: 80rpx;
 		background-color: #FFFFFF;
 	}
 
 	.tool-container {
 		box-shadow: 0 -2rpx 5rpx 0 rgba(0, 0, 0, 0.05);
-		height: 280rpx;
+		height: 180rpx;
 		padding: 28rpx 68rpx 0 68rpx;
 		box-sizing: border-box;
 	}
 
 	.link-icon {
-		font-size: 36rpx;
+		font-size: 32rpx;
 		color: #141E34;
 		margin-right: 10rpx;
 	}
 
 	.link-name {
-		font-size: 32rpx;
+		font-size: 28rpx;
 		color: #141E34;
 	}
 
 	.tool-item {
-		margin-right: 48rpx;
+		margin-right: 28rpx;
 		width: 100rpx;
 	}
 
 	.tool-icon {
-		font-size: 40rpx;
+		font-size: 32rpx;
 		color: #141E34;
 		margin-bottom: 4rpx;
 	}
 
 	.tool-name {
-		font-size: 32rpx;
+		font-size: 26rpx;
 		color: #141E34;
 	}
 
 	.save-btn {
-		width: 200rpx;
-		height: 80rpx;
-		line-height: 80rpx;
+		width: 160rpx;
+		height: 60rpx;
+		line-height: 60rpx;
 		text-align: center;
-		font-size: 30rpx;
+		font-size: 26rpx;
 		border: 2rpx solid #e8e8e8;
 		border-radius: 8rpx;
 		margin-right: 40rpx;
 	}
 
 	.pub-btn {
-		width: 200rpx;
-		height: 80rpx;
-		line-height: 80rpx;
+		width: 160rpx;
+		height: 60rpx;
+		line-height: 60rpx;
 		text-align: center;
-		font-size: 30rpx;
+		font-size: 26rpx;
 		color: #FFFFFF;
 		background-color: #ff6100;
 		border-radius: 8rpx;

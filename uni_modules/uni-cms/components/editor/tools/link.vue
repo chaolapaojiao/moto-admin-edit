@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<toolbarTool type="button" @change="$refs.popup.open()" :active="active" :disabled="disabled" :tooltip="{content: active ? '修改链接': '添加链接'}">
-			<uni-icons custom-prefix="editor-icon" type="icon-link" size="24px"></uni-icons>
+			<uni-icons custom-prefix="editor-icon" type="icon-link" size="20px"></uni-icons>
 		</toolbarTool>
 		<uni-popup ref="popup" type="center">
 			<view class="popup-body">

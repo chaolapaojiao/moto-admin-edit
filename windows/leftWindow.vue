@@ -1,7 +1,7 @@
 <template>
 	<view class="sidebar-container moto-flex-row-left">
 		<view class="moto-flex-column-center" style="margin-left: 25px;">
-			<view class="pub-btn" @click="openArticleEdit">创作内容</view>
+			<view class="pub-btn" @click="choosePubType">创作内容</view>
 			<el-menu class="sidebar" default-active="1-1" @select="onSelect" active-text-color="#ff6100">
 				<template v-for="(item, index) in menuList">
 					<el-sub-menu :index="item.index" v-if="item.isGroup">
@@ -25,11 +25,16 @@
 			</el-menu>
 			<view style="width: 20px;"></view>
 		</view>
+		<pub-type-select ref="pubTypeSelect"></pub-type-select>
 	</view>
 </template>
 
 <script>
+	import pubTypeSelect from '@/components/moto-cms/pub-type-select.vue'
 	export default {
+		components:{
+			pubTypeSelect
+		},
 		data() {
 			return {
 				activeMenu: '1-1',
@@ -86,9 +91,8 @@
 					url: menu.linkUrl
 				})
 			},
-			openArticleEdit(id) {
-				const host = window.location.host
-				window.open(`http://${host}/pages/moto-cms/article-editor`, '_blank')
+			choosePubType(id) {
+				this.$refs.pubTypeSelect.dialogVisible = true
 			}
 		}
 	}

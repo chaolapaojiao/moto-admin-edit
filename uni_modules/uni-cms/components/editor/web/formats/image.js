@@ -33,7 +33,7 @@ export default function(Quill) {
 			}
 			return node
 		}
-		
+
 		static formats(domNode) {
 			return ATTRIBUTES.reduce(function(formats, attribute) {
 				if (domNode.hasAttribute(attribute)) {
@@ -42,7 +42,15 @@ export default function(Quill) {
 				return formats
 			}, {})
 		}
-
+		deleteAt(index, length) {
+			const parent = document.querySelector('#editor')
+			const imageDesc = parent.querySelector('div[id=' + this.domNode.id + ']')
+			if (imageDesc) {
+				parent.removeChild(imageDesc)
+			}
+			super.deleteAt(index, length);
+			console.log(parent)
+		}
 		static sanitize(url) {
 			return url
 		}

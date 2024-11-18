@@ -14,13 +14,6 @@
 			"style": {
 				"navigationBarTitleText": "草稿列表"
 			}
-		}, {
-			"path": "pages/moto-cms/article-editor",
-			"style": {
-				"topWindow": false,
-				"leftWindow": false,
-				"navigationBarTitleText": "文章编辑"
-			}
 		},
 		{
 			"path": "pages/login/login",
@@ -28,6 +21,22 @@
 				"topWindow": false,
 				"leftWindow": false,
 				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/moto-cms/rich-article-editor",
+			"style": {
+				"topWindow": false,
+				"leftWindow": false,
+				"navigationBarTitleText": "富文本文章编辑"
+			}
+		},
+		{
+			"path": "pages/moto-cms/normal-article-editor",
+			"style": {
+				"topWindow": false,
+				"leftWindow": false,
+				"navigationBarTitleText": "普通文章编辑"
 			}
 		}
 	],

@@ -1,6 +1,6 @@
 <template>
 	<toolbarTool type="button" @change="change" :active="active" :disabled="disabled" :tooltip="{content: '分割线'}">
-		<uni-icons custom-prefix="editor-icon" type="icon-hr" size="24px"></uni-icons>
+		<uni-icons custom-prefix="editor-icon" type="icon-hr" size="20px"></uni-icons>
 	</toolbarTool>
 </template>
 
