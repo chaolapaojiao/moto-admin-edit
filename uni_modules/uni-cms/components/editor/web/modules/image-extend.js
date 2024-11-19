@@ -76,7 +76,6 @@ export default function(Quill) {
 			inputNode.style.position = 'absolute'
 			inputNode.setAttribute('id', date)
 			const parent = this.quill.root.parentNode
-			console.log(parent)
 			setTimeout(() => {
 				const elementRect = element.getBoundingClientRect()
 				const containerRect = parent.getBoundingClientRect()

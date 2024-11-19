@@ -28,9 +28,14 @@
 					<view class="pub-time">{{item.time}}</view>
 					<image mode="aspectFill" class="article-image" :src="item.imageUrl"></image>
 					<view style="margin-left: 64rpx;">
-						<view class="moto-flex-row-left" style="margin-bottom: 20px;">
-							<view class="article-title">{{item.title}}</view>
-							<view class="article-status">{{item.prompt}}</view>
+						<view style="margin-bottom: 20px;">
+							<view class="moto-flex-row-left">
+								<view class="article-title">{{item.title}}</view>
+								<view class="article-status">{{item.prompt}}</view>
+							</view>
+							<view class="article-type" v-if="item.type === 'CIRCLE_BIG_ARTICLE'">长图文</view>
+							<view class="article-type" v-else-if="item.type === 'ARTICLE'">资讯</view>
+							<view class="article-type" v-else>动态</view>
 						</view>
 						<view class="moto-flex-row-left">
 							<view class="moto-flex-row-left" style="margin-right: 40rpx;">
@@ -48,7 +53,10 @@
 						</view>
 					</view>
 				</view>
-				<view class="edit-btn" @click="openEdit(item.id)">编辑</view>
+				<view class="moto-flex-row-left">
+					<view class="edit-btn" @click="openEdit(item)">编辑</view>
+					<view class="delete-btn" @click="deleteArtice(item)">删除</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -96,22 +104,38 @@
 			getPubArticleList() {
 				const pageInfo = {
 					page: 1,
-					size: 5,
+					size: 3,
 					type: 'CIRCLE'
 				}
 				getApp().$openApi.motoCms.getPubArticleList(pageInfo).then(res => {
 					if (res.data.code === 200) {
 						this.articleList = res.data.data.releaseList
-						console.log(this.articleList)
 					}
 				})
 			},
 			getCountNumber(number) {
 				return number >= 1000 ? ((number / 1000).toFixed(1) + 'k') : number
 			},
-			openEdit(id) {
+			openEdit(item) {
 				const host = window.location.host
-				window.open(`http://${host}/pages/moto-cms/rich-article-editor?id=${id}`, '_blank')
+				if (item.type === 'CIRCLE_BIG_ARTICLE') {
+					window.open(`http://${host}/pages/moto-cms/rich-article-editor?id=${item.id}&type=1`, '_blank')
+				} else if (item.type === 'ARTICLE') {
+					window.open(`http://${host}/pages/moto-cms/rich-article-editor?id=${item.id}&type=2`, '_blank')
+				} else if (item.type === 'CIRCLE') {
+					window.open(`http://${host}/pages/moto-cms/normal-article-editor?id=${item.id}`, '_blank')
+				}
+			},
+			deleteArtice() {
+				uni.showModal({
+					title: '删除',
+					content: '确定要删除吗？',
+					success: (res) => {
+						if (res.confirm) {
+							
+						}
+					}
+				})
 			}
 		}
 	}
@@ -215,13 +239,13 @@
 	.edit-btn {
 		width: 100rpx;
 		height: 50rpx;
-		background-color: #ff6100;
 		border: 1rpx solid #bebebe;
 		border-radius: 4rpx;
-		color: #FFFFFF;
+		color: #141E34;
 		text-align: center;
 		line-height: 50rpx;
 		font-size: 26rpx;
+		margin-right: 30rpx;
 	}
 
 	.article-status {
@@ -229,5 +253,28 @@
 		font-weight: bold;
 		color: #9FA5B4;
 		margin-left: 20px;
+	}
+
+	.article-type {
+		font-size: 20rpx;
+		background-color: RGBA(255, 97, 0, 0.5);
+		width: 80rpx;
+		height: 32rpx;
+		line-height: 32rpx;
+		text-align: center;
+		border-radius: 4rpx;
+		color: #FFFFFF;
+	}
+
+	.delete-btn {
+		width: 100rpx;
+		height: 50rpx;
+		background-color: #ff6100;
+		border: 1rpx solid #bebebe;
+		border-radius: 4rpx;
+		color: #FFFFFF;
+		text-align: center;
+		line-height: 50rpx;
+		font-size: 26rpx;
 	}
 </style>

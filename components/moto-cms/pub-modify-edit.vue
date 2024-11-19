@@ -27,11 +27,9 @@
 </template>
 
 <script>
-	import request from '@/api/http.js'
 	import {
 		imageUpload
 	} from '@/utils/imageTool'
-	const http = request.http
 	export default {
 		data() {
 			return {

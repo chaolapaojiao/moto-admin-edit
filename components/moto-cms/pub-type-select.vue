@@ -28,7 +28,7 @@
 					{
 						title: '动态',
 						desc: '主要以多图片文字为主,详细分享你的心得',
-						linkUrl: '/pages/moto-cms/'
+						linkUrl: '/pages/moto-cms/normal-article-editor'
 					},
 					{
 						title: '资讯',
@@ -57,6 +57,7 @@
 	.item-title{
 		font-size: 28rpx;
 		color: #141E34;
+		font-weight: bold;
 		margin-bottom: 6rpx;
 	}
 	.item-desc{

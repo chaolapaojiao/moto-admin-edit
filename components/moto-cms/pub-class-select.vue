@@ -2,7 +2,7 @@
 	<el-dialog style="padding-bottom: 0" v-model="dialogVisible" title="关联分类" width="500" align-center>
 		<view class="moto-flex-row-between class-container">
 			<view v-for="(item, index) in articleClassList"
-				:style="{backgroundColor: index === 11 ? '#FFFFFF' : '#F8F9FB'}" class="class-item"
+				:style="{backgroundColor: !item.name ? '#FFFFFF' : '#F8F9FB'}" class="class-item"
 				:class="{'class-item-select': item.articleClass === currentSelect}" @click="onClassSelect(item)">
 				<view>{{item.name}}</view>
 			</view>
@@ -11,8 +11,8 @@
 			<view class="modify-text">为你的改装分组吧</view>
 			<view class="moto-flex-row-left">
 				<view v-for="item in modifyClassList" class="class-item"
-					:class="{'class-item-select': item.modifyClass === currentModifySelect}"
-					style="margin-right: 24px;" @click="modifyClassSelect(item)">
+					:class="{'class-item-select': item.modifyClass === currentModifySelect}" style="margin-right: 24px;"
+					@click="modifyClassSelect(item)">
 					<view>{{item.name}}</view>
 				</view>
 			</view>
@@ -67,6 +67,30 @@
 
 					}
 				],
+				newsClassList: [{
+					name: '新车发布',
+					articleClass: '1'
+				}, {
+					name: '新车谍照',
+					articleClass: '2'
+				}, {
+					name: '赛事报道',
+					articleClass: '3'
+				}, {
+					name: '行业新闻',
+					articleClass: '4'
+				}, {
+					name: '用车玩车',
+					articleClass: '5'
+				}, {
+					name: '新闻趣事',
+					articleClass: '6'
+				}, {
+					name: '厂家召回',
+					articleClass: '7'
+				}, {
+
+				}],
 				modifyClassList: [{
 						name: '性价比组',
 						modifyClass: 1
@@ -92,7 +116,7 @@
 					this.showModify = true
 				}
 			},
-			modifyClassSelect(item){
+			modifyClassSelect(item) {
 				this.currentModifySelect = item.modifyClass
 				this.$emit('classSelect', {
 					name: " 🛠改装升级",

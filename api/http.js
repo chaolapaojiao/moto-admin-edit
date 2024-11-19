@@ -84,6 +84,16 @@ http.interceptors.response.use((response) => {
 			}
 		})
 	} else if (response.data.code !== 200 && process.env.NODE_ENV !== 'production') {
+		let data = response.data
+		if(typeof data == 'string'){
+			data = JSON.parse(response.data)
+		}
+		if(data.code == 406){
+			getApp().$Message.warning('登录已过期')
+			uni.navigateTo({
+				url:'/pages/login/login'
+			})
+		}
 		// uni.showToast({
 		// 	title: response.data.code + response.data.message,
 		// 	icon: 'none'

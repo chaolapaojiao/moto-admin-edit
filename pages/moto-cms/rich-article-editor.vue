@@ -9,8 +9,8 @@
 				<view class="forms-container card-shadow">
 					<view style="padding: 30px 40px 0 40px">
 						<view class="title">
-							<textarea style="font-size: 18px;color: #141E34;font-weight: 400;"
-								placeholder-style="font-size: 18px" v-model="articleTitle" auto-height
+							<textarea style="font-size: 34rpx;color: #141E34;font-weight: 500;"
+								placeholder-style="font-size: 34rpx;font-weight: 400" v-model="articleTitle" auto-height
 								placeholder="请输入文章标题"></textarea>
 							<view class="line"></view>
 						</view>
@@ -24,8 +24,10 @@
 						<editor-component ref="editorComponents" @textchange="onTextChange"
 							@ready="onEditorReady"></editor-component>
 					</view>
-					<pub-keyword-input :relatedModelIdList.sync="relatedModelIdList" v-if="articleType === 'ARTICLE'"></pub-keyword-input>
-					<view class="moto-flex-row-left" style="padding: 0 34px;margin-bottom: 12px;" v-if="articleType === 'CIRCLE_BIG_ARTICLE'">
+					<pub-keyword-input :relatedLabelList.sync="relatedLabelList"
+						v-if="articleType === 'ARTICLE'"></pub-keyword-input>
+					<view class="moto-flex-row-left" style="padding: 0 34px;margin-bottom: 12px;"
+						v-if="articleType === 'CIRCLE_BIG_ARTICLE'">
 						<view v-if="linkClass" class="moto-flex-row-left" style="margin-right: 20px;">
 							<view class="iconv2 link-icon" style="margin-right: 8px;font-size: 17px;">&#xe697;</view>
 							<view class="link-name">{{linkClass.name}}</view>
@@ -86,7 +88,7 @@
 								</view>
 							</view>
 							<view v-else>
-								
+
 							</view>
 							<view class="moto-flex-row-left">
 								<view class="save-btn" @click="saveDraft">保存草稿</view>
@@ -178,7 +180,7 @@
 					editFlag: false,
 					modifyItemList: []
 				},
-				relatedModelIdList: [],
+				relatedLabelList: [],
 				articleImageList: [],
 				articleContent: '',
 				toolList: [{
@@ -229,6 +231,9 @@
 					this.$refs['topic-select'].getTagListAct()
 					this.$refs['topic-select'].dialogVisible = true
 				} else if (item.type === 'class') {
+					if (this.articleType === 'ARTICLE') {
+						this.$refs['class-select'].articleClassList = this.$refs['class-select'].newsClassList
+					}
 					this.$refs['class-select'].dialogVisible = true
 				} else if (item.type === 'vote') {
 					this.$refs['vote-edit'].dialogVisible = true
@@ -236,7 +241,7 @@
 					this.$refs['modify-edit'].dialogVisible = true
 				}
 			},
-			openModelSelect(){
+			openModelSelect() {
 				this.$refs['model-select'].dialogVisible = true
 			},
 			removeModifyItem(index) {
@@ -289,7 +294,7 @@
 							this.linkCircle = data.linkCircle
 						}
 						if (data.location) {
-							data.linkLocation = data.location
+							this.linkLocation = data.location
 						}
 						if (data.linkClass) {
 							this.linkClass = {
@@ -353,13 +358,27 @@
 				let postData = {
 					type: 1,
 					contentList: contentList,
-					title: this.articleTitle
+					title: this.articleTitle,
+					relatedLabelList: this.relatedLabelList
 				}
 				if (this.linkClass) {
 					postData.articleClass = this.linkClass.articleClass
+				} else {
+					postData.articleClass = 0
 				}
+				uni.showLoading({
+					title: '发布中',
+					icon: 'none'
+				})
 				getApp().$openApi.motoCms.pubNews(postData).then(res => {
-					console.log(JSON.stringify(res))
+					uni.hideLoading()
+					if (res.data.code === 200) {
+						getApp().$Message.success('发布成功')
+						this.linkClass = null
+						this.title = ''
+						this.relatedLabelList = []
+						this.$refs.editorComponents.parseHtml('')
+					}
 				})
 			},
 			pubCircleArticle(contentList) {
@@ -412,6 +431,7 @@
 						if (res.data.code == 200) {
 							getApp().$Message.success('发布成功')
 							this.$refs.editorComponents.parseHtml('')
+							this.articleTitle = ''
 							this.linkCircle = null
 							this.linkLocation = null
 							this.linkClass = null

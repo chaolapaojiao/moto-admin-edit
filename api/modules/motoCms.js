@@ -133,14 +133,21 @@ function saveDraft(data) {
 }
 
 // 资讯文章发布
-function pubNews(data){
+function pubNews(data) {
 	let {
 		timestamp,
 		signature
 	} = paramsEncryption(data, 'post')
 	const jsonStr = JSON.stringify(data)
 	signature = signature.replace(/\+/g, '%2B')
-	return http.post(`/motorArticle/pubArticle?timestamp=${timestamp}&signature=${signature}`,jsonStr)
+	return http.post(`/motorArticle/pubArticle?timestamp=${timestamp}&signature=${signature}`, jsonStr)
+}
+
+// 删除动态
+function delCirclelArticle(data) {
+	return http.delete('motorCircle/delCirclelArticle', {
+		params: data
+	})
 }
 export default {
 	getPubArticleList,
@@ -154,5 +161,6 @@ export default {
 	getTagListAct,
 	createTopic,
 	saveDraft,
-	pubNews
+	pubNews,
+	delCirclelArticle
 }

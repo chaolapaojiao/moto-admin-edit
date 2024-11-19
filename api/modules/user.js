@@ -3,15 +3,14 @@ const http = request.http
 import paramsEncryption from '@/utils/encryption.js'
 
 // 二维码登录
-function getLoginQrCode(deviceId) {
+function getLoginQrCode(data) {
 	let {
 		timestamp,
 		signature
-	} = paramsEncryption({
-		deviceId: deviceId
-	})
+	} = paramsEncryption(data, 'post')
 	signature = signature.replace(/\+/g, '%2B')
-	return http.post(`/user/createLoginQrCode?timestamp=${timestamp}&signature=${signature}`, deviceId)
+	const jsonStr = JSON.stringify(data)
+	return http.post(`/user/createLoginQrCode?timestamp=${timestamp}&signature=${signature}`, jsonStr)
 }
 
 function checkQrLogin(data) {

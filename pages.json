@@ -7,12 +7,12 @@
 		}, {
 			"path": "pages/moto-cms/article-list",
 			"style": {
-				"navigationBarTitleText": "文章列表"
+				"navigationBarTitleText": "发布记录"
 			}
 		}, {
 			"path": "pages/moto-cms/article-draft",
 			"style": {
-				"navigationBarTitleText": "草稿列表"
+				"navigationBarTitleText": "草稿箱"
 			}
 		},
 		{
@@ -28,7 +28,7 @@
 			"style": {
 				"topWindow": false,
 				"leftWindow": false,
-				"navigationBarTitleText": "富文本文章编辑"
+				"navigationBarTitleText": "长图文资讯编辑"
 			}
 		},
 		{
@@ -36,7 +36,7 @@
 			"style": {
 				"topWindow": false,
 				"leftWindow": false,
-				"navigationBarTitleText": "普通文章编辑"
+				"navigationBarTitleText": "动态编辑"
 			}
 		}
 	],

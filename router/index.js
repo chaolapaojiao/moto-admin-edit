@@ -7,9 +7,13 @@ const router = createRouter({
 	pageData: PAGE_DATA
 })
 const needLogin = [
-	'/pages/moto-cms/article-list',
-	'/pages/moto-cms/article-editor'
+	'pages/moto-cms/article-list',
+	'pages/moto-cms/rich-article-editor',
+	'pages/moto-cms/home',
+	'pages/moto-cms/article-draft',
+	'pages/moto-cms/normal-article-editor'
 ]
+
 router.beforeEach((to, from) => {
 	if (needLogin.includes(to.path)) {
 		const token = uni.getStorageSync('moto-pc-token')

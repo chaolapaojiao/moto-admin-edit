@@ -1,11 +1,11 @@
 <template>
-	<scroll-view scroll-x style="width: 1000px;padding-left: 50rpx;margin-bottom: 20rpx;">
-		<el-tag v-for="tag in relatedModelIdList" :key="tag" style="margin-right: 20rpx;" closable :disable-transitions="false"
-			@close="handleClose(tag)">
+	<scroll-view scroll-x style="width: 1000px;padding-left: 50rpx;margin-bottom: 20rpx;padding-top: 20rpx;">
+		<el-tag v-for="tag in relatedLabelList" :key="tag" style="margin-right: 20rpx;" closable
+			:disable-transitions="false" @close="handleClose(tag)">
 			{{ tag }}
 		</el-tag>
 		<el-input v-if="inputVisible" ref="InputRef" v-model="inputValue" style="width: 200rpx;" size="small"
-			@keyup.enter="handleInputConfirm" />
+			@keyup.enter="handleInputConfirm" @blur="handleInputConfirm"/>
 		<el-button v-else class="button-new-tag" size="small" @click="showInput">
 			+ 添加关键词
 		</el-button>
@@ -14,8 +14,8 @@
 
 <script>
 	export default {
-		props:{
-			relatedModelIdList: {
+		props: {
+			relatedLabelList: {
 				type: Array,
 				default: () => []
 			}
@@ -28,13 +28,15 @@
 		},
 		methods: {
 			handleClose(tag) {
-				const tags = this.relatedModelIdList
+				const tags = this.relatedLabelList
 				tags.splice(tags.indexOf(tag), 1)
-				this.$emit('update:relatedModelIdList', tags)
+				this.$emit('update:relatedLabelList', tags)
 			},
 			handleInputConfirm(e) {
 				if (this.inputValue) {
-					this.keywordTagList.push(this.inputValue)
+					const tags = this.relatedLabelList
+					tags.push(this.inputValue)
+					this.$emit('update:relatedLabelList', tags)
 				}
 				this.showInput = false
 				this.inputValue = ''

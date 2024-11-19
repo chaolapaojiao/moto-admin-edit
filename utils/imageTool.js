@@ -9,7 +9,6 @@ const key =
 
 const supportList = [
 	'image/png',
-	'image/jpg',
 	'image/jpeg',
 	'image/webp'
 ]
@@ -44,7 +43,7 @@ function getImageScale(url) {
 async function imageCompress(url, quality = 0.8) {
 	let imgType = (await fetch(url).then(r => r.blob())).type
 	if (!supportList.includes(imgType)) {
-		imgType = 'image/jpg'
+		imgType = 'image/jpeg'
 	}
 	return new Promise(async (resolve, reject) => {
 		const scaleInfo = await getImageScale(url)
@@ -55,20 +54,35 @@ async function imageCompress(url, quality = 0.8) {
 		img.height = canvas.height = scaleInfo.height;
 		let ctx = canvas.getContext("2d")
 		ctx.drawImage(img, 0, 0, img.width, img.height)
-		canvas.toBlob(
-			async (blob) => {
-					const result = await imageConversion.compress(blob, quality)
-					const file = new window.File([result], timestamp + blob.size, {
-						type: imgType
-					})
-					resolve({
-						url: URL.createObjectURL(file),
-						file: file
-					})
-				},
-				imgType,
-				quality
-		)
+		try {
+			canvas.toBlob(
+				async (blob) => {
+						const result = await imageConversion.compress(blob, quality)
+						const file = new window.File([result], timestamp + blob.size, {
+							type: imgType
+						})
+						resolve({
+							url: URL.createObjectURL(file),
+							file: file
+						})
+					},
+					imgType,
+					quality
+			)
+		} catch (e) {
+			const response = await fetch(url, {
+				mode: 'cors'
+			});
+			const blob = await response.blob();
+			const result = await imageConversion.compress(blob, quality)
+			const file = new window.File([result], timestamp + blob.size, {
+				type: imgType
+			})
+			resolve({
+				url: URL.createObjectURL(file),
+				file: file
+			})
+		}
 	})
 }
 
@@ -109,6 +123,8 @@ export async function imageUpload(url) {
 			const result = JSON.parse(res.data)
 			if (result.code === 200) {
 				resolve(result.data.url)
+			}else{
+				reject('upload fail')
 			}
 		}).catch(err => {
 			reject(err)
