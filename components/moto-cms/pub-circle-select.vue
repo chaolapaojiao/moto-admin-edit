@@ -210,61 +210,61 @@
 
 <style lang="scss">
 	.tab-item {
-		width: 200rpx;
-		height: 100rpx;
-		line-height: 100rpx;
+		width: 100px;
+		height: 50px;
+		line-height: 50px;
 		text-align: center;
 		color: #141E34;
 	}
-
+	
 	.tab-item-active {
 		background-color: #FFFFFF;
 		color: #ff6100;
 	}
-
+	
 	.card-circle-image {
-		width: 100rpx;
-		height: 100rpx;
-		border: 2rpx solid #f7f8f9;
-		border-radius: 8rpx;
+		width: 50px;
+		height: 50px;
+		border: 1px solid #f7f8f9;
+		border-radius: 4px;
 	}
-
+	
 	.select-btn {
-		width: 140rpx;
-		height: 60rpx;
+		width: 70px;
+		height: 30px;
 		text-align: center;
-		line-height: 60rpx;
+		line-height: 30px;
 		background: #F7F8FB;
 		color: #141E34;
-		font-size: 28rpx;
-		border-radius: 8rpx;
+		font-size: 14px;
+		border-radius: 4px;
 	}
-
+	
 	.status {
-		height: 100rpx;
-		line-height: 100rpx;
-		width: 700rpx;
+		height: 50px;
+		line-height: 50px;
+		width: 350px;
 		text-align: center;
 	}
-
+	
 	.search-btn {
-		width: 120rpx;
-		height: 60rpx;
+		width: 60px;
+		height: 30px;
 		text-align: center;
-		line-height: 60rpx;
-		color: #141E34;
-		background-color: #ff6100;
-		border-radius: 8rpx;
-		margin-left: 20rpx;
+		line-height: 30px;
 		color: #FFFFFF;
+		background-color: #ff6100;
+		border-radius: 4px;
+		margin-left: 10px;
 	}
-
+	
 	.seach-container {
-		width: 900rpx;
-		height: 800rpx;
+		width: 450px;
+		height: 400px;
+	}
+	
+	.el-dialog__title {
+		font-size: 17px !important;
 	}
 
-	.el-dialog__title {
-		font-size: 34rpx !important;
-	}
 </style>

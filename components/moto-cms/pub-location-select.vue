@@ -268,87 +268,87 @@
 
 <style lang="scss">
 	.search-btn {
-		width: 120rpx;
-		height: 60rpx;
+		width: 60px;
+		height: 30px;
 		text-align: center;
-		line-height: 60rpx;
+		line-height: 30px;
 		color: #141E34;
 		background-color: #ff6100;
-		border-radius: 8rpx;
-		margin-left: 20rpx;
+		border-radius: 4px;
+		margin-left: 10px;
 		color: #FFFFFF;
 	}
-
+	
 	.list-scrollview {
-		height: 800rpx;
+		height: 400px;
 		width: 100%;
 	}
-
+	
 	.location-card {}
-
+	
 	.map {
-		width: 1000rpx;
-		height: 500rpx;
-		margin-left: -32rpx;
+		width: 500px;
+		height: 250px;
+		margin-left: -16px;
 	}
-
+	
 	.map-btn-center {
 		position: absolute;
-		left: 450rpx;
-		bottom: 200rpx;
-		width: 100rpx;
-		height: 100rpx;
+		left: 225px;
+		bottom: 100px;
+		width: 50px;
+		height: 50px;
 	}
-
+	
 	.map-btn-my {
 		position: absolute;
-		bottom: 20rpx;
-		right: 20rpx;
-		width: 70rpx;
-		height: 70rpx;
+		bottom: 10px;
+		right: 10px;
+		width: 35px;
+		height: 35px;
 	}
-
+	
 	.location-item {
-		height: 100rpx;
-		margin-bottom: 16rpx;
+		height: 50px;
+		margin-bottom: 8px;
 	}
-
+	
 	.line {
-		width: 1000rpx;
+		width: 500px;
 		background-color: #f1f1f1;
-		height: 2rpx;
-		margin: 20rpx 0;
+		height: 1px;
+		margin: 10px 0;
 	}
-
+	
 	.point-icon {
-		width: 48rpx;
-		height: 48rpx;
-		margin-right: 20rpx;
+		width: 24px;
+		height: 24px;
+		margin-right: 10px;
 	}
-
+	
 	.location-point {
-		font-size: 48rpx;
-		margin-right: 20rpx;
+		font-size: 24px;
+		margin-right: 10px;
 	}
-
+	
 	.location-name {
 		color: #141E34;
-		font-size: 28rpx;
+		font-size: 14px;
 	}
-
+	
 	.sub-info {
-		font-size: 24rpx;
+		font-size: 12px;
 		color: #999;
 	}
-
+	
 	.el-dialog__title {
-		font-size: 34rpx;
+		font-size: 17px;
 	}
-
+	
 	.status {
-		height: 100rpx;
-		line-height: 100rpx;
-		width: 900rpx;
+		height: 50px;
+		line-height: 50px;
+		width: 450px;
 		text-align: center;
 	}
 </style>

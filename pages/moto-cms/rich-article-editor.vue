@@ -9,8 +9,8 @@
 				<view class="forms-container card-shadow">
 					<view style="padding: 30px 40px 0 40px">
 						<view class="title">
-							<textarea style="font-size: 34rpx;color: #141E34;font-weight: 500;"
-								placeholder-style="font-size: 34rpx;font-weight: 400" v-model="articleTitle" auto-height
+							<textarea style="font-size: 17px;color: #141E34;font-weight: 500;"
+								placeholder-style="font-size: 17px;font-weight: 400" v-model="articleTitle" auto-height
 								placeholder="请输入文章标题"></textarea>
 							<view class="line"></view>
 						</view>
@@ -71,12 +71,12 @@
 									<view class="link-name">{{linkClass ? linkClass.name : '选择分类'}}</view>
 								</view>
 								<view class="moto-flex-row-left" style="margin-left: 20px;" @click="openModelSelect">
-									<view class="iconv2 link-icon" style="font-size: 34rpx;">&#xe73e;</view>
+									<view class="iconv2 link-icon" style="font-size: 17px;">&#xe73e;</view>
 									<view class="link-name">{{linkModel ? linkModel.modelName : '关联车型'}}
 									</view>
 								</view>
 							</view>
-							<view style="color: #848B9E;font-size: 26rpx;">正文字数: {{wordCount}}</view>
+							<view style="color: #848B9E;font-size: 13px;">正文字数: {{wordCount}}</view>
 						</view>
 						<view class="moto-flex-row-between" style="margin-top: 10px;margin-left: -10px;">
 							<view class="moto-flex-row-left" v-if="articleType === 'CIRCLE_BIG_ARTICLE'">
@@ -581,169 +581,168 @@
 </script>
 
 <style lang="scss">
-	@import '@/uni_modules/uni-cms/common/style/article-detail.scss';
-
 	.link-item-group {
-		margin-bottom: 40rpx;
+		margin-bottom: 20px;
 	}
-
+	
 	.link-item-icon {
-		font-size: 44rpx;
+		font-size: 22px;
 	}
-
+	
 	.link-item-title {
-		width: 260rpx;
-		margin-left: 20rpx;
-		font-size: 32rpx;
+		width: 130px;
+		margin-left: 10px;
+		font-size: 16px;
 		font-weight: 400;
 	}
-
+	
 	.cirlce-list-scroll {
 		flex: 1;
-		width: 800rpx;
-		height: 72rpx;
-		margin-left: 20rpx;
+		width: 400px;
+		height: 36px;
+		margin-left: 10px;
 	}
-
+	
 	.line {
 		width: 100%;
-		height: 2rpx;
+		height: 1px;
 		background-color: #f2f2f2;
-		margin-top: 30rpx;
+		margin-top: 15px;
 	}
-
+	
 	.recommend-circle-item {
-		height: 72rpx;
-		line-height: 72rpx;
+		height: 36px;
+		line-height: 36px;
 		background: #F6F7FC;
-		border-radius: 8rpx;
-		font-size: 32rpx;
+		border-radius: 4px;
+		font-size: 16px;
 		color: #474E62;
-		padding: 0 20rpx;
-		margin-right: 20rpx;
+		padding: 0 10px;
+		margin-right: 10px;
 	}
-
+	
 	.confirm-button {
-		width: 200rpx;
-		margin-right: 740rpx;
+		width: 100px;
+		margin-right: 370px;
 	}
-
+	
 	.circle-slect {
-		margin-left: 24rpx;
-		width: 300rpx;
-		border: 2rpx solid #eee;
-		border-radius: 8rpx;
-		font-size: 28rpx;
+		margin-left: 12px;
+		width: 150px;
+		border: 1px solid #eee;
+		border-radius: 4px;
+		font-size: 14px;
 		color: #848B9E;
-		padding: 16rpx 0 16rpx 24rpx;
+		padding: 8px 0 8px 12px;
 	}
-
+	
 	.circle-slect:hover {
-		border: 2rpx solid blue;
+		border: 1px solid blue;
 	}
-
+	
 	.content-preview {
-		width: 760rpx;
-		height: 200rpx;
+		width: 380px;
+		height: 100px;
 		background-color: blue;
-		margin-right: 80rpx;
+		margin-right: 40px;
 	}
-
+	
 	.forms-container {
-		margin-top: 80rpx;
+		margin-top: 40px;
 		background-color: #FFFFFF;
 		width: 90%;
 	}
-
+	
 	.tool-container {
-		box-shadow: 0 -2rpx 5rpx 0 rgba(0, 0, 0, 0.05);
-		height: 180rpx;
-		padding: 28rpx 68rpx 0 68rpx;
+		box-shadow: 0 -1px 2.5px 0 rgba(0, 0, 0, 0.05);
+		height: 90px;
+		padding: 14px 34px 0 34px;
 		box-sizing: border-box;
 	}
-
+	
 	.link-icon {
-		font-size: 32rpx;
+		font-size: 16px;
 		color: #141E34;
-		margin-right: 10rpx;
+		margin-right: 5px;
 	}
-
+	
 	.link-name {
-		font-size: 28rpx;
+		font-size: 14px;
 		color: #141E34;
 	}
-
+	
 	.tool-item {
-		margin-right: 28rpx;
-		width: 100rpx;
+		margin-right: 14px;
+		width: 50px;
 	}
-
+	
 	.tool-icon {
-		font-size: 32rpx;
+		font-size: 16px;
 		color: #141E34;
-		margin-bottom: 4rpx;
+		margin-bottom: 2px;
 	}
-
+	
 	.tool-name {
-		font-size: 26rpx;
+		font-size: 13px;
 		color: #141E34;
 	}
-
+	
 	.save-btn {
-		width: 160rpx;
-		height: 60rpx;
-		line-height: 60rpx;
+		width: 80px;
+		height: 30px;
+		line-height: 30px;
 		text-align: center;
-		font-size: 26rpx;
-		border: 2rpx solid #e8e8e8;
-		border-radius: 8rpx;
-		margin-right: 40rpx;
+		font-size: 13px;
+		border: 1px solid #e8e8e8;
+		border-radius: 4px;
+		margin-right: 20px;
 	}
-
+	
 	.pub-btn {
-		width: 160rpx;
-		height: 60rpx;
-		line-height: 60rpx;
+		width: 80px;
+		height: 30px;
+		line-height: 30px;
 		text-align: center;
-		font-size: 26rpx;
+		font-size: 13px;
 		color: #FFFFFF;
 		background-color: #ff6100;
-		border-radius: 8rpx;
+		border-radius: 4px;
 	}
-
+	
 	.topic-item {
-		margin: 4rpx 40rpx 4rpx 0;
+		margin: 2px 20px 2px 0;
 	}
-
+	
 	.topic-name {
 		color: #3459AE;
-		font-size: 34rpx;
+		font-size: 17px;
 	}
-
+	
 	.delete-icon {
-		margin-left: 10rpx;
-		font-size: 28rpx;
+		margin-left: 5px;
+		font-size: 14px;
 		color: #BFC4CF;
 	}
-
+	
 	.modify-scroll {
 		width: 95%;
-		padding: 0 68rpx;
-		margin-bottom: 24rpx;
+		padding: 0 34px;
+		margin-bottom: 12px;
 	}
-
+	
 	.modify-item {
-		height: 80rpx;
-		padding: 0 28rpx;
-		border: 2rpx solid #F1F2F5;
-		border-radius: 8rpx;
-		margin-right: 24rpx;
+		height: 40px;
+		padding: 0 14px;
+		border: 1px solid #F1F2F5;
+		border-radius: 4px;
+		margin-right: 12px;
+	}
+	
+	.modify-item-image {
+		height: 30px;
+		width: 30px;
+		border-radius: 4px;
+		margin-right: 10px;
 	}
 
-	.modify-item-image {
-		height: 60rpx;
-		width: 60rpx;
-		border-radius: 8rpx;
-		margin-right: 20rpx;
-	}
 </style>

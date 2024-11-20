@@ -6,7 +6,7 @@
 			<view class="search-btn" @click="confirmSearch">搜索</view>
 		</view>
 		<scroll-view :show-scrollbar="false" scroll-y class="scroll-container" v-if="showSearch">
-			<view v-for="item in searchInfo.data" style="margin-bottom: 30rpx;" class="moto-flex-row-between"
+			<view v-for="item in searchInfo.data" style="margin-bottom: 15px;" class="moto-flex-row-between"
 				@click="selectTopic(item)">
 				<view class="moto-flex-row-left">
 					<view class="iconv2" style="font-size: 16px;color: #FF6100">&#xe71c;</view>
@@ -16,7 +16,7 @@
 					<view class="tag" style="background: linear-gradient( 226deg, #FFBEB7 0%, #FF4250 100%);"
 						v-if="item.topicType === 2">有奖</view>
 				</view>
-				<view style="color: #848B9E;font-size: 24rpx;">{{item.hotCount}}&nbsp;热度</view>
+				<view style="color: #848B9E;font-size: 12px;">{{item.hotCount}}&nbsp;热度</view>
 			</view>
 			<view v-if="searchInfo.empty" class="moto-flex-row-between" @click="createTopic">
 				<view class="moto-flex-row-left">
@@ -39,7 +39,7 @@
 						<view class="tag" style="background: linear-gradient( 226deg, #FFBEB7 0%, #FF4250 100%);"
 							v-if="item.topicType === 2">有奖</view>
 					</view>
-					<view style="color: #848B9E;font-size: 24rpx;">{{item.hotCount}}&nbsp;热度</view>
+					<view style="color: #848B9E;font-size: 12px;">{{item.hotCount}}&nbsp;热度</view>
 				</view>
 				<view class="class-title" v-if="hotTopicList.length">热门话题</view>
 				<view v-for="item in hotTopicList" style="margin-bottom: 8px;" class="moto-flex-row-between"
@@ -52,7 +52,7 @@
 						<view class="tag" style="background: linear-gradient( 226deg, #FFBEB7 0%, #FF4250 100%);"
 							v-if="item.topicType === 2">有奖</view>
 					</view>
-					<view style="color: #848B9E;font-size: 24rpx;">{{item.hotCount}}&nbsp;热度</view>
+					<view style="color: #848B9E;font-size: 12px;">{{item.hotCount}}&nbsp;热度</view>
 				</view>
 				<view v-for="item in listInfo.data" style="margin-bottom: 8px;" class="moto-flex-row-between"
 					@click="selectTopic(item)">
@@ -60,7 +60,7 @@
 						<view class="iconv2" style="font-size: 16px;color: #FF6100">&#xe71c;</view>
 						<view class="topic-name">{{item.topicTagName}}</view>
 					</view>
-					<view style="color: #848B9E;font-size: 24rpx;">{{item.hotCount}}&nbsp;热度</view>
+					<view style="color: #848B9E;font-size: 12px;">{{item.hotCount}}&nbsp;热度</view>
 				</view>
 				<view style="height: 50px;">
 					<view v-if="listInfo.loading" class="status">加载中...</view>
@@ -211,53 +211,54 @@
 
 <style lang="scss" scoped>
 	.el-dialog__title {
-		font-size: 34rpx;
+		font-size: 17px;
 	}
-
+	
 	.search-btn {
-		width: 120rpx;
-		height: 60rpx;
+		width: 60px;
+		height: 30px;
 		text-align: center;
-		line-height: 60rpx;
+		line-height: 30px;
 		color: #141E34;
 		background-color: #ff6100;
-		border-radius: 8rpx;
-		margin-left: 20rpx;
+		border-radius: 4px;
+		margin-left: 10px;
 		color: #FFFFFF;
 	}
-
+	
 	.scroll-container {
-		width: 940rpx;
-		height: 1000rpx;
+		width: 470px;
+		height: 500px;
 	}
-
+	
 	.class-title {
-		font-size: 24rpx;
+		font-size: 12px;
 		color: #848B9E;
-		margin-bottom: 10rpx;
+		margin-bottom: 5px;
 	}
-
+	
 	.topic-name {
-		font-size: 26rpx;
+		font-size: 13px;
 		color: #141E34;
-		margin-left: 12rpx;
+		margin-left: 6px;
 	}
-
+	
 	.tag {
-		width: 48rpx;
-		height: 30rpx;
-		line-height: 30rpx;
-		font-size: 20rpx;
+		width: 24px;
+		height: 15px;
+		line-height: 15px;
+		font-size: 10px;
 		text-align: center;
 		color: #FFFFFF;
-		border-radius: 4rpx;
-		margin-left: 10rpx
+		border-radius: 2px;
+		margin-left: 5px;
 	}
-
+	
 	.status {
-		height: 100rpx;
-		line-height: 100rpx;
-		width: 900rpx;
+		height: 50px;
+		line-height: 50px;
+		width: 450px;
 		text-align: center;
 	}
+
 </style>

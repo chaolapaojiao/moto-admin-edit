@@ -7,7 +7,7 @@
 			</el-col>
 			<el-col :span="16">
 				<view class="editor-container card-shadow">
-					<view style="padding: 32rpx;">
+					<view style="padding: 16px;">
 						<scroll-view :show-scrollbar="false" class="moto-flex-row-left image-scroll-container" scroll-x>
 							<view style="white-space: nowrap" class="moto-flex-row-left">
 								<view v-for="(item,index) in imageList" style="position: relative;">
@@ -21,9 +21,9 @@
 								</el-upload>
 							</view>
 						</scroll-view>
-						<view style="height: 30rpx;"></view>
-						<textarea style="font-size: 34rpx;color: #141E34;font-weight: 500;width: 100%;"
-							placeholder-style="font-size: 34rpx;font-weight: 400" v-model="articleTitle" auto-height
+						<view style="height: 15px;"></view>
+						<textarea style="font-size: 17px;color: #141E34;font-weight: 500;width: 100%;"
+							placeholder-style="font-size: 17px;font-weight: 400" v-model="articleTitle" auto-height
 							placeholder="请输入文章标题"></textarea>
 						<view class="line"></view>
 						<view class="moto-flex-row-left" style="flex-wrap: wrap;margin-top: 10px;">
@@ -32,7 +32,7 @@
 								<view class="iconv2 delete-icon" @click="removeTopic(item.topicTagId)">&#xe671;</view>
 							</view>
 						</view>
-						<textarea class="content-textarea" placeholder-style="font-size: 34rpx"
+						<textarea class="content-textarea" placeholder-style="font-size: 17px"
 							placeholder="分享你的机车生活,交流用车心得,各种生活趣事" v-model="articleContent"></textarea>
 					</view>
 					<view class="moto-flex-row-left" style="padding: 0 34px;margin-bottom: 12px;">
@@ -76,7 +76,7 @@
 									</view>
 								</view>
 							</view>
-							<view style="color: #848B9E;font-size: 26rpx;">正文字数: {{articleContent.length}}</view>
+							<view style="color: #848B9E;font-size: 13px;">正文字数: {{articleContent.length}}</view>
 						</view>
 						<view class="moto-flex-row-between" style="margin-top: 10px;margin-left: -10px;">
 							<view class="moto-flex-row-left">
@@ -456,40 +456,40 @@
 		width: 100%;
 		position: relative;
 	}
-
+	
 	.editor-container {
 		margin-top: 5px;
 		width: 850px;
 		height: calc(100% - 10px);
 		background-color: #FFFFFF;
 		box-sizing: border-box;
-		padding-top: 20rpx;
+		padding-top: 10px;
 	}
-
+	
 	.image-upload {
-		width: 220rpx;
-		height: 220rpx;
+		width: 110px;
+		height: 110px;
 		text-align: center;
-		line-height: 220rpx;
-		font-size: 40rpx;
+		line-height: 110px;
+		font-size: 20px;
 		color: #999;
-		border-radius: 8rpx;
-		border: 2rpx dashed #eee;
-		margin-bottom: 10rpx;
+		border-radius: 4px;
+		border: 1px dashed #eee;
+		margin-bottom: 5px;
 	}
-
+	
 	.line {
 		width: 100%;
-		height: 2rpx;
+		height: 1px;
 		background-color: #f2f2f2;
-		margin: 30rpx 0 60rpx 0;
+		margin: 15px 0 30px 0;
 	}
-
+	
 	::v-deep .el-upload--picture-card {
-		width: 220rpx;
-		height: 220rpx;
+		width: 110px;
+		height: 110px;
 	}
-
+	
 	::v-deep .el-upload-list--picture-card {
 		display: flex;
 		flex-wrap: nowrap !important;
@@ -497,148 +497,149 @@
 		white-space: nowrap;
 		scrollbar-width: none;
 	}
-
+	
 	::v-deep .el-upload-list__item {
 		flex-shrink: 0;
-		width: 220rpx;
-		height: 220rpx;
+		width: 110px;
+		height: 110px;
 	}
-
+	
 	.content-textarea {
-		font-size: 34rpx;
+		font-size: 17px;
 		color: #141E34;
 		width: 100%;
-		letter-spacing: 1.5rpx;
-		line-height: 48rpx;
-		height: 390px;
+		letter-spacing: 0.75px;
+		line-height: 24px;
+		height: 195px;
 	}
-
+	
 	.tool-container {
 		width: 850px;
-		box-shadow: 0 -2rpx 5rpx 0 rgba(0, 0, 0, 0.05);
-		height: 180rpx;
-		padding: 28rpx 68rpx 0 68rpx;
+		box-shadow: 0 -1px 2.5px 0 rgba(0, 0, 0, 0.05);
+		height: 90px;
+		padding: 14px 34px 0 34px;
 		box-sizing: border-box;
 	}
-
+	
 	.link-icon {
-		font-size: 32rpx;
+		font-size: 16px;
 		color: #141E34;
-		margin-right: 10rpx;
+		margin-right: 5px;
 	}
-
+	
 	.link-name {
-		font-size: 28rpx;
+		font-size: 14px;
 		color: #141E34;
 	}
-
+	
 	.tool-item {
-		margin-right: 28rpx;
-		width: 100rpx;
+		margin-right: 14px;
+		width: 50px;
 	}
-
+	
 	.tool-icon {
-		font-size: 32rpx;
+		font-size: 16px;
 		color: #141E34;
-		margin-bottom: 4rpx;
+		margin-bottom: 2px;
 	}
-
+	
 	.tool-name {
-		font-size: 26rpx;
+		font-size: 13px;
 		color: #141E34;
 	}
-
+	
 	.save-btn {
-		width: 160rpx;
-		height: 60rpx;
-		line-height: 60rpx;
+		width: 80px;
+		height: 30px;
+		line-height: 30px;
 		text-align: center;
-		font-size: 26rpx;
-		border: 2rpx solid #e8e8e8;
-		border-radius: 8rpx;
-		margin-right: 40rpx;
+		font-size: 13px;
+		border: 1px solid #e8e8e8;
+		border-radius: 4px;
+		margin-right: 20px;
 	}
-
+	
 	.pub-btn {
-		width: 160rpx;
-		height: 60rpx;
-		line-height: 60rpx;
+		width: 80px;
+		height: 30px;
+		line-height: 30px;
 		text-align: center;
-		font-size: 26rpx;
+		font-size: 13px;
 		color: #FFFFFF;
 		background-color: #ff6100;
-		border-radius: 8rpx;
+		border-radius: 4px;
 	}
-
+	
 	.topic-item {
-		margin: 4rpx 40rpx 4rpx 0;
+		margin: 2px 20px 2px 0;
 	}
-
+	
 	.topic-name {
 		color: #3459AE;
-		font-size: 34rpx;
+		font-size: 17px;
 	}
-
+	
 	.delete-icon {
-		margin-left: 10rpx;
-		font-size: 28rpx;
+		margin-left: 5px;
+		font-size: 14px;
 		color: #BFC4CF;
 	}
-
+	
 	.modify-scroll {
 		width: 95%;
-		padding: 0 68rpx;
-		margin-bottom: 24rpx;
+		padding: 0 34px;
+		margin-bottom: 12px;
 	}
-
+	
 	.modify-item {
-		height: 80rpx;
-		padding: 0 28rpx;
-		border: 2rpx solid #F1F2F5;
-		border-radius: 8rpx;
-		margin-right: 24rpx;
+		height: 40px;
+		padding: 0 14px;
+		border: 1px solid #F1F2F5;
+		border-radius: 4px;
+		margin-right: 12px;
 	}
-
+	
 	.modify-item-image {
-		height: 60rpx;
-		width: 60rpx;
-		border-radius: 8rpx;
-		margin-right: 20rpx;
+		height: 30px;
+		width: 30px;
+		border-radius: 4px;
+		margin-right: 10px;
 	}
-
+	
 	.article-image {
-		width: 220rpx;
-		height: 220rpx;
-		border-radius: 8rpx;
-		margin-right: 32rpx;
+		width: 110px;
+		height: 110px;
+		border-radius: 4px;
+		margin-right: 16px;
 	}
-
+	
 	.image-delete-icon {
 		position: absolute;
-		right: 32rpx;
+		right: 16px;
 		top: 0;
 		background-color: rgba(0, 0, 0, 0.3);
-		border-radius: 4rpx;
+		border-radius: 2px;
 		color: #FFFFFF;
-		font-size: 28rpx;
+		font-size: 14px;
 	}
-
+	
 	.image-scroll-container {
 		width: 900px;
 	}
-
+	
 	.image-upload-status {
 		position: absolute;
 		top: 0;
 		left: 0;
 		z-index: 1;
-		width: 220rpx;
-		height: 220rpx;
-		border-radius: 8rpx;
+		width: 110px;
+		height: 110px;
+		border-radius: 4px;
 		background-color: rgba(0, 0, 0, 0.3);
 		color: #FFFFFF;
-		font-size: 28rpx;
+		font-size: 14px;
 		text-align: center;
-		line-height: 220rpx;
+		line-height: 110px;
 	}
+
 </style>

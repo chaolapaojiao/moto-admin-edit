@@ -135,118 +135,119 @@
 
 <style lang="scss" scoped>
 	.article-card {
-		width: 560rpx;
-		padding: 32rpx;
-		margin: 0 50rpx 0 100rpx;
+		width: 280px;
+		padding: 16px;
+		margin: 0 25px 0 50px;
 		background-color: #FFFFFF;
-		border-radius: 8rpx;
-		box-shadow: 4rpx 8rpx 10rpx 0 rgba(0, 0, 0, 0.08);
+		border-radius: 4px;
+		box-shadow: 2px 4px 5px 0 rgba(0, 0, 0, 0.08);
 	}
-
+	
 	.title {
-		font-size: 28rpx;
+		font-size: 14px;
 		font-weight: bold;
 		color: #141E34;
-		margin: 8rpx 0;
+		margin: 4px 0;
 	}
-
+	
 	.user-avatar {
-		width: 64rpx;
-		height: 64rpx;
+		width: 32px;
+		height: 32px;
 		border-radius: 50%;
-		border: 2rpx solid #f8f8f8;
-		margin-right: 12rpx
+		border: 1px solid #f8f8f8;
+		margin-right: 6px;
 	}
-
+	
 	.user-name {
-		font-size: 24rpx;
+		font-size: 12px;
 		font-weight: 500;
 		color: #141E34;
 	}
-
+	
 	.content {
-		font-size: 28rpx;
+		font-size: 14px;
 		color: #141E34;
-		line-height: 48rpx;
-		margin-bottom: 8rpx;
+		line-height: 24px;
+		margin-bottom: 4px;
 		white-space: normal;
 	}
-
+	
 	.image-item {
-		width: 184rpx;
-		height: 144rpx;
-		border: 2rpx solid #eee;
+		width: 92px;
+		height: 72px;
+		border: 1px solid #eee;
 		background-color: #ddd;
-		border-radius: 8rpx;
-		margin-bottom: 8rpx;
+		border-radius: 4px;
+		margin-bottom: 4px;
 	}
-
+	
 	.card-icon {
-		font-size: 30rpx;
-		margin-right: 4rpx;
+		font-size: 15px;
+		margin-right: 2px;
 	}
-
+	
 	.time {
-		font-size: 22rpx;
+		font-size: 11px;
 		color: #9FA5B4;
 	}
-
+	
 	.circle-name {
-		font-size: 22rpx;
+		font-size: 11px;
 		color: #9FA5B4;
-		margin-left: 12rpx;
+		margin-left: 6px;
 	}
-
+	
 	.line {
 		width: 100%;
-		height: 2rpx;
+		height: 1px;
 		background-color: #eee;
-		margin: 24rpx 0;
+		margin: 12px 0;
 	}
-
+	
 	.image-item-single {
-		width: 240rpx;
-		border: 2px solid #eee;
+		width: 120px;
+		border: 1px solid #eee;
 		background-color: #ddd;
-		border-radius: 8rpx;
-		margin-bottom: 8rpx;
+		border-radius: 4px;
+		margin-bottom: 4px;
 	}
-
+	
 	.vote-container {
-		padding: 20rpx 24rpx 20rpx 24rpx;
+		padding: 10px 12px 10px 12px;
 		background: #F7F8FB;
-		border-radius: 16rrpx;
-		width: 520rpx;
-		margin-bottom: 16rpx;
+		border-radius: 8px;
+		width: 260px;
+		margin-bottom: 8px;
 	}
-
+	
 	.vote-icon {
-		width: 60rpx;
-		height: 32rpx;
+		width: 30px;
+		height: 16px;
 	}
-
+	
 	.vote-title {
-		font-size: 30rpx;
+		font-size: 15px;
 		color: #141E34;
 		font-weight: 500;
-		margin-left: 12rpx;
+		margin-left: 6px;
 	}
-
+	
 	.vote-opiton-item {
-		width: 500rpx;
-		height: 56rpx;
+		width: 250px;
+		height: 28px;
 		background: #FFFFFF;
-		border-radius: 4rpx;
-		margin-top: 16rpx;
-		line-height: 56rpx;
-		padding-left: 24rpx;
-		font-size: 24rpx;
+		border-radius: 2px;
+		margin-top: 8px;
+		line-height: 28px;
+		padding-left: 12px;
+		font-size: 12px;
 		color: #141E34;
-		border: 2rpx solid #EBECEF
+		border: 1px solid #EBECEF;
+	}
+	
+	.card-title {
+		margin: 50px 0 25px 50px;
+		font-size: 14px;
 	}
 
-	.card-title {
-		margin: 100rpx 0 50rpx 100rpx;
-		font-size: 28rpx;
-	}
 </style>

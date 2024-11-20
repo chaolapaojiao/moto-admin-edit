@@ -2,7 +2,7 @@
 	<view style="width: 100%;">
 		<view class="moto-flex-row-left">
 			<view class="card-shadow moto-flex-column-center article-count-card">
-				<view class="moto-flex-row-left" style="margin-bottom: 50rpx;">
+				<view class="moto-flex-row-left" style="margin-bottom: 25px;">
 					<view class="article-card-title">总发布帖数</view>
 					<view class="article-card-count">{{circleArticleCount}}</view>
 				</view>
@@ -19,13 +19,14 @@
 			</view>
 		</view>
 		<view class="article-list-card card-shadow">
-			<view class="moto-flex-row-between" style="margin-bottom: 50rpx;">
-				<view style="font-size: 32rpx;">近期发布</view>
+			<view class="moto-flex-row-between" style="margin-bottom: 25px;">
+				<view style="font-size: 16px;">近期发布</view>
 				<view class="all-record-btn" @click="openArticleRecord">全部记录</view>
 			</view>
 			<view v-for="item in articleList">
 				<article-card :item="item"></article-card>
 			</view>
+			<el-empty v-if="!articleList.length" :image-size="150" />
 		</view>
 	</view>
 </template>
@@ -96,68 +97,69 @@
 
 <style lang="scss">
 	.article-count-card {
-		width: 650rpx;
-		height: 300rpx;
+		width: 325px;
+		height: 150px;
 		background-color: #FFFFFF;
-		margin-right: 50rpx;
-		border-radius: 8rpx;
+		margin-right: 25px;
+		border-radius: 4px;
 		align-items: flex-start;
-		padding-left: 100rpx;
+		padding-left: 50px;
 		box-sizing: border-box;
 	}
-
+	
 	.acount-count-card {
-		width: 1550rpx;
-		height: 300rpx;
+		width: 775px;
+		height: 150px;
 		background-color: #FFFFFF;
-		margin-right: 100rpx;
-		border-radius: 8rpx;
-		padding: 0 200rpx;
+		margin-right: 50px;
+		border-radius: 4px;
+		padding: 0 100px;
 		box-sizing: border-box;
 	}
-
+	
 	.article-list-card {
-		height: 1100rpx;
-		width: 2250rpx;
-		margin-top: 50rpx;
-		border-radius: 8rpx;
+		height: 550px;
+		width: 1125px;
+		margin-top: 25px;
+		border-radius: 4px;
 		background-color: #FFFFFF;
-		padding: 54rpx;
+		padding: 27px;
 		box-sizing: border-box;
 	}
-
+	
 	.article-card-title {
-		font-size: 28rpx;
+		font-size: 14px;
 		color: #666666;
-		margin-right: 100rpx;
+		margin-right: 50px;
 	}
-
+	
 	.article-card-count {
-		font-size: 34rpx;
+		font-size: 17px;
 		font-weight: bold;
 		color: #141E34;
 	}
-
+	
 	.account-card-title {
-		font-size: 30rpx;
+		font-size: 15px;
 		color: #666666;
-		margin-bottom: 20rpx;
+		margin-bottom: 10px;
 	}
-
+	
 	.account-card-count {
-		font-size: 36rpx;
+		font-size: 18px;
 		font-weight: bold;
 		color: #141E34;
 	}
-
+	
 	.all-record-btn {
-		width: 200rpx;
-		height: 70rpx;
-		border: 2rpx solid #bebebe;
-		border-radius: 4rpx;
+		width: 100px;
+		height: 35px;
+		border: 1px solid #bebebe;
+		border-radius: 2px;
 		color: #666666;
 		text-align: center;
-		line-height: 70rpx;
-		font-size: 28rpx;
+		line-height: 35px;
+		font-size: 14px;
 	}
+
 </style>

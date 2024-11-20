@@ -81,62 +81,63 @@
 
 <style lang="scss" scoped>
 	.image-upload {
-		width: 200rpx;
-		height: 200rpx;
+		width: 100px;
+		height: 100px;
 		text-align: center;
-		line-height: 200rpx;
-		font-size: 40rpx;
+		line-height: 100px;
+		font-size: 20px;
 		color: #999;
-		border: 3rpx dashed #eaeaea;
+		border: 1px dashed #eaeaea;
 	}
-
+	
 	.option-title {
-		width: 100rpx;
-		font-size: 28rpx;
+		width: 50px;
+		font-size: 14px;
 		color: #141E34;
 	}
-
+	
 	.line {
 		width: 100%;
-		height: 2rpx;
-		margin: 8rpx 0;
+		height: 1px;
+		margin: 4px 0;
 		background-color: #EBECEF;
 	}
-
+	
 	.input-item {
-		width: 800rpx;
-		height: 60rpx;
-		font-size: 28rpx;
+		width: 400px;
+		height: 30px;
+		font-size: 14px;
 		color: #141E34;
 	}
-
+	
 	.confirm-btn {
-		width: 180rpx;
-		height: 80rpx;
+		width: 90px;
+		height: 40px;
 		text-align: center;
-		line-height: 80rpx;
+		line-height: 40px;
 		background-color: #ff6100;
-		border-radius: 8rpx;
+		border-radius: 4px;
 		color: #FFFFFF;
 		font-weight: 400;
-		margin-top: 40rpx;
+		margin-top: 20px;
 	}
-
+	
 	.modify-image {
-		width: 200rpx;
-		height: 200rpx;
-		border-radius: 8rpx;
+		width: 100px;
+		height: 100px;
+		border-radius: 4px;
 	}
-
+	
 	.status {
 		position: absolute;
 		top: 0;
 		left: 0;
-		height: 200rpx;
-		width: 200rpx;
+		height: 100px;
+		width: 100px;
 		color: #FFFFFF;
 		text-align: center;
-		line-height: 200rpx;
+		line-height: 100px;
 		background-color: rgba(0, 0, 0, 0.4);
 	}
+
 </style>

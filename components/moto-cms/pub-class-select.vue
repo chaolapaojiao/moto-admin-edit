@@ -131,33 +131,33 @@
 
 <style lang="scss">
 	.el-dialog__title {
-		font-size: 34rpx !important;
+		font-size: 17px !important;
 	}
-
+	
 	.class-container {
 		flex-wrap: wrap;
 	}
-
+	
 	.class-item {
-		width: 200rpx;
-		height: 80rpx;
+		width: 100px;
+		height: 40px;
 		text-align: center;
-		line-height: 80rpx;
+		line-height: 40px;
 		background-color: #F8F9FB;
 		color: #141E34;
-		font-size: 28rpx;
-		margin-bottom: 28rpx;
+		font-size: 14px;
+		margin-bottom: 14px;
 	}
-
+	
 	.modify-text {
-		font-size: 26rpx;
+		font-size: 13px;
 		color: #848B9E;
-		margin-bottom: 28rpx;
+		margin-bottom: 14px;
 	}
-
+	
 	.class-item-select {
 		background-color: #FFF6F0 !important;
-		border: 2rpx solid #FF6100;
-
+		border: 1px solid #FF6100;
 	}
+
 </style>

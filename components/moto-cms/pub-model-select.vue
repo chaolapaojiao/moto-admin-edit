@@ -33,14 +33,14 @@
 
 <style lang="scss">
 	.search-btn {
-		width: 120rpx;
-		height: 60rpx;
+		width: 60px;
+		height: 30px;
 		text-align: center;
-		line-height: 60rpx;
+		line-height: 30px;
 		color: #141E34;
 		background-color: #ff6100;
-		border-radius: 8rpx;
-		margin-left: 20rpx;
+		border-radius: 4px;
+		margin-left: 10px;
 		color: #FFFFFF;
 	}
 </style>

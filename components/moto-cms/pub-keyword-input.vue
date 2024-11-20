@@ -1,10 +1,10 @@
 <template>
-	<scroll-view scroll-x style="width: 1000px;padding-left: 50rpx;margin-bottom: 20rpx;padding-top: 20rpx;">
-		<el-tag v-for="tag in relatedLabelList" :key="tag" style="margin-right: 20rpx;" closable
+	<scroll-view scroll-x style="width: 1000px;padding-left: 25px;margin-bottom: 10px;padding-top: 10px;">
+		<el-tag v-for="tag in relatedLabelList" :key="tag" style="margin-right: 10px;" closable
 			:disable-transitions="false" @close="handleClose(tag)">
 			{{ tag }}
 		</el-tag>
-		<el-input v-if="inputVisible" ref="InputRef" v-model="inputValue" style="width: 200rpx;" size="small"
+		<el-input v-if="inputVisible" ref="InputRef" v-model="inputValue" style="width: 100px;" size="small"
 			@keyup.enter="handleInputConfirm" @blur="handleInputConfirm"/>
 		<el-button v-else class="button-new-tag" size="small" @click="showInput">
 			+ 添加关键词
