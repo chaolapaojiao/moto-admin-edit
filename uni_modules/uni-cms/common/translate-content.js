@@ -8,7 +8,6 @@ const hadeFontMap = {
 }
 
 export function translateInputContent(contextList) {
-	console.log(contextList)
 	let htmlContent = ''
 	const contextListGroup = []
 	for (let index = 0; index <= contextList[contextList.length - 1].itemIndex; index++) {
@@ -23,11 +22,15 @@ export function translateInputContent(contextList) {
 					htmlItem +=
 						`<span style="${section.format.style}">${section.context}</span>`
 				} else {
-					htmlItem += `<p><img class="uploaded" image-describe="${section.format.imageDescribe}" src="${section.context}"></img><p>`
+					htmlItem +=
+						`<p><img class="uploaded" image-describe="${section.format.imageDescribe}" src="${section.context}"></img><p>`
 				}
 			})
 		} else {
 			const data = item[0]
+			if (!data) {
+				return
+			}
 			if (data.contextClass === 1) {
 				if (data.format.head) {
 					htmlItem +=
@@ -105,7 +108,8 @@ export function translateOutputContent(list) {
 						styleStr += `text-indent: ${nextItem.attributes.textIndent};`
 					}
 					if (nextItem.attributes?.lineHeight) {
-						styleStr += `line-height: ${nextItem.attributes.lineHeight * fontSizeNumber} + 'px';`
+						styleStr +=
+							`line-height: ${nextItem.attributes.lineHeight.slice(0, 2) * fontSizeNumber} + 'px';`
 					}
 				}
 			}

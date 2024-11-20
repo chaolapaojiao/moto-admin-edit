@@ -626,7 +626,7 @@
 	}
 
 	.editor-container {
-		height: 575px;
+		height: 500px;
 		overflow: scroll;
 		scrollbar-width: none;
 	}

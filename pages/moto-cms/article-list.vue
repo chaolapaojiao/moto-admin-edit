@@ -1,130 +1,144 @@
 <template>
-	<view style="width: 100%;">
-		<view class="moto-flex-row-left">
-			<view class="card-shadow moto-flex-column-center article-count-card">
-				<view class="moto-flex-row-left" style="margin-bottom: 50rpx;">
-					<view class="article-card-title">总发布帖数</view>
-					<view class="article-card-count">123</view>
-				</view>
-				<view class="moto-flex-row-left">
-					<view class="article-card-title">总发浏览数</view>
-					<view class="article-card-count">123</view>
+	<view style="width: 100%;height: 100%;overflow: hidden;">
+		<view class="article-list-card card-shadow">
+			<view class="title">发布记录</view>
+			<view class="moto-flex-row-center" style="margin: 10rpx 0 40rpx 0;">
+				<view class="tab-container">
+					<view class="tab" :class="{'active-tab':nCurrentTab === 0 }" @click="onTabChange(0)">圈子</view>
+					<view class="tab" :class="{'active-tab':nCurrentTab === 1 }" @click="onTabChange(1)">资讯</view>
 				</view>
 			</view>
-			<view class="acount-count-card card-shadow moto-flex-row-between">
-				<view v-for="item in accoutData" class="moto-flex-column-center">
-					<view class="account-card-title">{{item.title}}</view>
-					<view class="account-card-count">{{item.count}}</view>
+			<view style="height: 85%;">
+				<view v-for="(item,index) in tabs[nCurrentTab].data[tabs[nCurrentTab].currentPage]">
+					<article-card @deleteSuccess="onDeleteSuccess" :item="item"></article-card>
 				</view>
+			</view>
+			<view class="moto-flex-row-center">
+				<el-pagination hide-on-single-page size="small" @change="onPageChange" layout="prev, pager, next"
+					:default-page-size="tabs[nCurrentTab].size" :total="tabs[nCurrentTab].total" />
 			</view>
 		</view>
-		<scroll-view class="article-list-card card-shadow"></scroll-view>
 	</view>
 </template>
 
 <script>
+	import articleCard from '@/components/moto-cms/article-card.vue'
 	export default {
+		components: {
+			articleCard
+		},
 		data() {
 			return {
-				pageInfo: {
-					page: 1,
-					size: 10,
-					type: 'CIRCLE'
-				},
-				accoutData: [{
-						title: '粉丝',
-						count: 333
+				tabs: [{
+						type: 0,
+						page: 1,
+						size: 5,
+						currentPage: 1,
+						select: 'CIRCLE',
+						name: '圈子',
+						total: 0,
+						data: []
 					},
 					{
-						title: '获赞',
-						count: 333
+						type: 1,
+						page: 1,
+						size: 5,
+						currentPage: 1,
+						select: 'ARTICLE',
+						name: '资讯',
+						total: 0,
+						data: []
 					},
-					{
-						title: '获评论',
-						count: 333
-					}
 				],
-				tabelData: []
+				nCurrentTab: 0
 			}
 		},
 		onLoad() {
 			this.getPubList()
 		},
 		methods: {
+			onTabChange(tab) {
+				this.nCurrentTab = tab
+				if (tab === 1 && !this.tabs[1].data.length) {
+					this.getPubList()
+				}
+			},
 			getPubList() {
-				getApp().$openApi.motoCms.getPubArticleList(this.pageInfo).then(res => {
+				const tab = this.tabs[this.nCurrentTab]
+				const params = {
+					page: tab.page,
+					size: tab.size,
+					type: tab.select
+				}
+				getApp().$openApi.motoCms.getPubArticleList(params).then(res => {
 					if (res.data.code === 200) {
-						this.tabelData = res.data.data.releaseList
+						tab.total = res.data.data.total
+						tab.data[tab.page] = res.data.data.releaseList
+						tab.page++
 					}
 				})
 			},
-			openEdit(id) {
-				const host = window.location.host
-				console.log(host)
-				if (id) {
-					uni.navigateTo({
-						url: '/pages/moto-cms/article-editor?id=' + id
-					})
-				} else {
-
-					window.open(`http://${host}/pages/moto-cms/article-editor`, '_blank')
+			onPageChange(e) {
+				const tab = this.tabs[this.nCurrentTab]
+				tab.currentPage = e
+				if (!tab.data[tab.currentPage]) {
+					this.getPubList()
+				}
+			},
+			onDeleteSuccess(id) {
+				const tab = this.tabs[this.nCurrentTab]
+				const index = tab.data[tab.currentPage].findIndex(item => item.id === id)
+				if (index !== -1) {
+					tab.data[tab.currentPage].splice(index, 1)
 				}
 			}
 		}
 	}
 </script>
 
-<style lang="scss">
-	.article-count-card {
-		width: 650rpx;
-		height: 300rpx;
-		background-color: #FFFFFF;
-		margin-right: 50rpx;
-		border-radius: 8rpx;
-		align-items: flex-start;
-		padding-left: 100rpx;
-		box-sizing: border-box;
-	}
-
-	.acount-count-card {
-		width: 1550rpx;
-		height: 300rpx;
-		background-color: #FFFFFF;
-		margin-right: 100rpx;
-		border-radius: 8rpx;
-		padding: 0 200rpx;
-		box-sizing: border-box;
-	}
-
+<style lang="scss" scoped>
 	.article-list-card {
-		height: 1100rpx;
-		width: 2250rpx;
-		margin-top: 50rpx;
-		border-radius: 8rpx;
+		width: calc(100% - 50px);
+		height: 100%;
+		margin-top: 20rpx;
+		padding: 50rpx;
 		background-color: #FFFFFF;
+		box-sizing: border-box;
 	}
 
-	.article-card-title {
-		font-size: 28rpx;
-		color: #666666;
-		margin-right: 100rpx;
-	}
-
-	.article-card-count {
+	.title {
 		font-size: 34rpx;
-		font-weight: bold;
-		color: #141E34;
 	}
 
-	.account-card-title {
-		font-size: 30rpx;
-		color: #666666;
-		margin-bottom: 20rpx;
+	.tab-container {
+		padding-left: 6rpx;
+		padding-right: 6rpx;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		height: 56rpx;
+		background: #F6F7FC;
+		font-weight: 400;
+		border-radius: 4rpx;
+		margin-left: 60rpx;
+		width: 240rpx
 	}
 
-	.account-card-count {
-		font-size: 36rpx;
-		font-weight: bold;
-		color: #141E34;
+	.active-tab {
+		background-color: #FFFFFF !important;
+		color: #141E34 !important;
+		border-radius: 2rpx;
+	}
+
+	.tab {
+		padding: 0 24rpx;
+		color: #6F7582;
+		font-size: 28rpx;
+		text-align: center;
+		height: 46rpx;
+		line-height: 46rpx;
+		border-radius: 4rpx;
+		transition: .1s;
 	}
 </style>

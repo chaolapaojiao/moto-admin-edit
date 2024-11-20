@@ -21,7 +21,9 @@ export default function(Quill) {
 							const date = 'moto' + Date.parse(new Date())
 							element.setAttribute('id', date)
 							const inputText = element.getAttribute('image-describe')
-							this.createInput(element, date, inputText)
+							setTimeout(()=>{
+								this.createInput(element, date, inputText)
+							}, 500)
 						}
 						if (element.classList.length <= 0) {
 							element.removeAttribute('class')

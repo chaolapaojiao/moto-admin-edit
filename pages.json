@@ -26,7 +26,6 @@
 		{
 			"path": "pages/moto-cms/rich-article-editor",
 			"style": {
-				"topWindow": false,
 				"leftWindow": false,
 				"navigationBarTitleText": "长图文资讯编辑"
 			}
@@ -34,7 +33,6 @@
 		{
 			"path": "pages/moto-cms/normal-article-editor",
 			"style": {
-				"topWindow": false,
 				"leftWindow": false,
 				"navigationBarTitleText": "动态编辑"
 			}
@@ -43,7 +41,7 @@
 	"topWindow": {
 		"path": "windows/topWindow",
 		"style": {
-			"height": "70px"
+			"height": "60px"
 		},
 		"matchMedia": {
 			"minWidth": 0

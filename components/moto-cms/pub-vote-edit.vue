@@ -40,6 +40,16 @@
 			}
 		},
 		methods: {
+			init() {
+				this.voteTitle = ''
+				this.voteItemList = [{
+						itemText: ''
+					},
+					{
+						itemText: ''
+					}
+				]
+			},
 			addOption() {
 				if (this.voteItemList.length >= 5) {
 					getApp().$Message.warning('最多只能添加5个选项')

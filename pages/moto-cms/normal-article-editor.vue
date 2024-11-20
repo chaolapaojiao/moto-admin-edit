@@ -1,11 +1,11 @@
 <template>
 	<view class="container">
-		<el-row :gutter="20" style="height: 100%;">
-			<el-col :span="6">
+		<el-row :gutter="10" style="height: 100%;">
+			<el-col :span="7">
 				<pub-preview :vote="linkVoteInfo" :circle="linkCircle" :title="articleTitle"
 					:images="imageList.map(item => item.url).slice(0, 3)" :content="articleContent"></pub-preview>
 			</el-col>
-			<el-col :span="17">
+			<el-col :span="16">
 				<view class="editor-container card-shadow">
 					<view style="padding: 32rpx;">
 						<scroll-view :show-scrollbar="false" class="moto-flex-row-left image-scroll-container" scroll-x>
@@ -22,7 +22,7 @@
 							</view>
 						</scroll-view>
 						<view style="height: 30rpx;"></view>
-						<textarea style="font-size: 34rpx;color: #141E34;font-weight: 500;"
+						<textarea style="font-size: 34rpx;color: #141E34;font-weight: 500;width: 100%;"
 							placeholder-style="font-size: 34rpx;font-weight: 400" v-model="articleTitle" auto-height
 							placeholder="请输入文章标题"></textarea>
 						<view class="line"></view>
@@ -177,8 +177,41 @@
 				this.articleId = option.id
 				this.getEditData()
 			}
+			if (option.draftId) {
+				this.draftId = option.draftId
+				this.getDraftInfo()
+			}
 		},
 		methods: {
+			getDraftInfo() {
+				getApp().$openApi.motoCms.getDraftInfo({
+					draftId: this.draftId
+				}).then(res => {
+					if (res.data.code === 200) {
+						const data = JSON.parse(res.data.data.draftData)
+						this.articleTitle = data.articleTitle
+						this.linkCircle = data.linkCircle ? data.linkCircle : null
+						this.linkClass = data.linkClass ? data.linkClass : null
+						this.linkLocation = data.linkLocation ? data.linkLocation : null
+						this.linkModel = data.linkModel ? data.linkModel : null
+						if (this.linkTopicList && this.linkTopicList.length) {
+							this.linkTopicList = data.linkTopicList
+						}
+						this.linkVoteInfo = data.linkVoteInfo
+						this.linkModifyInfo = data.linkModifyInfo
+						data.contentList.forEach((item, index) =>{
+							if(item.contextClass === 1){
+								this.articleContent = item.context
+							}else{
+								this.imageList.push({
+									url: item.context,
+									id: Date.now() + index
+								})
+							}
+						})
+					}
+				})
+			},
 			getEditData() {
 				getApp().$openApi.motoCms.getCircleArticleInfo({
 					articleId: this.articleId
@@ -198,7 +231,6 @@
 						}
 						if (data.location) {
 							this.linkLocation = data.location
-							console.log(this.linkLocation)
 						}
 						if (data.linkClass) {
 							this.linkClass = {
@@ -377,7 +409,7 @@
 				this.$refs['circle-select'].dialogVisible = true
 			},
 			saveDraft() {
-				const imageUrlList = this.imageList.map(item =>{
+				const imageUrlList = this.imageList.map(item => {
 					return {
 						contextClass: 2,
 						context: item.url
@@ -426,8 +458,9 @@
 	}
 
 	.editor-container {
-		width: 950px;
-		height: 100%;
+		margin-top: 5px;
+		width: 850px;
+		height: calc(100% - 10px);
 		background-color: #FFFFFF;
 		box-sizing: border-box;
 		padding-top: 20rpx;
@@ -481,7 +514,7 @@
 	}
 
 	.tool-container {
-		width: 950px;
+		width: 850px;
 		box-shadow: 0 -2rpx 5rpx 0 rgba(0, 0, 0, 0.05);
 		height: 180rpx;
 		padding: 28rpx 68rpx 0 68rpx;

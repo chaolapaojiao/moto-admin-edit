@@ -459,7 +459,13 @@
 				this.quill.on(Quill.events.TEXT_CHANGE, async (delta, oldDelta, source) => {
 					const nodes = (await this.getEditorContext().getContents()).delta.ops
 					const images = nodes.filter(item => item.insert.image).map(item => item.insert.image)
-					const content = nodes.find(item => item.insert && typeof item.insert === 'string').insert
+					let content = ''
+					for(let index in nodes){
+						const data = nodes[index]
+						if(nodes[index] && nodes[index].insert !== '\n'){
+							content += nodes[index].insert
+						}
+					}
 					const text = this.quill.getText().replace(/\n/g, '')
 					this.$emit('textchange', {
 						detail: text.length,

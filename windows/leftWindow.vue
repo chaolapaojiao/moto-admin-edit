@@ -2,7 +2,7 @@
 	<view class="sidebar-container moto-flex-row-left">
 		<view class="moto-flex-column-center" style="margin-left: 25px;">
 			<view class="pub-btn" @click="choosePubType">创作内容</view>
-			<el-menu class="sidebar" default-active="1-1" @select="onSelect" active-text-color="#ff6100">
+			<el-menu class="sidebar" :default-active="activeMenu" @select="onSelect" active-text-color="#ff6100">
 				<template v-for="(item, index) in menuList">
 					<el-sub-menu :index="item.index" v-if="item.isGroup">
 						<template #title>
@@ -13,10 +13,12 @@
 						</template>
 						<el-menu-item-group style="background-color: transparent;">
 							<el-menu-item v-for="menu in item.childrenMenu" :index="item.index + '-' + menu.index">
-								<view style="font-size: 26rpx"
+								<view style="width: 100%;padding-left: 100rpx;"
 									:style="{color: activeMenu === (item.index + '-' + menu.index) ? '#ff6100' : '#717171'}"
 									@click="openLinkUrl(menu)">
-									{{menu.name}}
+									<view style="font-size: 26rpx;">
+										{{menu.name}}
+									</view>
 								</view>
 							</el-menu-item>
 						</el-menu-item-group>
@@ -67,7 +69,7 @@
 						childrenMenu: [{
 								name: '评论',
 								index: '1',
-								linkUrl: '/pages/moto-cms/article-draft'
+								linkUrl: ''
 							},
 							{
 								name: '点赞',
@@ -82,7 +84,22 @@
 				]
 			}
 		},
+		mounted() {
+			uni.$on('pageChange', this.onPageChange)
+		},
 		methods: {
+			onPageChange(e){
+				for(let index in this.menuList){
+					const mneu = this.menuList[index]
+					const data = mneu.childrenMenu
+					for(let tabIndex in data){
+						if(data[tabIndex].linkUrl == e){
+							this.activeMenu = this.menuList[index].index + '-' + data[tabIndex].index
+						}
+					}
+				}
+				
+			},
 			onSelect(e) {
 				this.activeMenu = e
 			},
@@ -128,6 +145,7 @@
 		height: 80rpx !important;
 		width: 100%;
 		background-color: #f8f8f8;
+		padding: 0!important;
 	}
 
 	.menu-icon {

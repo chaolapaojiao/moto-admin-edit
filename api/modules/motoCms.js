@@ -145,9 +145,67 @@ function pubNews(data) {
 
 // 删除动态
 function delCirclelArticle(data) {
+	const {
+		timestamp,
+		signature
+	} = paramsEncryption(data)
+	data.timestamp = timestamp
+	data.signature = signature
 	return http.delete('motorCircle/delCirclelArticle', {
 		params: data
 	})
+}
+
+// 草稿列表
+function getDraftList(data) {
+	const {
+		timestamp,
+		signature
+	} = paramsEncryption(data)
+	data.timestamp = timestamp
+	data.signature = signature
+	return http.get('common/getDraftList', {
+		params: data
+	})
+}
+
+// 删除草稿
+function delDrafts(data) {
+	let {
+		timestamp,
+		signature
+	} = paramsEncryption({
+		draftIds: data.draftIds.join(',')
+	})
+	data.timestamp = timestamp
+	data.signature = signature
+	signature = signature.replace(/\+/g, '%2B')
+	return http.delete(`common/delDrafts?draftIds=${data.draftIds}&timestamp=${timestamp}&signature=${signature}`)
+}
+
+// 获取草稿详情
+function getDraftInfo(data) {
+	const {
+		timestamp,
+		signature
+	} = paramsEncryption(data)
+	data.timestamp = timestamp
+	data.signature = signature
+	return http.get('common/getDraftInfo', {
+		params: data
+	})
+}
+
+// 输出资讯文章
+function deleteNews(articleId) {
+	let {
+		timestamp,
+		signature
+	} = paramsEncryption({
+		articleId: articleId
+	})
+	signature = signature.replace(/\+/g, '%2B')
+	return http.delete(`/motorArticle/delArticle?articleId=${articleId}&timestamp=${timestamp}&signature=${signature}`)
 }
 export default {
 	getPubArticleList,
@@ -162,5 +220,9 @@ export default {
 	createTopic,
 	saveDraft,
 	pubNews,
-	delCirclelArticle
+	delCirclelArticle,
+	getDraftList,
+	delDrafts,
+	getDraftInfo,
+	deleteNews
 }

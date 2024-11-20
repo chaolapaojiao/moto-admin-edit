@@ -1,5 +1,5 @@
 <template>
-	<view class="moto-flex-row-center" style="height: 100%;">
+	<view style="height: 100%;overflow: hidden;">
 		<view class="article-card">
 			<view class="moto-flex-row-left">
 				<image class="user-avatar" :src="articleData.authorInfo.avatarUrl"></image>
@@ -133,17 +133,10 @@
 </script>
 
 <style lang="scss" scoped>
-	.content-contanier {
-		height: 1500px;
-		width: 720rpx;
-		background-color: #FFFFFF;
-		border-radius: 120rpx;
-		padding: 80rpx 24rpx 0 32rpx;
-	}
-
 	.article-card {
 		width: 560rpx;
 		padding: 32rpx;
+		margin: 150rpx 50rpx 0 120rpx;
 		background-color: #FFFFFF;
 		border-radius: 8rpx;
 		box-shadow: 4rpx 8rpx 10rpx 0 rgba(0, 0, 0, 0.08);

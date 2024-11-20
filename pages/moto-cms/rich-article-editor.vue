@@ -1,11 +1,11 @@
 <template>
 	<view>
-		<el-row :gutter="20">
-			<el-col :span="6">
-				<pub-preview :vote="linkVoteInfo" :circle="linkCircle" :title="articleTitle" :images="articleImageList"
-					:content="articleContent"></pub-preview>
+		<el-row :gutter="10">
+			<el-col :span="7">
+				<pub-preview :vote="linkVoteInfo" :circle="linkCircle" :title="articleTitle"
+					:images="articleImageList.slice(0, 3)" :content="articleContent"></pub-preview>
 			</el-col>
-			<el-col :span="17">
+			<el-col :span="16">
 				<view class="forms-container card-shadow">
 					<view style="padding: 30px 40px 0 40px">
 						<view class="title">
@@ -25,7 +25,7 @@
 							@ready="onEditorReady"></editor-component>
 					</view>
 					<pub-keyword-input :relatedLabelList.sync="relatedLabelList"
-						v-if="articleType === 'ARTICLE'"></pub-keyword-input>
+						v-if="articleType === 'ARTICLE'" ref="pub-keyword-input"></pub-keyword-input>
 					<view class="moto-flex-row-left" style="padding: 0 34px;margin-bottom: 12px;"
 						v-if="articleType === 'CIRCLE_BIG_ARTICLE'">
 						<view v-if="linkClass" class="moto-flex-row-left" style="margin-right: 20px;">
@@ -160,7 +160,7 @@
 			return {
 				systemInfo: uni.getSystemInfoSync(),
 				formData,
-				articleType: 'ARTICLE',
+				articleType: 'CIRCLE_BIG_ARTICLE',
 				wordCount: 0,
 				articleTitle: '',
 				articleId: null,
@@ -214,6 +214,10 @@
 			if (e.type) {
 				this.articleType = e.type
 			}
+			if (e.draftId) {
+				this.draftId = e.draftId
+				this.getDraftInfo()
+			}
 		},
 		mounted() {
 			const sysinfo = uni.getSystemInfoSync()
@@ -221,6 +225,28 @@
 			this.$refs.editorComponents.parseHtml(html)
 		},
 		methods: {
+			getDraftInfo() {
+				getApp().$openApi.motoCms.getDraftInfo({
+					draftId: this.draftId
+				}).then(res => {
+					if (res.data.code === 200) {
+						const data = JSON.parse(res.data.data.draftData)
+						console.log(data)
+						this.articleTitle = data.articleTitle
+						this.linkCircle = data.linkCircle ? data.linkCircle : null
+						this.linkClass = data.linkClass ? data.linkClass : null
+						this.linkLocation = data.linkLocation ? data.linkLocation : null
+						this.linkModel = data.linkModel ? data.linkModel : null
+						if (this.linkTopicList && this.linkTopicList.length) {
+							this.linkTopicList = data.linkTopicList
+						}
+						this.linkVoteInfo = data.linkVoteInfo
+						this.linkModifyInfo = data.linkModifyInfo
+						const htmlContent = translateInputContent(data.contentList)
+						this.$refs.editorComponents.parseHtml(htmlContent)
+					}
+				})
+			},
 			onToolsClick(item) {
 				if (item.type === 'topic') {
 					if (this.linkTopicList.length >= 5) {
@@ -284,6 +310,7 @@
 				getApp().$openApi.motoCms.getCircleArticleInfo({
 					articleId: id
 				}).then(res => {
+					console.log(res)
 					if (res.data.code === 200) {
 						const data = res.data.data
 						this.articleTitle = data.articleTitle
@@ -366,6 +393,12 @@
 				} else {
 					postData.articleClass = 0
 				}
+				if (this.articleId) {
+					postData.articleId = this.articleId
+				}
+				if (this.draftId) {
+					postData.draftId = this.draftId
+				}
 				uni.showLoading({
 					title: '发布中',
 					icon: 'none'
@@ -375,9 +408,10 @@
 					if (res.data.code === 200) {
 						getApp().$Message.success('发布成功')
 						this.linkClass = null
-						this.title = ''
+						this.articleTitle = ''
 						this.relatedLabelList = []
 						this.$refs.editorComponents.parseHtml('')
+						this.$refs['pub-keyword-input'].inputVisible = false
 					}
 				})
 			},
@@ -403,6 +437,9 @@
 				}
 				if (this.articleId) {
 					postData.articleId = this.articleId
+				}
+				if (this.draftId) {
+					postData.draftId = this.draftId
 				}
 				if (this.linkCircle) {
 					postData.circleId = this.linkCircle.circleId
@@ -445,6 +482,8 @@
 								editFlag: false,
 								modifyItemList: []
 							}
+							this.$refs['vote-edit'].init()
+							this.$refs['modify-edit'].init()
 						}
 					})
 			},
@@ -464,7 +503,7 @@
 							linkModifyInfo: this.linkModifyInfo
 						}
 						const postData = {
-							articleType: "CIRCLE_BIG_ARTICLE",
+							articleType: this.articleType,
 							draftData: JSON.stringify(content),
 							draftId: this.draftId
 						}
@@ -482,7 +521,8 @@
 				})
 			},
 			onTextChange(e) {
-				// this.articleImageList = e.images
+				console.log(e)
+				this.articleImageList = e.images
 				this.articleContent = e.content
 				this.wordCount = e.detail
 				// 自动保存
@@ -535,9 +575,6 @@
 
 				this.formData.thumbnail = newThumbnail
 				this.autoGetCover = false
-			},
-			async previewArticle() {
-
 			}
 		}
 	}
@@ -615,6 +652,7 @@
 	.forms-container {
 		margin-top: 80rpx;
 		background-color: #FFFFFF;
+		width: 90%;
 	}
 
 	.tool-container {

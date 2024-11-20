@@ -14,6 +14,7 @@ function paramsEncryption(data, type = 'get') {
 		objectStr = 'body' + '=' + jsonStr + '&'
 	} else {
 		const sortData = cleanAndSort(data)
+
 		for (let key in sortData) {
 			if (typeof sortData[key] === 'object' && isArray(sortData[key])) {
 				dataStr += key + '=' + JSON.stringify(sortData[key]) + '&'

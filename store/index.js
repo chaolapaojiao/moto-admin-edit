@@ -2,7 +2,8 @@ import {
 	createStore
 } from 'vuex'
 const state = {
-	userInfo: uni.getStorageSync('userInfo')
+	userInfo: uni.getStorageSync('userInfo'),
+	topBg: '#f8f8f8'
 }
 
 const mutations = {
@@ -10,6 +11,9 @@ const mutations = {
 		state.userInfo = userInfo
 		uni.setStorageSync('userInfo', userInfo)
 		uni.setStorageSync('moto-pc-token', userInfo.token)
+	},
+	setTopBg(state, bg){
+		state.topBg = bg
 	}
 }
 export default createStore({
