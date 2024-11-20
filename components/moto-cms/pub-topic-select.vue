@@ -6,7 +6,7 @@
 			<view class="search-btn" @click="confirmSearch">搜索</view>
 		</view>
 		<scroll-view :show-scrollbar="false" scroll-y class="scroll-container" v-if="showSearch">
-			<view v-for="item in searchInfo.data" style="margin-bottom: 8px;" class="moto-flex-row-between"
+			<view v-for="item in searchInfo.data" style="margin-bottom: 30rpx;" class="moto-flex-row-between"
 				@click="selectTopic(item)">
 				<view class="moto-flex-row-left">
 					<view class="iconv2" style="font-size: 16px;color: #FF6100">&#xe71c;</view>

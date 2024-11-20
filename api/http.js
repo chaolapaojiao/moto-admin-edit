@@ -42,7 +42,8 @@ let requestConfig = {
 http.config = requestConfig
 
 http.interceptors.request.use((config) => {
-	if (store.state.userInfo) {
+	const token = uni.getStorageInfoSync('moto-pc-token')
+	if (token) {
 		config.header = {
 			"token": store.state.userInfo.token
 		}
