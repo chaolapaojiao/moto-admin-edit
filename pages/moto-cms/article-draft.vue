@@ -3,7 +3,7 @@
 		<view class="moto-flex-row-left card-list-container">
 			<view v-if="pageInfo.currentPage === 1" class="article-card card-shadow moto-flex-column-center"
 				@click="choosePubType">
-				<view class="iconv2" style="font-size: 50rpx;margin-bottom: 10rpx;">&#xe6e0;</view>
+				<view class="iconv2" style="font-size: 25px;margin-bottom: 5px;">&#xe6e0;</view>
 				<view>发布动态</view>
 			</view>
 			<view v-for="(item, index) in draftList[pageInfo.currentPage]" class="article-card card-shadow">
@@ -13,11 +13,11 @@
 				<view class="article-type" v-if="item.articleType === 'CIRCLE_BIG_ARTICLE'">长图文</view>
 				<view class="article-type" v-if="item.articleType === 'ARTICLE'">资讯</view>
 				<view class="article-type" v-if="item.articleType === 'CIRCLE'">动态</view>
-				<view style="padding: 10rpx 24rpx;">
+				<view style="padding: 5px 12px;">
 					<view class="draft-title moto-lines-1" :style="{color: item.title ? '' : '#BFC4CF'}">
 						{{item.title ? item.title : '暂无标题'}}
 					</view>
-					<view style="color:#BFC4CF;font-size: 24rpx;">{{item.timeStr}}</view>
+					<view style="color:#BFC4CF;font-size: 12px;">{{item.timeStr}}</view>
 				</view>
 				<view class="moto-flex-row-left btn-contaniner">
 					<view class="btn" @click="deleteDraft(item, index)">删除</view>
@@ -116,7 +116,7 @@
 		position: relative;
 		width: calc(100% - 50px);
 		height: 100%;
-		padding: 80rpx;
+		padding: 40px;
 		box-sizing: border-box;
 	}
 
@@ -124,11 +124,11 @@
 		position: relative;
 		flex-shrink: 0;
 		width: 26%;
-		height: 320rpx;
+		height: 160px;
 		background-color: #FFFFFF;
-		margin-right: 120rpx;
-		margin-bottom: 120rpx;
-		border-radius: 12rpx;
+		margin-right: 60px;
+		margin-bottom: 60px;
+		border-radius: 6px;
 		overflow: hidden;
 	}
 
@@ -136,51 +136,52 @@
 		height: 95%;
 		flex-wrap: wrap;
 		align-items: flex-start;
-		margin-left: 140rpx;
+		align-content: flex-start;
+		margin-left: 70px;
 		width: 100%;
 	}
 
 	.draft-image {
 		width: 100%;
-		height: 200rpx;
+		height: 100px;
 	}
 
 	.draft-title {
-		font-size: 28rpx;
+		font-size: 14px;
 		width: 100%;
-		margin-bottom: 6rpx;
+		margin-bottom: 3px;
 	}
 
 	.no-image {
 		width: 100%;
-		height: 200rpx;
+		height: 100px;
 		background-color: #F7F8FB;
 		color: #BFC4CF;
-		font-size: 28rpx;
+		font-size: 14px;
 	}
 
 	.btn-contaniner {
 		position: absolute;
-		bottom: 10rpx;
-		right: 10rpx;
+		bottom: 5px;
+		right: 5px;
 	}
 
 	.btn {
-		padding: 4rpx 10rpx;
-		border: 2rpx solid #eee;
-		border-radius: 4rpx;
-		font-size: 22rpx;
-		margin-right: 10rpx;
+		padding: 2px 5px;
+		border: 1px solid #eee;
+		border-radius: 2px;
+		font-size: 11px;
+		margin-right: 5px;
 	}
 
 	.article-type {
 		position: absolute;
 		top: 0;
 		left: 0;
-		padding: 2rpx 6rpx;
-		font-size: 18rpx;
+		padding: 2px 6px;
+		font-size: 9px;
 		color: #FFFFFF;
 		background-color: rgba(255, 97, 0, 0.8);
-		border-bottom-right-radius: 8rpx;
+		border-bottom-right-radius: 4px;
 	}
 </style>

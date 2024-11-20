@@ -1,9 +1,9 @@
 <template>
-	<view class="moto-flex-row-between" style="margin-bottom: 80rpx;">
+	<view class="moto-flex-row-between" style="margin-bottom: 40px;">
 		<view class="moto-flex-row-left">
 			<view class="pub-time">{{item.time}}</view>
 			<image mode="aspectFill" class="article-image" :src="item.imageUrl"></image>
-			<view style="margin-left: 64rpx;">
+			<view style="margin-left: 32px;">
 				<view style="margin-bottom: 20px;">
 					<view class="moto-flex-row-left">
 						<view class="article-title">{{item.title}}</view>
@@ -14,11 +14,11 @@
 					<view class="article-type" v-else>动态</view>
 				</view>
 				<view class="moto-flex-row-left">
-					<view class="moto-flex-row-left" style="margin-right: 40rpx;">
+					<view class="moto-flex-row-left" style="margin-right: 20px;">
 						<view class="iconv2 data-icon">&#xe775;</view>
 						<view class="data-count">{{getCountNumber(item.browseCount)}}</view>
 					</view>
-					<view class="moto-flex-row-left" style="margin-right: 40rpx;">
+					<view class="moto-flex-row-left" style="margin-right: 20px;">
 						<view class="iconv2 data-icon">&#xe644;</view>
 						<view class="data-count">{{getCountNumber(item.likeCount)}}</view>
 					</view>
@@ -91,71 +91,72 @@
 <style lang="scss" scoped>
 	.pub-time {
 		color: #666666;
-		font-size: 32rpx;
-		width: 250rpx;
+		font-size: 16px;
+		width: 125px;
 	}
-
+	
 	.article-image {
-		width: 200rpx;
-		height: 150rpx;
-		border-radius: 8rpx;
+		width: 100px;
+		height: 75px;
+		border-radius: 4px;
 	}
-
+	
 	.article-title {
 		color: #666666;
-		font-size: 32rpx;
+		font-size: 16px;
 	}
-
+	
 	.data-icon {
 		color: #666666;
-		font-size: 30rpx;
-		margin-right: 8rpx;
+		font-size: 15px;
+		margin-right: 4px;
 	}
-
+	
 	.data-count {
 		color: #666666;
-		font-size: 28rpx;
+		font-size: 14px;
 	}
-
+	
 	.edit-btn {
-		width: 100rpx;
-		height: 50rpx;
-		border: 1rpx solid #bebebe;
-		border-radius: 4rpx;
+		width: 50px;
+		height: 25px;
+		border: 0.5px solid #bebebe;
+		border-radius: 2px;
 		color: #141E34;
 		text-align: center;
-		line-height: 50rpx;
-		font-size: 24rpx;
-		margin-right: 30rpx;
+		line-height: 25px;
+		font-size: 12px;
+		margin-right: 15px;
 	}
-
+	
 	.article-status {
-		font-size: 28rpx;
+		font-size: 14px;
 		font-weight: bold;
 		color: #9FA5B4;
-		margin-left: 20px;
+		margin-left: 10px;
 	}
-
+	
 	.article-type {
-		font-size: 20rpx;
+		font-size: 10px;
 		background-color: RGBA(255, 97, 0, 0.5);
-		width: 80rpx;
-		height: 32rpx;
-		line-height: 32rpx;
+		width: 40px;
+		height: 16px;
+		line-height: 16px;
 		text-align: center;
-		border-radius: 4rpx;
+		border-radius: 2px;
 		color: #FFFFFF;
+	}
+	
+	.delete-btn {
+		width: 50px;
+		height: 25px;
+		background-color: #ff6100;
+		border: 0.5px solid #bebebe;
+		border-radius: 2px;
+		color: #FFFFFF;
+		text-align: center;
+		line-height: 25px;
+		font-size: 12px;
 	}
 
-	.delete-btn {
-		width: 100rpx;
-		height: 50rpx;
-		background-color: #ff6100;
-		border: 1rpx solid #bebebe;
-		border-radius: 4rpx;
-		color: #FFFFFF;
-		text-align: center;
-		line-height: 50rpx;
-		font-size: 24rpx;
-	}
 </style>

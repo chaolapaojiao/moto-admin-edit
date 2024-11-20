@@ -2,7 +2,7 @@
 	<view style="width: 100%;height: 100%;overflow: hidden;">
 		<view class="article-list-card card-shadow">
 			<view class="title">发布记录</view>
-			<view class="moto-flex-row-center" style="margin: 10rpx 0 40rpx 0;">
+			<view class="moto-flex-row-center" style="margin: 5px 0 20px 0;">
 				<view class="tab-container">
 					<view class="tab" :class="{'active-tab':nCurrentTab === 0 }" @click="onTabChange(0)">圈子</view>
 					<view class="tab" :class="{'active-tab':nCurrentTab === 1 }" @click="onTabChange(1)">资讯</view>
@@ -12,6 +12,7 @@
 				<view v-for="(item,index) in tabs[nCurrentTab].data[tabs[nCurrentTab].currentPage]">
 					<article-card @deleteSuccess="onDeleteSuccess" :item="item"></article-card>
 				</view>
+				<el-empty v-if="!tabs[nCurrentTab].total" :image-size="150" />
 			</view>
 			<view class="moto-flex-row-center">
 				<el-pagination hide-on-single-page size="small" @change="onPageChange" layout="prev, pager, next"
@@ -100,45 +101,45 @@
 	.article-list-card {
 		width: calc(100% - 50px);
 		height: 100%;
-		margin-top: 20rpx;
-		padding: 50rpx;
+		margin-top: 10px;
+		padding: 25px;
 		background-color: #FFFFFF;
 		box-sizing: border-box;
 	}
 
 	.title {
-		font-size: 34rpx;
+		font-size: 17px;
 	}
 
 	.tab-container {
-		padding-left: 6rpx;
-		padding-right: 6rpx;
+		padding-left: 3px;
+		padding-right: 3px;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
-		height: 56rpx;
+		height: 28px;
 		background: #F6F7FC;
 		font-weight: 400;
-		border-radius: 4rpx;
-		margin-left: 60rpx;
-		width: 240rpx
+		border-radius: 2px;
+		margin-left: 30px;
+		width: 120px;
 	}
 
 	.active-tab {
 		background-color: #FFFFFF !important;
 		color: #141E34 !important;
-		border-radius: 2rpx;
+		border-radius: 1px;
 	}
 
 	.tab {
-		padding: 0 24rpx;
+		padding: 0 12px;
 		color: #6F7582;
-		font-size: 28rpx;
+		font-size: 14px;
 		text-align: center;
-		height: 46rpx;
-		line-height: 46rpx;
-		border-radius: 4rpx;
-		transition: .1s;
+		height: 23px;
+		line-height: 23px;
+		border-radius: 2px;
+		transition: 0.1s;
 	}
 </style>
