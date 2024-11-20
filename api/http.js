@@ -5,7 +5,7 @@ const host = "/devHost"
 let requestConfig = {
 	baseURL: host,
 	header: {
-		// token: uni.getStorageSync('token') !== undefined ? uni.getStorageSync('token') : ''
+		token: store.state.token
 	},
 	method: 'GET',
 	dataType: 'json',
@@ -41,11 +41,14 @@ let requestConfig = {
 }
 http.config = requestConfig
 
-
-http.config.header.token = store.state.userInfo?.token
-// http.config.header.token = 'ZSYd47ddXcuY/rCY2YT0cg=='
-
-
+http.interceptors.request.use((config) => {
+	if (store.state.userInfo) {
+		config.header = {
+			"token": store.state.userInfo.token
+		}
+	}
+	return config
+})
 http.interceptors.response.use((response) => {
 	/* 对响应成功做点什么 可使用async await 做异步操作*/
 	//  if (response.data.code !== 200) { // 服务端返回的状态码不等于200，则reject()
@@ -59,12 +62,10 @@ http.interceptors.response.use((response) => {
 			icon: 'none'
 		})
 	} else if (response.data.code === 406) {
-		// 未登录
-		// console.log('接口返回没有登录或没有token', response);
-		// getApp().$openApi.logout()
-		// getApp().$openApi.startLogin()
-
-
+		getApp().$Message.warning('暂未登录或登录已过期')
+		uni.navigateTo({
+			url: '/pages/login/login'
+		})
 	} else if (response.data.code === 407) {
 		uni.showToast({
 			title: '该账号已注销，暂时无法登录',
@@ -84,20 +85,10 @@ http.interceptors.response.use((response) => {
 			}
 		})
 	} else if (response.data.code !== 200 && process.env.NODE_ENV !== 'production') {
-		let data = response.data
-		if(typeof data == 'string'){
-			data = JSON.parse(response.data)
-		}
-		if(data.code == 406){
-			getApp().$Message.warning('登录已过期')
-			uni.navigateTo({
-				url:'/pages/login/login'
-			})
-		}
-		// uni.showToast({
-		// 	title: response.data.code + response.data.message,
-		// 	icon: 'none'
-		// })
+		uni.showToast({
+			title: response.data.code + response.data.message,
+			icon: 'none'
+		})
 	}
 
 	return response
