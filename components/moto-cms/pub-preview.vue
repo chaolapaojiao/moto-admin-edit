@@ -1,5 +1,6 @@
 <template>
 	<view style="height: 100%;overflow: hidden;">
+		<view class="card-title">预览卡片</view>
 		<view class="article-card">
 			<view class="moto-flex-row-left">
 				<image class="user-avatar" :src="articleData.authorInfo.avatarUrl"></image>
@@ -136,7 +137,7 @@
 	.article-card {
 		width: 560rpx;
 		padding: 32rpx;
-		margin: 150rpx 50rpx 0 120rpx;
+		margin: 0 50rpx 0 100rpx;
 		background-color: #FFFFFF;
 		border-radius: 8rpx;
 		box-shadow: 4rpx 8rpx 10rpx 0 rgba(0, 0, 0, 0.08);
@@ -242,5 +243,10 @@
 		font-size: 24rpx;
 		color: #141E34;
 		border: 2rpx solid #EBECEF
+	}
+
+	.card-title {
+		margin: 100rpx 0 50rpx 100rpx;
+		font-size: 28rpx;
 	}
 </style>

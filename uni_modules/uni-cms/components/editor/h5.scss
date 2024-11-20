@@ -1,9 +1,9 @@
 .editor {
 	padding-top: 8px;
 	::v-deep .ql-container {
-		min-height: 490px;
+		min-height: 470px;
 		height: auto;
-		overflow-y: auto;
+		overflow-y: hidden;
 	}
 }
 
