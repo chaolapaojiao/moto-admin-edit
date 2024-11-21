@@ -61,7 +61,7 @@
 					readOnly: false, // 可编辑
 					debug: false, // 关闭调试模式
 					placeholder: '输入内容', // 占位符
-					scrollingContainer: 'html,body', // 滚动容器
+					scrollingContainer: '.editor-container', // 滚动容器
 					scrollingConfig: {
 						boundHeight: window.innerHeight - 100
 					},

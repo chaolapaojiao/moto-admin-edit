@@ -1,6 +1,6 @@
 <template>
-	<view style="width: 100%;">
-		<view class="moto-flex-row-left">
+	<view style="width: 100%;height: 100%;">
+		<view class="moto-flex-row-left" style="height: 20%;width: 100%;">
 			<view class="card-shadow moto-flex-column-center article-count-card">
 				<view class="moto-flex-row-left" style="margin-bottom: 25px;">
 					<view class="article-card-title">总发布帖数</view>
@@ -97,8 +97,8 @@
 
 <style lang="scss">
 	.article-count-card {
-		width: 325px;
-		height: 150px;
+		width: 40%;
+		height: 100%;
 		background-color: #FFFFFF;
 		margin-right: 25px;
 		border-radius: 4px;
@@ -108,8 +108,8 @@
 	}
 	
 	.acount-count-card {
-		width: 775px;
-		height: 150px;
+		width: 55%;
+		height: 100%;
 		background-color: #FFFFFF;
 		margin-right: 50px;
 		border-radius: 4px;
@@ -118,8 +118,8 @@
 	}
 	
 	.article-list-card {
-		height: 550px;
-		width: 1125px;
+		height: 75%;
+		width: calc(95% + 10px);
 		margin-top: 25px;
 		border-radius: 4px;
 		background-color: #FFFFFF;

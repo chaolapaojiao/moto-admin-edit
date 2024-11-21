@@ -64,6 +64,7 @@
 				getApp().$openApi.motoCms.getDraftList(params).then(res => {
 					if (res.data.code === 200) {
 						const data = res.data.data.draftList
+						console.log(data)
 						this.pageInfo.total = data.total
 						this.draftList[this.pageInfo.page] = data.dataList
 						this.pageInfo.page++

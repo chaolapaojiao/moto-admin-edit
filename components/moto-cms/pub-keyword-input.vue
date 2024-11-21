@@ -38,7 +38,7 @@
 					tags.push(this.inputValue)
 					this.$emit('update:relatedLabelList', tags)
 				}
-				this.showInput = false
+				this.inputVisible = false
 				this.inputValue = ''
 			},
 			showInput() {

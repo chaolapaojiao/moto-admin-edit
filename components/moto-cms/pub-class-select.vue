@@ -22,6 +22,12 @@
 
 <script>
 	export default {
+		props: {
+			linkClass: {
+				type: Object,
+				default: () => ({})
+			}
+		},
 		data() {
 			return {
 				dialogVisible: false,
@@ -112,6 +118,7 @@
 				if (item.articleClass !== 1003) {
 					this.$emit('classSelect', item)
 					this.dialogVisible = false
+					this.showModify = false
 				} else {
 					this.showModify = true
 				}
@@ -125,6 +132,23 @@
 				})
 				this.dialogVisible = false
 			}
+		},
+		watch: {
+			linkClass() {
+				if (this.linkClass?.articleClass) {
+					this.currentSelect = this.linkClass.articleClass
+					if (this.linkClass.modifyClass) {
+						this.showModify = true
+						this.currentModifySelect = this.linkClass.modifyClass
+					} else {
+						this.showModify = false
+						this.currentModifySelect = ''
+					}
+				} else {
+					this.currentSelect = ''
+					this.showModify = false
+				}
+			}
 		}
 	}
 </script>
@@ -133,11 +157,11 @@
 	.el-dialog__title {
 		font-size: 17px !important;
 	}
-	
+
 	.class-container {
 		flex-wrap: wrap;
 	}
-	
+
 	.class-item {
 		width: 100px;
 		height: 40px;
@@ -148,16 +172,15 @@
 		font-size: 14px;
 		margin-bottom: 14px;
 	}
-	
+
 	.modify-text {
 		font-size: 13px;
 		color: #848B9E;
 		margin-bottom: 14px;
 	}
-	
+
 	.class-item-select {
 		background-color: #FFF6F0 !important;
 		border: 1px solid #FF6100;
 	}
-
 </style>

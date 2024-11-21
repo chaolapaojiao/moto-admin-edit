@@ -49,6 +49,10 @@
 				return number >= 1000 ? ((number / 1000).toFixed(1) + 'k') : number
 			},
 			openEdit(item) {
+				if(item.type !== 'CIRCLE' && item.platform === 1){
+					getApp().$Message.warning('该文章不支持在pc端修改')
+					return
+				}
 				const host = window.location.host
 				if (item.type === 'CIRCLE_BIG_ARTICLE') {
 					window.open(`http://${host}/pages/moto-cms/rich-article-editor?id=${item.id}&type=CIRCLE_BIG_ARTICLE`,
@@ -77,7 +81,8 @@
 								getApp().$openApi.motoCms.delCirclelArticle({
 									articleId: item.id
 								}).then(res => {
-									console.log(res)
+									getApp().$Message.success('删除成功')
+									this.$emit('deleteSuccess', item.id)
 								})
 							}
 						}

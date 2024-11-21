@@ -1,13 +1,13 @@
 <template>
-	<view>
-		<el-row :gutter="10">
+	<view class="page-contaniner">
+		<el-row :gutter="10" style="height: 100%;">
 			<el-col :span="7">
 				<pub-preview :vote="linkVoteInfo" :circle="linkCircle" :title="articleTitle"
 					:images="articleImageList.slice(0, 3)" :content="articleContent"></pub-preview>
 			</el-col>
-			<el-col :span="16">
+			<el-col :span="16" style="height: 100%">
 				<view class="forms-container card-shadow">
-					<view style="padding: 30px 40px 0 40px">
+					<view style="padding: 30px 40px 0 40px;height: 100%;">
 						<view class="title">
 							<textarea style="font-size: 17px;color: #141E34;font-weight: 500;"
 								placeholder-style="font-size: 17px;font-weight: 400" v-model="articleTitle" auto-height
@@ -21,37 +21,51 @@
 							</view>
 						</view>
 						<view v-if="!linkTopicList.length" style="height: 10px;"></view>
-						<editor-component ref="editorComponents" @textchange="onTextChange"
+						<editor-component :bottomHeight="bottomHeight" ref="editorComponents" @textchange="onTextChange"
 							@ready="onEditorReady"></editor-component>
 					</view>
-					<pub-keyword-input :relatedLabelList.sync="relatedLabelList"
-						v-if="articleType === 'ARTICLE'" ref="pub-keyword-input"></pub-keyword-input>
-					<view class="moto-flex-row-left" style="padding: 0 34px;margin-bottom: 12px;"
-						v-if="articleType === 'CIRCLE_BIG_ARTICLE'">
-						<view v-if="linkClass" class="moto-flex-row-left" style="margin-right: 20px;">
-							<view class="iconv2 link-icon" style="margin-right: 8px;font-size: 17px;">&#xe697;</view>
-							<view class="link-name">{{linkClass.name}}</view>
-							<view class="iconv2 delete-icon" @click="linkClass = null">&#xe671;</view>
-						</view>
-						<view v-if="linkVoteInfo.voteItemList.length" class="moto-flex-row-left">
-							<view class="iconv2 link-icon" style="margin-right: 8px;font-size: 17px;">&#xe789;</view>
-							<view class="link-name">{{linkVoteInfo.voteTitle}}</view>
-							<view class="iconv2 delete-icon" @click="linkVoteInfo.voteItemList = []">&#xe671;</view>
-						</view>
-					</view>
-					<scroll-view :show-scrollbar="false" v-if="linkModifyInfo.modifyItemList.length"
-						class="modify-scroll" scroll-x>
-						<view class="moto-flex-row-left" style="white-space: nowrap;">
-							<view class="link-name" style="margin-right: 20px;">改装清单: </view>
-							<view v-for="(item,index) in linkModifyInfo.modifyItemList"
-								class="modify-item moto-flex-row-left">
-								<image v-if="item.itemUrl" mode="aspectFill" class="modify-item-image"
-									:src="item.itemUrl"></image>
-								<view class="link-name">{{item.itemName}}</view>
-								<view class="iconv2 delete-icon" @click="removeModifyItem(index)">&#xe671;</view>
+					<view
+						style="position: absolute;bottom: 90px;background-color: #FFFFFF;width: 100%;padding-top: 4px;">
+						<pub-keyword-input :relatedLabelList.sync="relatedLabelList" v-if="articleType === 'ARTICLE'"
+							ref="pub-keyword-input"></pub-keyword-input>
+						<view class="moto-flex-row-left" style="padding: 0 34px;margin-bottom: 12px;"
+							v-if="articleType === 'CIRCLE_BIG_ARTICLE'">
+							<view v-if="linkClass" class="moto-flex-row-left" style="margin-right: 20px">
+								<view class="iconv2 link-icon" style="margin-right: 8px;font-size: 17px;">&#xe697;
+								</view>
+								<view class="link-name">{{linkClass.name}}</view>
+								<view class="iconv2 delete-icon" @click="linkClass = null">&#xe671;</view>
+							</view>
+							<view v-if="linkVoteInfo.voteItemList.length" class="moto-flex-row-left">
+								<view class="iconv2 link-icon" style="margin-right: 8px;font-size: 17px;">&#xe789;
+								</view>
+								<view class="link-name">{{linkVoteInfo.voteTitle}}</view>
+								<view class="iconv2 delete-icon" @click="linkVoteInfo.voteItemList = []">&#xe671;</view>
 							</view>
 						</view>
-					</scroll-view>
+						<scroll-view :show-scrollbar="false" v-if="linkModifyInfo.modifyItemList.length"
+							class="modify-scroll" scroll-x>
+							<view class="moto-flex-row-left" style="white-space: nowrap;">
+								<view class="link-name" style="margin-right: 20px;">改装清单: </view>
+								<view v-for="(item,index) in linkModifyInfo.modifyItemList"
+									class="modify-item moto-flex-row-left">
+									<image v-if="item.itemUrl" mode="aspectFill" class="modify-item-image"
+										:src="item.itemUrl"></image>
+									<view class="link-name">{{item.itemName}}</view>
+									<view class="iconv2 delete-icon" @click="removeModifyItem(index)">&#xe671;</view>
+								</view>
+							</view>
+						</scroll-view>
+						<scroll-view :show-scrollbar="false" v-if="linkModelList.length" class="modify-scroll" scroll-x>
+							<view class="moto-flex-row-left" style="white-space: nowrap;">
+								<view class="link-name" style="margin-right: 20px;">关联车型: </view>
+								<view v-for="(item,index) in linkModelList" class="modify-item moto-flex-row-left">
+									<view class="link-name">{{item.brandName}}{{item.modelName}}</view>
+									<view class="iconv2 delete-icon" @click="removeModelItem(index)">&#xe671;</view>
+								</view>
+							</view>
+						</scroll-view>
+					</view>
 					<view class="tool-container">
 						<view class="moto-flex-row-between">
 							<view class="moto-flex-row-left" v-if="articleType === 'CIRCLE_BIG_ARTICLE'">
@@ -72,7 +86,7 @@
 								</view>
 								<view class="moto-flex-row-left" style="margin-left: 20px;" @click="openModelSelect">
 									<view class="iconv2 link-icon" style="font-size: 17px;">&#xe73e;</view>
-									<view class="link-name">{{linkModel ? linkModel.modelName : '关联车型'}}
+									<view class="link-name">关联车型
 									</view>
 								</view>
 							</view>
@@ -103,10 +117,11 @@
 		<pub-location-select @locationSelect="onLocatonSelect" ref="location-select"></pub-location-select>
 		<pub-topic-select :seleted="linkTopicList.map(item => item.topicTagId)" @topicSelect="onTopicSelect"
 			ref="topic-select"></pub-topic-select>
-		<pub-class-select @classSelect="onClassSelect" ref="class-select"></pub-class-select>
+		<pub-class-select :linkClass="linkClass" @classSelect="onClassSelect" ref="class-select"></pub-class-select>
 		<pub-vote-edit @voteEdit="onVoteEdit" ref="vote-edit"></pub-vote-edit>
 		<pub-modify-edit @modifyEdit="onModifyEdit" ref="modify-edit"></pub-modify-edit>
-		<pub-model-select ref="model-select"></pub-model-select>
+		<pub-model-select :linkModelList=linkModelList @modelSelect="onModelSelect"
+			ref="model-select"></pub-model-select>
 	</view>
 </template>
 
@@ -169,7 +184,7 @@
 				linkCircle: null,
 				linkLocation: null,
 				linkClass: null,
-				linkModel: null,
+				linkModelList: [],
 				linkTopicList: [],
 				linkVoteInfo: {
 					editFlag: false,
@@ -207,16 +222,35 @@
 			}
 		},
 		onLoad(e) {
-			if (e.id) {
-				this.articleId = e.id
-				this.getArticleDetail(this.articleId)
-			}
 			if (e.type) {
 				this.articleType = e.type
+			}
+			if (e.id) {
+				this.articleId = e.id
+				if (this.articleType === 'CIRCLE_BIG_ARTICLE') {
+					this.getCircleArticleDetail()
+				} else {
+					this.getNewDetail()
+				}
 			}
 			if (e.draftId) {
 				this.draftId = e.draftId
 				this.getDraftInfo()
+			}
+		},
+		computed: {
+			bottomHeight() {
+				const height = 0
+				if(this.articleType === 'ARTICLE'){
+					height = 20
+				}
+				if ((this.linkClass && this.linkModelList.length) || this.linkClass && this.linkModifyInfo.modifyItemList.length) {
+					return height + 70 + 'px'
+				} else if (this.linkClass || this.linkModelList.length || this.linkModifyInfo.modifyItemList.length) {
+					return height + 35 + 'px'
+				} else if (!this.linkClass && !this.linkModelList.length && !this.linkModifyInfo.modifyItemList.length) {
+					return height
+				}
 			}
 		},
 		mounted() {
@@ -231,13 +265,12 @@
 				}).then(res => {
 					if (res.data.code === 200) {
 						const data = JSON.parse(res.data.data.draftData)
-						console.log(data)
 						this.articleTitle = data.articleTitle
 						this.linkCircle = data.linkCircle ? data.linkCircle : null
 						this.linkClass = data.linkClass ? data.linkClass : null
 						this.linkLocation = data.linkLocation ? data.linkLocation : null
-						this.linkModel = data.linkModel ? data.linkModel : null
-						if (this.linkTopicList && this.linkTopicList.length) {
+						this.linkModelList = data.linkModelList ? data.linkModelList : []
+						if (data.linkTopicList && data.linkTopicList.length) {
 							this.linkTopicList = data.linkTopicList
 						}
 						this.linkVoteInfo = data.linkVoteInfo
@@ -246,6 +279,9 @@
 						this.$refs.editorComponents.parseHtml(htmlContent)
 					}
 				})
+			},
+			removeModelItem(index) {
+				this.linkModelList.splice(index, 1)
 			},
 			onToolsClick(item) {
 				if (item.type === 'topic') {
@@ -266,6 +302,9 @@
 				} else if (item.type === 'list') {
 					this.$refs['modify-edit'].dialogVisible = true
 				}
+			},
+			onModelSelect(item) {
+				this.linkModelList.push(item)
 			},
 			openModelSelect() {
 				this.$refs['model-select'].dialogVisible = true
@@ -306,11 +345,10 @@
 				this.$refs['circle-select'].getCircleList()
 				this.$refs['circle-select'].dialogVisible = true
 			},
-			getArticleDetail(id) {
+			getCircleArticleDetail() {
 				getApp().$openApi.motoCms.getCircleArticleInfo({
-					articleId: id
+					articleId: this.articleId
 				}).then(res => {
-					console.log(res)
 					if (res.data.code === 200) {
 						const data = res.data.data
 						this.articleTitle = data.articleTitle
@@ -343,6 +381,31 @@
 								editFlag: false,
 								modifyItemList: data.modifyInfo.modifyItemList
 							}
+						}
+					}
+				})
+			},
+			getNewDetail() {
+				getApp().$openApi.motoCms.getNewsInfo({
+					articleId: this.articleId
+				}).then(res => {
+					if (res.data.code === 200) {
+						const data = res.data.data
+						console.log(data)
+						this.articleTitle = data.title
+						const contextList = data.contentList
+						const htmlContent = translateInputContent(contextList)
+						this.$refs.editorComponents.parseHtml(htmlContent)
+						if (data.linkClass) {
+							this.linkClass = {
+								articleClass: data.articleClass
+							}
+						}
+						if (data.linkMotorModel && data.linkMotorModel.length) {
+							this.linkModelList = data.linkMotorModel
+						}
+						if (data.relatedLabelList && data.relatedLabelList.length) {
+							this.relatedLabelList = data.relatedLabelList
 						}
 					}
 				})
@@ -399,11 +462,15 @@
 				if (this.draftId) {
 					postData.draftId = this.draftId
 				}
+				if (this.linkModelList.length) {
+					postData.relatedModelIdList = this.linkModelList.map(item => item.modelId)
+				}
 				uni.showLoading({
 					title: '发布中',
 					icon: 'none'
 				})
 				getApp().$openApi.motoCms.pubNews(postData).then(res => {
+					console.log(postData)
 					uni.hideLoading()
 					if (res.data.code === 200) {
 						getApp().$Message.success('发布成功')
@@ -496,11 +563,12 @@
 							linkCircle: this.linkCircle,
 							contentList: contentList,
 							linkLocation: this.linkLocation,
-							articleTitle: this.articleTitle,
+							title: this.articleTitle,
 							linkClass: this.linkClass,
 							linkTopicList: this.linkTopicList,
 							linkVoteInfo: this.linkVoteInfo,
-							linkModifyInfo: this.linkModifyInfo
+							linkModifyInfo: this.linkModifyInfo,
+							linkModelList: this.linkModelList
 						}
 						const postData = {
 							articleType: this.articleType,
@@ -521,7 +589,6 @@
 				})
 			},
 			onTextChange(e) {
-				console.log(e)
 				this.articleImageList = e.images
 				this.articleContent = e.content
 				this.wordCount = e.detail
@@ -584,32 +651,32 @@
 	.link-item-group {
 		margin-bottom: 20px;
 	}
-	
+
 	.link-item-icon {
 		font-size: 22px;
 	}
-	
+
 	.link-item-title {
 		width: 130px;
 		margin-left: 10px;
 		font-size: 16px;
 		font-weight: 400;
 	}
-	
+
 	.cirlce-list-scroll {
 		flex: 1;
 		width: 400px;
 		height: 36px;
 		margin-left: 10px;
 	}
-	
+
 	.line {
 		width: 100%;
 		height: 1px;
 		background-color: #f2f2f2;
 		margin-top: 15px;
 	}
-	
+
 	.recommend-circle-item {
 		height: 36px;
 		line-height: 36px;
@@ -620,12 +687,12 @@
 		padding: 0 10px;
 		margin-right: 10px;
 	}
-	
+
 	.confirm-button {
 		width: 100px;
 		margin-right: 370px;
 	}
-	
+
 	.circle-slect {
 		margin-left: 12px;
 		width: 150px;
@@ -635,58 +702,65 @@
 		color: #848B9E;
 		padding: 8px 0 8px 12px;
 	}
-	
+
 	.circle-slect:hover {
 		border: 1px solid blue;
 	}
-	
+
 	.content-preview {
 		width: 380px;
 		height: 100px;
-		background-color: blue;
 		margin-right: 40px;
 	}
-	
+
 	.forms-container {
+		position: relative;
 		margin-top: 40px;
 		background-color: #FFFFFF;
 		width: 90%;
+		height: calc(100% - 40px);
+		padding: 0;
+		box-sizing: border-box;
 	}
-	
+
 	.tool-container {
+		width: 100%;
+		position: absolute;
+		bottom: 0;
 		box-shadow: 0 -1px 2.5px 0 rgba(0, 0, 0, 0.05);
 		height: 90px;
 		padding: 14px 34px 0 34px;
 		box-sizing: border-box;
+		background-color: #FFFFFF;
 	}
-	
+
 	.link-icon {
 		font-size: 16px;
 		color: #141E34;
 		margin-right: 5px;
 	}
-	
+
 	.link-name {
 		font-size: 14px;
 		color: #141E34;
 	}
-	
+
 	.tool-item {
 		margin-right: 14px;
 		width: 50px;
 	}
-	
+
 	.tool-icon {
 		font-size: 16px;
 		color: #141E34;
 		margin-bottom: 2px;
 	}
-	
+
 	.tool-name {
 		font-size: 13px;
 		color: #141E34;
 	}
-	
+
 	.save-btn {
 		width: 80px;
 		height: 30px;
@@ -697,7 +771,7 @@
 		border-radius: 4px;
 		margin-right: 20px;
 	}
-	
+
 	.pub-btn {
 		width: 80px;
 		height: 30px;
@@ -708,28 +782,28 @@
 		background-color: #ff6100;
 		border-radius: 4px;
 	}
-	
+
 	.topic-item {
 		margin: 2px 20px 2px 0;
 	}
-	
+
 	.topic-name {
 		color: #3459AE;
 		font-size: 17px;
 	}
-	
+
 	.delete-icon {
 		margin-left: 5px;
 		font-size: 14px;
 		color: #BFC4CF;
 	}
-	
+
 	.modify-scroll {
 		width: 95%;
 		padding: 0 34px;
 		margin-bottom: 12px;
 	}
-	
+
 	.modify-item {
 		height: 40px;
 		padding: 0 14px;
@@ -737,7 +811,7 @@
 		border-radius: 4px;
 		margin-right: 12px;
 	}
-	
+
 	.modify-item-image {
 		height: 30px;
 		width: 30px;
@@ -745,4 +819,9 @@
 		margin-right: 10px;
 	}
 
+	.page-contaniner {
+		height: 100%;
+		width: 100%;
+		overflow: hidden;
+	}
 </style>

@@ -32,35 +32,37 @@
 								<view class="iconv2 delete-icon" @click="removeTopic(item.topicTagId)">&#xe671;</view>
 							</view>
 						</view>
-						<textarea class="content-textarea" placeholder-style="font-size: 17px"
+						<textarea :maxlength="-1" class="content-textarea" placeholder-style="font-size: 17px;" :auto-height="true"
 							placeholder="分享你的机车生活,交流用车心得,各种生活趣事" v-model="articleContent"></textarea>
 					</view>
-					<view class="moto-flex-row-left" style="padding: 0 34px;margin-bottom: 12px;">
-						<view v-if="linkClass" class="moto-flex-row-left" style="margin-right: 20px;">
-							<view class="iconv2 link-icon" style="margin-right: 8px;font-size: 17px;">&#xe697;</view>
-							<view class="link-name">{{linkClass.name}}</view>
-							<view class="iconv2 delete-icon" @click="linkClass = null">&#xe671;</view>
-						</view>
-						<view v-if="linkVoteInfo.voteItemList.length" class="moto-flex-row-left">
-							<view class="iconv2 link-icon" style="margin-right: 8px;font-size: 17px;">&#xe789;</view>
-							<view class="link-name">{{linkVoteInfo.voteTitle}}</view>
-							<view class="iconv2 delete-icon" @click="linkVoteInfo.voteItemList = []">&#xe671;</view>
-						</view>
-					</view>
-					<scroll-view :show-scrollbar="false" v-if="linkModifyInfo.modifyItemList.length"
-						class="modify-scroll" scroll-x>
-						<view class="moto-flex-row-left" style="white-space: nowrap;">
-							<view class="link-name" style="margin-right: 20px;">改装清单: </view>
-							<view v-for="(item,index) in linkModifyInfo.modifyItemList"
-								class="modify-item moto-flex-row-left">
-								<image v-if="item.itemUrl" mode="aspectFill" class="modify-item-image"
-									:src="item.itemUrl">
-								</image>
-								<view class="link-name">{{item.itemName}}</view>
-								<view class="iconv2 delete-icon" @click="removeModifyItem(index)">&#xe671;</view>
+					<view style="position: absolute;bottom: 90px;width: 100%;background-color: #FFFFFF;">
+						<view class="moto-flex-row-left" style="padding: 0 34px;margin-bottom: 12px;">
+							<view v-if="linkClass" class="moto-flex-row-left" style="margin-right: 20px;">
+								<view class="iconv2 link-icon" style="margin-right: 8px;font-size: 17px;">&#xe697;</view>
+								<view class="link-name">{{linkClass.name}}</view>
+								<view class="iconv2 delete-icon" @click="linkClass = null">&#xe671;</view>
+							</view>
+							<view v-if="linkVoteInfo.voteItemList.length" class="moto-flex-row-left">
+								<view class="iconv2 link-icon" style="margin-right: 8px;font-size: 17px;">&#xe789;</view>
+								<view class="link-name">{{linkVoteInfo.voteTitle}}</view>
+								<view class="iconv2 delete-icon" @click="linkVoteInfo.voteItemList = []">&#xe671;</view>
 							</view>
 						</view>
-					</scroll-view>
+						<scroll-view :show-scrollbar="false" v-if="linkModifyInfo.modifyItemList.length"
+							class="modify-scroll" scroll-x>
+							<view class="moto-flex-row-left" style="white-space: nowrap;">
+								<view class="link-name" style="margin-right: 20px;">改装清单: </view>
+								<view v-for="(item,index) in linkModifyInfo.modifyItemList"
+									class="modify-item moto-flex-row-left">
+									<image v-if="item.itemUrl" mode="aspectFill" class="modify-item-image"
+										:src="item.itemUrl">
+									</image>
+									<view class="link-name">{{item.itemName}}</view>
+									<view class="iconv2 delete-icon" @click="removeModifyItem(index)">&#xe671;</view>
+								</view>
+							</view>
+						</scroll-view>
+					</view>
 					<view class="tool-container">
 						<view class="moto-flex-row-between">
 							<view class="moto-flex-row-left">
@@ -87,7 +89,7 @@
 									</view>
 								</view>
 							</view>
-							<view class="moto-flex-row-left">
+							<view style="display: flex">
 								<view class="save-btn" @click="saveDraft">保存草稿</view>
 								<view class="pub-btn" @click="submit">发布</view>
 							</view>
@@ -100,7 +102,7 @@
 		<pub-location-select @locationSelect="onLocatonSelect" ref="location-select"></pub-location-select>
 		<pub-topic-select :seleted="linkTopicList.map(item => item.topicTagId)" @topicSelect="onTopicSelect"
 			ref="topic-select"></pub-topic-select>
-		<pub-class-select @classSelect="onClassSelect" ref="class-select"></pub-class-select>
+		<pub-class-select :linkClass="linkClass" @classSelect="onClassSelect" ref="class-select"></pub-class-select>
 		<pub-vote-edit @voteEdit="onVoteEdit" ref="vote-edit"></pub-vote-edit>
 		<pub-modify-edit @modifyEdit="onModifyEdit" ref="modify-edit"></pub-modify-edit>
 	</view>
@@ -458,6 +460,7 @@
 	}
 	
 	.editor-container {
+		position: relative;
 		margin-top: 5px;
 		width: 850px;
 		height: calc(100% - 10px);
@@ -510,15 +513,18 @@
 		width: 100%;
 		letter-spacing: 0.75px;
 		line-height: 24px;
-		height: 195px;
 	}
 	
 	.tool-container {
+		position: absolute;
+		bottom: 0;
+		left: 0;
 		width: 850px;
 		box-shadow: 0 -1px 2.5px 0 rgba(0, 0, 0, 0.05);
 		height: 90px;
 		padding: 14px 34px 0 34px;
 		box-sizing: border-box;
+		background-color: #FFFFFF;
 	}
 	
 	.link-icon {
@@ -586,6 +592,7 @@
 	}
 	
 	.modify-scroll {
+		bottom: 90px;
 		width: 95%;
 		padding: 0 34px;
 		margin-bottom: 12px;

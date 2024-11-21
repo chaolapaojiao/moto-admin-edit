@@ -1,5 +1,5 @@
 <template>
-	<view class="editor-container">
+	<view class="editor-container" :style="{'--bottomHeight': bottomHeightCss}">
 		<view class="editor" :style="{height: editorHeight <= 0 ? 'auto': `${editorHeight}px`}">
 			<web-editor ref="webEditor" id="editor" @ready="onEditorReady" @statuschange="onStatusChange"
 				@textchange="(e) => $emit('textchange', e)" showImgSize showImgToolbar showImgResize
@@ -24,8 +24,8 @@
 					:disabled="!showFooterToolBar"></tool-strike>
 				<tool-underline @change="({type, value}) => format(type, value)" :active="formats.underline"
 					:disabled="!showFooterToolBar"></tool-underline>
-				<tool-link @change="({type, value}) => format(type, value)" :active="formats.link"
-					:disabled="!showFooterToolBar"></tool-link>
+				<!-- <tool-link @change="({type, value}) => format(type, value)" :active="formats.link"
+					:disabled="!showFooterToolBar"></tool-link> -->
 				<tool-align @change="({type, value}) => format(type, value)" :active="formats.align"
 					:disabled="!showFooterToolBar"></tool-align>
 				<!-- <tool-hr @change="({type, value}) => format(type, value)" :disabled="!showFooterToolBar"></tool-hr> -->
@@ -287,8 +287,15 @@
 			WebEditor,
 			// #endif
 		},
+		props:{
+			bottomHeight: {
+				type: String,
+				default: '0px'
+			}
+		},
 		data() {
 			return {
+				bottomHeightCss: '0px',
 				formats: {}, // 编辑器格式状态
 				keyboardHeight: 0, // 键盘高度
 				showFooterToolBar: true, // 是否显示底部工具栏
@@ -604,29 +611,25 @@
 				})
 				this.$refs.popup.close()
 			}
+		},
+		watch:{
+			bottomHeight(){
+				this.bottomHeightCss = this.bottomHeight
+			}
 		}
 	}
 </script>
 
 <style scoped lang="scss">
-	// #ifdef H5
 	@import '@/uni_modules/uni-cms/common/style/editor-icon.css';
-	// #endif
-
-	/* #ifdef H5 */
 	@import "quill.scss";
-	/* #endif */
-
-	@media screen and (max-width: 768px) {
-		@import "app.scss";
-	}
 
 	@media screen and (min-width: 768px) {
 		@import "h5.scss";
 	}
 
 	.editor-container {
-		height: 480px;
+		height: calc(70% - var(--bottomHeight));
 		overflow: scroll;
 		scrollbar-width: none;
 	}

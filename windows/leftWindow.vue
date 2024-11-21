@@ -13,10 +13,10 @@
 						</template>
 						<el-menu-item-group style="background-color: transparent;">
 							<el-menu-item v-for="menu in item.childrenMenu" :index="item.index + '-' + menu.index">
-								<view style="width: 100%;padding-left: 100rpx;"
+								<view style="width: 100%;padding-left: 50px;"
 									:style="{color: activeMenu === (item.index + '-' + menu.index) ? '#ff6100' : '#717171'}"
 									@click="openLinkUrl(menu)">
-									<view style="font-size: 26rpx;">
+									<view style="font-size: 13px;">
 										{{menu.name}}
 									</view>
 								</view>
@@ -120,67 +120,68 @@
 		height: 100%;
 		width: 100%;
 	}
-
+	
 	.sidebar {
-		width: 280rpx;
-		height: 80%;
+		width: 140px;
+		height: 40%;
 		background-color: blue;
 		border: 0 !important;
 	}
-
+	
 	.split-line {
-		width: 2px;
+		width: 1px;
 		height: 100vh;
 	}
-
+	
 	.menu-title {
-		font-size: 15px;
+		font-size: 7.5px;
 	}
-
+	
 	.el-sub-menu__title {
-		height: 90rpx !important;
+		height: 45px !important;
 	}
-
+	
 	.el-menu-item {
-		height: 80rpx !important;
+		height: 40px !important;
 		width: 100%;
 		background-color: #f8f8f8;
 		padding: 0!important;
 	}
-
+	
 	.menu-icon {
-		font-size: 32rpx;
+		font-size: 16px;
 		color: #717171;
 	}
-
+	
 	.el-menu {
 		background-color: transparent !important;
 	}
-
+	
 	.pub-btn {
-		width: 270rpx;
-		height: 80rpx;
+		width: 135px;
+		height: 40px;
 		background-color: #ff6100;
-		border-radius: 8rpx;
+		border-radius: 4px;
 		color: #FFFFFF;
 		text-align: center;
-		line-height: 80rpx;
-		font-size: 24rpx;
+		line-height: 40px;
+		font-size: 12px;
 		font-weight: bold;
-		margin-bottom: 20rpx;
+		margin-bottom: 10px;
 	}
-
+	
 	.group-name {
 		color: #717171;
-		margin-left: 20rpx;
+		margin-left: 10px;
 	}
-
+	
 	::v-deep .el-menu-item-group__title {
 		display: none !important;
 		padding: 0 !important;
 	}
-
+	
 	.el-menu-item-group__title {
 		padding: 0 !important;
 	}
+
 </style>

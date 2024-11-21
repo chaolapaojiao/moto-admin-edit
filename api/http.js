@@ -86,10 +86,10 @@ http.interceptors.response.use((response) => {
 			}
 		})
 	} else if (response.data.code !== 200 && process.env.NODE_ENV !== 'production') {
-		uni.showToast({
-			title: response.data.code + response.data.message,
-			icon: 'none'
-		})
+		// uni.showToast({
+		// 	title: response.data.code + response.data.message,
+		// 	icon: 'none'
+		// })
 	}
 
 	return response

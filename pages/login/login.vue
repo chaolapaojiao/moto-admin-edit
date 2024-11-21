@@ -9,12 +9,11 @@
 		<el-card shadow="always">
 			<view class="moto-flex-column-center" style="width: 100%">
 				<view class="card-title">扫码登录</view>
-				<view style="width: 190px;height: 180px;">
+				<view style="width: 190px;height: 180px;position: relative;">
 					<img v-if="qrCodeImg" :src="qrCodeImg" class="qr-code" />
-				</view>
-				<view v-if="codeExpire" class="moto-flex-row-left" style="margin-left: 20px;" @click="getLoginQrCode">
-					<view class="login-hint">二维码已过期，请</view>
-					<view class="login-hint" style="color: blue;margin-right: 20px;">刷新</view>
+					<view class="expire-mask" @click="refreshCode" v-if="codeExpire">
+						<view class="iconv2 refresh-icon" :class="{'refresh-animate': loading}">&#xe694;</view>
+					</view>
 				</view>
 				<text class="login-hint">请使用机车圈app扫一扫登录</text>
 			</view>
@@ -33,18 +32,26 @@
 				qrCodeImg: '',
 				timer: null,
 				loginInterval: null,
-				codeExpire: false
+				codeExpire: false,
+				loading: false
 			}
 		},
 		onLoad() {
 			this.getLoginQrCode()
 		},
 		methods: {
+			refreshCode() {
+				this.loading = true
+				setTimeout(() => {
+					this.getLoginQrCode()
+				}, 500)
+			},
 			...mapMutations(['setUserInfo']),
 			getLoginQrCode() {
 				getApp().$openApi.user.getLoginQrCode({
 					deviceId: this.systemInfo.deviceId
 				}).then(res => {
+					this.loading = false
 					if (res.data.code === 200) {
 						this.codeExpire = false
 						clearTimeout(this.timer)
@@ -98,53 +105,85 @@
 	}
 
 	.logo-container {
-		margin: 50rpx;
+		margin: 25px;
 	}
 
 	.logo-image {
-		width: 80rpx;
-		height: 80rpx;
-		border-radius: 16rpx;
-		margin-right: 14rpx;
+		width: 40px;
+		height: 40px;
+		border-radius: 8px;
+		margin-right: 7px;
 	}
 
 	.logo-title {
-		font-size: 28rpx;
+		font-size: 14px;
 		font-weight: 500;
 		color: #ff6100;
 	}
 
 	.logo-sub-title {
-		margin-top: 16rpx;
-		margin-left: 20rpx;
-		font-size: 24rpx;
+		margin-top: 8px;
+		margin-left: 10px;
+		font-size: 12px;
 		font-weight: 400;
 		color: #141E34;
 	}
 
 	.card-title {
-		font-size: 28rpx;
+		font-size: 14px;
 		font-weight: 400;
 	}
 
 	.el-card__body {
-		padding: 20rpx 0;
+		padding: 10px 0;
 	}
 
 	.el-card {
 		position: absolute;
-		top: 420rpx;
-		right: 300rpx;
-		width: 440rpx;
+		top: 210px;
+		right: 150px;
+		width: 220px;
 	}
 
 	.qr-code {
-		width: 380rpx;
-		height: 360rpx;
-		margin-bottom: -20rpx;
+		width: 190px;
+		height: 180px;
+		margin-bottom: -10px;
 	}
 
 	.login-hint {
-		font-size: 24rpx;
+		font-size: 12px;
+	}
+
+	.expire-mask {
+		position: absolute;
+		top: 0;
+		left: 0;
+		background: rgba(255, 255, 255, .7);
+		width: 190px;
+		height: 180px;
+		text-align: center;
+		line-height: 180px;
+		border-radius: 8px;
+		margin-right: 7px;
+
+	}
+
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	.refresh-icon {
+		font-size: 25px;
+	}
+
+	.refresh-animate {
+		animation: spin 2s linear infinite;
 	}
 </style>

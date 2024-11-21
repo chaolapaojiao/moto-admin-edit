@@ -137,12 +137,19 @@
 						this.getNearbyPoiList()
 					},
 					fail: (err) => {
-						console.log(err)
+						navigator.geolocation.getCurrentPosition((res) => {
+							console.log(res)
+						}, (err) => {
+							console.log(err)
+						});
 					}
 				});
 			},
 			selectLocation(item) {
-				this.$emit('locationSelect', {...item, type: 3})
+				this.$emit('locationSelect', {
+					...item,
+					type: 3
+				})
 				this.dialogVisible = false
 			},
 			onDialogClose() {
@@ -278,20 +285,20 @@
 		margin-left: 10px;
 		color: #FFFFFF;
 	}
-	
+
 	.list-scrollview {
 		height: 400px;
 		width: 100%;
 	}
-	
+
 	.location-card {}
-	
+
 	.map {
 		width: 500px;
 		height: 250px;
 		margin-left: -16px;
 	}
-	
+
 	.map-btn-center {
 		position: absolute;
 		left: 225px;
@@ -299,7 +306,7 @@
 		width: 50px;
 		height: 50px;
 	}
-	
+
 	.map-btn-my {
 		position: absolute;
 		bottom: 10px;
@@ -307,44 +314,44 @@
 		width: 35px;
 		height: 35px;
 	}
-	
+
 	.location-item {
 		height: 50px;
 		margin-bottom: 8px;
 	}
-	
+
 	.line {
 		width: 500px;
 		background-color: #f1f1f1;
 		height: 1px;
 		margin: 10px 0;
 	}
-	
+
 	.point-icon {
 		width: 24px;
 		height: 24px;
 		margin-right: 10px;
 	}
-	
+
 	.location-point {
 		font-size: 24px;
 		margin-right: 10px;
 	}
-	
+
 	.location-name {
 		color: #141E34;
 		font-size: 14px;
 	}
-	
+
 	.sub-info {
 		font-size: 12px;
 		color: #999;
 	}
-	
+
 	.el-dialog__title {
 		font-size: 17px;
 	}
-	
+
 	.status {
 		height: 50px;
 		line-height: 50px;

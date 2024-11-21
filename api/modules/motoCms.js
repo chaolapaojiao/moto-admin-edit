@@ -145,15 +145,12 @@ function pubNews(data) {
 
 // 删除动态
 function delCirclelArticle(data) {
-	const {
+	let {
 		timestamp,
 		signature
 	} = paramsEncryption(data)
-	data.timestamp = timestamp
-	data.signature = signature
-	return http.delete('motorCircle/delCirclelArticle', {
-		params: data
-	})
+	signature = signature.replace(/\+/g, '%2B')
+	return http.delete(`/motorCircle/delCirclelArticle?articleId=${data.articleId}&timestamp=${timestamp}&signature=${signature}`)
 }
 
 // 草稿列表
@@ -196,7 +193,7 @@ function getDraftInfo(data) {
 	})
 }
 
-// 输出资讯文章
+// 删除资讯文章
 function deleteNews(articleId) {
 	let {
 		timestamp,
@@ -206,6 +203,19 @@ function deleteNews(articleId) {
 	})
 	signature = signature.replace(/\+/g, '%2B')
 	return http.delete(`/motorArticle/delArticle?articleId=${articleId}&timestamp=${timestamp}&signature=${signature}`)
+}
+
+// 获取咨询回显编辑
+function getNewsInfo(data){
+	const {
+		timestamp,
+		signature
+	} = paramsEncryption(data)
+	data.timestamp = timestamp
+	data.signature = signature
+	return http.get('/motorArticle/getEditArticle', {
+		params: data
+	})
 }
 export default {
 	getPubArticleList,
@@ -224,5 +234,6 @@ export default {
 	getDraftList,
 	delDrafts,
 	getDraftInfo,
-	deleteNews
+	deleteNews,
+	getNewsInfo
 }

@@ -1,7 +1,7 @@
 .editor {
 	padding-top: 8px;
 	::v-deep .ql-container {
-		min-height: 470px;
+		min-height: 500px;
 		height: auto;
 		overflow-y: hidden;
 	}
@@ -15,7 +15,7 @@
 	right: 0;
 	z-index: 999;
 	width: 1050px;
-	height: 80rpx;
+	height: 40px;
 	&.pc {
 		display: block;
 	}
