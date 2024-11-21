@@ -1,7 +1,7 @@
 <template>
 	<view style="height: 100%" :style="{backgroundColor: topBg}">
 		<view class="nav-container moto-flex-row-between">
-			<view class="moto-flex-row-left">
+			<view class="moto-flex-row-left" @click="openHome">
 				<image class="logo-img" src="/static/image/logo.png"></image>
 				<view class="title">机车圈APP | 创作者中心</view>
 			</view>
@@ -28,7 +28,11 @@
 			...mapState(['userInfo', 'topBg'])
 		},
 		methods: {
-
+			openHome(){
+				uni.navigateTo({
+					url: '/pages/moto-cms/home'
+				})
+			}
 		}
 	}
 </script>

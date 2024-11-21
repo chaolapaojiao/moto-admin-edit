@@ -552,7 +552,7 @@
 						break
 				}
 				// 插入内容后，将编辑器滚动到底部
-				setTimeout(() => this.editorCtx.scrollIntoView(), 100)
+				setTimeout(() => this.editorCtx.scrollIntoView(), 200)
 			},
 			// 获取编辑器所选内容的格式
 			getFormat(range) {

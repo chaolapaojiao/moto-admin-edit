@@ -123,19 +123,19 @@
 	}
 	
 	.edit-btn {
-		width: 50px;
-		height: 25px;
+		width: 60px;
+		height: 30px;
 		border: 0.5px solid #bebebe;
-		border-radius: 2px;
+		border-radius: 4px;
 		color: #141E34;
 		text-align: center;
-		line-height: 25px;
-		font-size: 12px;
+		line-height: 30px;
+		font-size: 14px;
 		margin-right: 15px;
 	}
 	
 	.article-status {
-		font-size: 14px;
+		font-size: 13px;
 		font-weight: bold;
 		color: #9FA5B4;
 		margin-left: 10px;
@@ -150,18 +150,19 @@
 		text-align: center;
 		border-radius: 2px;
 		color: #FFFFFF;
+		margin-top: 5px;
 	}
 	
 	.delete-btn {
-		width: 50px;
-		height: 25px;
+		width: 60px;
+		height: 30px;
 		background-color: #ff6100;
 		border: 0.5px solid #bebebe;
-		border-radius: 2px;
+		border-radius: 4px;
 		color: #FFFFFF;
 		text-align: center;
-		line-height: 25px;
-		font-size: 12px;
+		line-height: 30px;
+		font-size: 13px;
 	}
 
 </style>

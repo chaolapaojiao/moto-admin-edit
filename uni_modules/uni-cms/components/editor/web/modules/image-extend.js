@@ -21,7 +21,7 @@ export default function(Quill) {
 							const date = 'moto' + Date.parse(new Date())
 							element.setAttribute('id', date)
 							const inputText = element.getAttribute('image-describe')
-							setTimeout(()=>{
+							setTimeout(() => {
 								this.createInput(element, date, inputText)
 							}, 500)
 						}
@@ -84,13 +84,25 @@ export default function(Quill) {
 				inputNode.style.left = `${elementRect.left - containerRect.left - 1 + parent.scrollLeft}px`
 				inputNode.style.top =
 					`${elementRect.top - containerRect.top + elementRect.height + parent.scrollTop + 25}px`
-				inputNode.style.width = `${elementRect.width}px`
+				inputNode.style.width = `${elementRect.width - 15}px`
 				// 渲染到element上
 				parent.appendChild(inputNode)
 			}, 100)
+			uni.$on('textChange', () => {
+				setTimeout(() => {
+					const elementRect = element.getBoundingClientRect()
+					const containerRect = parent.getBoundingClientRect()
+					inputNode.style.left =
+						`${elementRect.left - containerRect.left - 1 + parent.scrollLeft}px`
+					inputNode.style.top =
+						`${elementRect.top - containerRect.top + elementRect.height + parent.scrollTop + 25}px`
+					inputNode.style.width = `${elementRect.width - 15}px`
+				}, 100)
+			})
 			input.addEventListener('input', (e) => {
 				element.setAttribute('image-describe', e.target.value)
 			});
+			
 		}
 		async uploader(element) {
 			// 标记元素正在上传

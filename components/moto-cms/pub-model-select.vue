@@ -7,6 +7,7 @@
 				<view class="search-btn" @click="onSearchChange">搜索</view>
 			</view>
 			<scroll-view scroll-y class="model-list-container" :show-scrollbar="false" @scrolltolower="onScrolltolower">
+				<el-empty v-if="!searchInfo.searchKeyword" description="请输入搜索内容" :image-size="100" />
 				<view style="white-space: normal;">
 					<view v-for="item in modelList" class="model-card" @click="selectModel(item)">
 						<view class="moto-flex-row-left">
@@ -61,7 +62,11 @@
 				this.searchInfo.scrollId = ''
 				this.searchInfo.empty = false
 				this.searchInfo.nomore = false
-				this.confirmSearch()
+				if (this.searchInfo.searchKeyword) {
+					this.confirmSearch()
+				} else {
+					this.modelList = []
+				}
 			}, 500),
 			onScrolltolower: throttle(function() {
 				this.confirmSearch()
@@ -93,8 +98,8 @@
 				})
 			},
 			selectModel(item) {
-				const result =  this.linkModelList.find(model => model.modelId === item.modelId)
-				if(result){
+				const result = this.linkModelList.find(model => model.modelId === item.modelId)
+				if (result) {
 					getApp().$Message.warning('已关联该车型')
 					return
 				}

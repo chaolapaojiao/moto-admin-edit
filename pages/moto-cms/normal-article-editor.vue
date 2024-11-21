@@ -35,7 +35,7 @@
 						<textarea :maxlength="-1" class="content-textarea" placeholder-style="font-size: 17px;" :auto-height="true"
 							placeholder="分享你的机车生活,交流用车心得,各种生活趣事" v-model="articleContent"></textarea>
 					</view>
-					<view style="position: absolute;bottom: 90px;width: 100%;background-color: #FFFFFF;">
+					<view style="position: absolute;bottom: 100px;width: 100%;background-color: #FFFFFF;">
 						<view class="moto-flex-row-left" style="padding: 0 34px;margin-bottom: 12px;">
 							<view v-if="linkClass" class="moto-flex-row-left" style="margin-right: 20px;">
 								<view class="iconv2 link-icon" style="margin-right: 8px;font-size: 17px;">&#xe697;</view>
@@ -72,7 +72,7 @@
 										{{linkLocation ? (linkLocation.name ?linkLocation.name :  linkLocation.locationName) : '关联位置'}}
 									</view>
 								</view>
-								<view class="moto-flex-row-left" style="margin-left: 20px;" @click="openCicleSelect">
+								<view class="moto-flex-row-left" style="margin-left: 40px;" @click="openCicleSelect">
 									<view class="iconv2 link-icon">&#xe785;</view>
 									<view class="link-name">{{linkCircle ? linkCircle.circleName : '关联圈子'}}
 									</view>
@@ -411,6 +411,10 @@
 				this.$refs['circle-select'].dialogVisible = true
 			},
 			saveDraft() {
+				if(!this.articleTitle){
+					getApp().$Message.warning('请输入标题后再保存')
+					return
+				}
 				const imageUrlList = this.imageList.map(item => {
 					return {
 						contextClass: 2,
@@ -426,7 +430,7 @@
 					linkCircle: this.linkCircle,
 					contentList: contentList,
 					linkLocation: this.linkLocation,
-					articleTitle: this.articleTitle,
+					title: this.articleTitle,
 					linkClass: this.linkClass,
 					linkTopicList: this.linkTopicList,
 					linkVoteInfo: this.linkVoteInfo,
@@ -521,14 +525,15 @@
 		left: 0;
 		width: 850px;
 		box-shadow: 0 -1px 2.5px 0 rgba(0, 0, 0, 0.05);
-		height: 90px;
+		height: 100px;
 		padding: 14px 34px 0 34px;
 		box-sizing: border-box;
 		background-color: #FFFFFF;
+		padding-bottom: 10px;
 	}
 	
 	.link-icon {
-		font-size: 16px;
+		font-size: 18px;
 		color: #141E34;
 		margin-right: 5px;
 	}
@@ -539,12 +544,12 @@
 	}
 	
 	.tool-item {
-		margin-right: 14px;
+		margin-right: 20px;
 		width: 50px;
 	}
 	
 	.tool-icon {
-		font-size: 16px;
+		font-size: 18px;
 		color: #141E34;
 		margin-bottom: 2px;
 	}
@@ -555,22 +560,22 @@
 	}
 	
 	.save-btn {
-		width: 80px;
-		height: 30px;
-		line-height: 30px;
+		width: 100px;
+		height: 40px;
+		line-height: 40px;
 		text-align: center;
-		font-size: 13px;
+		font-size: 14px;
 		border: 1px solid #e8e8e8;
 		border-radius: 4px;
 		margin-right: 20px;
 	}
 	
 	.pub-btn {
-		width: 80px;
-		height: 30px;
-		line-height: 30px;
+		width: 100px;
+		height: 40px;
+		line-height: 40px;
 		text-align: center;
-		font-size: 13px;
+		font-size: 14px;
 		color: #FFFFFF;
 		background-color: #ff6100;
 		border-radius: 4px;

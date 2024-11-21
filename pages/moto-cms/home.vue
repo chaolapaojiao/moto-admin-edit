@@ -1,6 +1,6 @@
 <template>
 	<view style="width: 100%;height: 100%;">
-		<view class="moto-flex-row-left" style="height: 20%;width: 100%;">
+		<view class="moto-flex-row-left" style="height: 20%;width: 90%">
 			<view class="card-shadow moto-flex-column-center article-count-card">
 				<view class="moto-flex-row-left" style="margin-bottom: 25px;">
 					<view class="article-card-title">总发布帖数</view>
@@ -23,7 +23,7 @@
 				<view style="font-size: 16px;">近期发布</view>
 				<view class="all-record-btn" @click="openArticleRecord">全部记录</view>
 			</view>
-			<view v-for="item in articleList">
+			<view v-for="item in articleList" style="height: 25%">
 				<article-card :item="item"></article-card>
 			</view>
 			<el-empty v-if="!articleList.length" :image-size="150" />
@@ -108,10 +108,9 @@
 	}
 	
 	.acount-count-card {
-		width: 55%;
+		width: 60%;
 		height: 100%;
 		background-color: #FFFFFF;
-		margin-right: 50px;
 		border-radius: 4px;
 		padding: 0 100px;
 		box-sizing: border-box;
@@ -120,7 +119,7 @@
 	.article-list-card {
 		height: 75%;
 		overflow: hidden;
-		width: calc(95% + 10px);
+		width: 90%;
 		margin-top: 25px;
 		border-radius: 4px;
 		background-color: #FFFFFF;

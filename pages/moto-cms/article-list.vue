@@ -9,7 +9,7 @@
 				</view>
 			</view>
 			<view style="height: 85%;">
-				<view v-for="(item,index) in tabs[nCurrentTab].data[tabs[nCurrentTab].currentPage]">
+				<view v-for="(item,index) in tabs[nCurrentTab].data[tabs[nCurrentTab].currentPage]" style="height: 20%;">
 					<article-card @deleteSuccess="onDeleteSuccess" :item="item"></article-card>
 				</view>
 				<el-empty v-if="!tabs[nCurrentTab].total" :image-size="150" />

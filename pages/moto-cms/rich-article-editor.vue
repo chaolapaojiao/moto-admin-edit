@@ -25,7 +25,7 @@
 							@ready="onEditorReady"></editor-component>
 					</view>
 					<view
-						style="position: absolute;bottom: 90px;background-color: #FFFFFF;width: 100%;padding-top: 4px;">
+						style="position: absolute;bottom: 100px;background-color: #FFFFFF;width: 100%;padding-top: 4px;">
 						<pub-keyword-input :relatedLabelList.sync="relatedLabelList" v-if="articleType === 'ARTICLE'"
 							ref="pub-keyword-input"></pub-keyword-input>
 						<view class="moto-flex-row-left" style="padding: 0 34px;margin-bottom: 12px;"
@@ -60,7 +60,8 @@
 							<view class="moto-flex-row-left" style="white-space: nowrap;">
 								<view class="link-name" style="margin-right: 20px;">关联车型: </view>
 								<view v-for="(item,index) in linkModelList" class="modify-item moto-flex-row-left">
-									<view class="link-name" style="font-size: 13px;">{{item.brandName}}{{item.modelName}}</view>
+									<view class="link-name" style="font-size: 13px;">
+										{{item.brandName}}{{item.modelName}}</view>
 									<view class="iconv2 delete-icon" @click="removeModelItem(index)">&#xe671;</view>
 								</view>
 							</view>
@@ -85,7 +86,7 @@
 									<view class="link-name">{{linkClass ? linkClass.name : '选择分类'}}</view>
 								</view>
 								<view class="moto-flex-row-left" style="margin-left: 20px;" @click="openModelSelect">
-									<view class="iconv2 link-icon" style="font-size: 17px;">&#xe73e;</view>
+									<view class="iconv2 link-icon" style="font-size: 18px;">&#xe73e;</view>
 									<view class="link-name">关联车型
 									</view>
 								</view>
@@ -241,15 +242,16 @@
 		computed: {
 			bottomHeight() {
 				const height = 0
-				if(this.articleType === 'ARTICLE'){
+				if (this.articleType === 'ARTICLE') {
 					height = 20
 				}
-				if ((this.linkClass && this.linkModelList.length) || this.linkClass && this.linkModifyInfo.modifyItemList.length) {
+				if ((this.linkClass && this.linkModelList.length) || this.linkClass && this.linkModifyInfo.modifyItemList
+					.length) {
 					return height + 70 + 'px'
 				} else if (this.linkClass || this.linkModelList.length || this.linkModifyInfo.modifyItemList.length) {
 					return height + 35 + 'px'
 				} else if (!this.linkClass && !this.linkModelList.length && !this.linkModifyInfo.modifyItemList.length) {
-					return height
+					return height + 'px'
 				}
 			}
 		},
@@ -556,6 +558,10 @@
 					})
 			},
 			saveDraft() {
+				if (!this.articleTitle) {
+					getApp().$Message.warning('请输入标题后再保存')
+					return
+				}
 				this.editorCtx.getContents({
 					success: (e) => {
 						const contentList = translateOutputContent(e.delta.ops)
@@ -729,14 +735,15 @@
 		position: absolute;
 		bottom: 0;
 		box-shadow: 0 -1px 2.5px 0 rgba(0, 0, 0, 0.05);
-		height: 90px;
+		height: 100px;
 		padding: 14px 34px 0 34px;
 		box-sizing: border-box;
 		background-color: #FFFFFF;
+		padding-bottom: 10px;
 	}
 
 	.link-icon {
-		font-size: 16px;
+		font-size: 18px;
 		color: #141E34;
 		margin-right: 5px;
 	}
@@ -747,12 +754,12 @@
 	}
 
 	.tool-item {
-		margin-right: 14px;
+		margin-right: 20px;
 		width: 50px;
 	}
 
 	.tool-icon {
-		font-size: 16px;
+		font-size: 20px;
 		color: #141E34;
 		margin-bottom: 2px;
 	}
@@ -763,22 +770,22 @@
 	}
 
 	.save-btn {
-		width: 80px;
-		height: 30px;
-		line-height: 30px;
+		width: 100px;
+		height: 40px;
+		line-height: 40px;
 		text-align: center;
-		font-size: 13px;
+		font-size: 14px;
 		border: 1px solid #e8e8e8;
 		border-radius: 4px;
 		margin-right: 20px;
 	}
-
+	
 	.pub-btn {
-		width: 80px;
-		height: 30px;
-		line-height: 30px;
+		width: 100px;
+		height: 40px;
+		line-height: 40px;
 		text-align: center;
-		font-size: 13px;
+		font-size: 14px;
 		color: #FFFFFF;
 		background-color: #ff6100;
 		border-radius: 4px;

@@ -34,6 +34,11 @@
 				default: null
 			}
 		},
+		data() {
+			return {
+				isQuillFocused: false
+			}
+		},
 		mounted() {
 			// 初始化编辑器
 			this.initEditor()
@@ -51,6 +56,7 @@
 				// #ifdef VUE3
 				Quill.register('modules/ImageResize', window.ImageResize.default)
 				// #endif
+
 				// #ifndef VUE3
 				Quill.register('modules/ImageResize', window.ImageResize)
 				// #endif
@@ -269,7 +275,7 @@
 				this.quill.formatText(range.index, 1, 'data-custom', Object.keys(data).map(key =>
 						`${key}=${data[key]}`)
 					.join('&'), Quill.sources.SILENT)
-				this.quill.insertText(range.index + 2, '\n', Quill.sources.USER)
+				this.quill.insertText(range.index + 2, '\n\n', Quill.sources.USER)
 				// 光标下移
 				this.quill.setSelection(range.index + 100, Quill.sources.SILENT)
 
@@ -450,6 +456,17 @@
 						this.$emit('blur')
 					}
 				})
+				document.addEventListener('click', (event) => {
+					const editorContainer = document.querySelector('#editor');
+					if (editorContainer.contains(event.target) && !this.isQuillFocused) {
+						this.isQuillFocused = true
+						this.$emit('focus')
+					}
+					if (!editorContainer.contains(event.target) && this.isQuillFocused) {
+						this.isQuillFocused = false
+						this.$emit('blur')
+					}
+				});
 				// 监听滚动事件
 				this.quill.on(Quill.events.SCROLL_OPTIMIZE, () => {
 					const range = this.quill.selection.getRange()[0]
@@ -457,12 +474,13 @@
 				})
 				// 监听文本变化事件
 				this.quill.on(Quill.events.TEXT_CHANGE, async (delta, oldDelta, source) => {
+					uni.$emit('textChange')
 					const nodes = (await this.getEditorContext().getContents()).delta.ops
 					const images = nodes.filter(item => item.insert.image).map(item => item.insert.image)
 					let content = ''
-					for(let index in nodes){
+					for (let index in nodes) {
 						const data = nodes[index]
-						if(nodes[index] && nodes[index].insert !== '\n'){
+						if (nodes[index] && typeof nodes[index].insert === 'string' && nodes[index].insert !== '\n') {
 							content += nodes[index].insert
 						}
 					}
