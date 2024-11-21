@@ -51,7 +51,7 @@
 									class="modify-item moto-flex-row-left">
 									<image v-if="item.itemUrl" mode="aspectFill" class="modify-item-image"
 										:src="item.itemUrl"></image>
-									<view class="link-name">{{item.itemName}}</view>
+									<view class="link-name" style="font-size: 13px;">{{item.itemName}}</view>
 									<view class="iconv2 delete-icon" @click="removeModifyItem(index)">&#xe671;</view>
 								</view>
 							</view>
@@ -60,7 +60,7 @@
 							<view class="moto-flex-row-left" style="white-space: nowrap;">
 								<view class="link-name" style="margin-right: 20px;">关联车型: </view>
 								<view v-for="(item,index) in linkModelList" class="modify-item moto-flex-row-left">
-									<view class="link-name">{{item.brandName}}{{item.modelName}}</view>
+									<view class="link-name" style="font-size: 13px;">{{item.brandName}}{{item.modelName}}</view>
 									<view class="iconv2 delete-icon" @click="removeModelItem(index)">&#xe671;</view>
 								</view>
 							</view>
@@ -479,6 +479,7 @@
 						this.relatedLabelList = []
 						this.$refs.editorComponents.parseHtml('')
 						this.$refs['pub-keyword-input'].inputVisible = false
+						this.linkModelList = []
 					}
 				})
 			},
@@ -805,16 +806,16 @@
 	}
 
 	.modify-item {
-		height: 40px;
-		padding: 0 14px;
+		height: 30px;
+		padding: 0 6px;
 		border: 1px solid #F1F2F5;
 		border-radius: 4px;
 		margin-right: 12px;
 	}
 
 	.modify-item-image {
-		height: 30px;
-		width: 30px;
+		height: 20px;
+		width: 20px;
 		border-radius: 4px;
 		margin-right: 10px;
 	}
