@@ -119,6 +119,7 @@
 	
 	.article-list-card {
 		height: 75%;
+		overflow: hidden;
 		width: calc(95% + 10px);
 		margin-top: 25px;
 		border-radius: 4px;

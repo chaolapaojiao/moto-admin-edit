@@ -40,29 +40,28 @@
 		width: 100%;
 		box-sizing: border-box;
 	}
-	
+
 	.logo-img {
 		width: 32px;
 		height: 32px;
 		border-radius: 6px;
 	}
-	
+
 	.title {
 		margin-left: 10px;
 		font-size: 13px;
 		font-weight: 500;
 	}
-	
+
 	.user-avatar {
 		width: 30px;
 		height: 30px;
 		border-radius: 15px;
 	}
-	
+
 	.nick-name {
 		font-size: 12px;
 		margin-left: 5px;
 		color: #141E34;
 	}
-
 </style>
