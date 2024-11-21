@@ -72,7 +72,7 @@
 										{{linkLocation ? (linkLocation.name ?linkLocation.name :  linkLocation.locationName) : '关联位置'}}
 									</view>
 								</view>
-								<view class="moto-flex-row-left" style="margin-left: 40px;" @click="openCicleSelect">
+								<view class="moto-flex-row-left" style="margin-left: 30px;" @click="openCicleSelect">
 									<view class="iconv2 link-icon">&#xe785;</view>
 									<view class="link-name">{{linkCircle ? linkCircle.circleName : '关联圈子'}}
 									</view>
@@ -332,6 +332,7 @@
 				getApp().$openApi.motoCms.pubCircleArticle(postData).then(res => {
 					if (res.data.code === 200) {
 						uni.hideLoading()
+						uni.$off('textChange')
 						getApp().$Message.success('发布成功')
 						this.articleContent = ''
 						this.articleTitle = ''

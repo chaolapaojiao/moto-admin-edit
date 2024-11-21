@@ -69,15 +69,17 @@
 						childrenMenu: [{
 								name: '评论',
 								index: '1',
-								linkUrl: ''
+								linkUrl: '/pages/moto-interact/comment'
 							},
 							{
 								name: '点赞',
-								index: '2'
+								index: '2',
+								linkUrl: '/pages/moto-interact/like'
 							},
 							{
 								name: '关注',
-								index: '3'
+								index: '3',
+								linkUrl: '/pages/moto-interact/follow'
 							}
 						]
 					},

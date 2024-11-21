@@ -74,7 +74,7 @@
 									<view class="iconv2 link-icon">&#xe784;</view>
 									<view class="link-name">{{linkLocation ? linkLocation.name : '关联位置'}}</view>
 								</view>
-								<view class="moto-flex-row-left" style="margin-left: 20px;" @click="openCicleSelect">
+								<view class="moto-flex-row-left" style="margin-left: 30px;" @click="openCicleSelect">
 									<view class="iconv2 link-icon">&#xe785;</view>
 									<view class="link-name">{{linkCircle ? linkCircle.circleName : '关联圈子'}}
 									</view>

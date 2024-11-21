@@ -36,6 +36,27 @@
 				"leftWindow": false,
 				"navigationBarTitleText": "动态编辑"
 			}
+		},
+		{
+			"path" : "pages/moto-interact/comment",
+			"style" : 
+			{
+				"navigationBarTitleText" : "评论互动"
+			}
+		},
+		{
+			"path" : "pages/moto-interact/like",
+			"style" : 
+			{
+				"navigationBarTitleText" : "点赞互动"
+			}
+		},
+		{
+			"path" : "pages/moto-interact/follow",
+			"style" : 
+			{
+				"navigationBarTitleText" : "关注互动"
+			}
 		}
 	],
 	"topWindow": {

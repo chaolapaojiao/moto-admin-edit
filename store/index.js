@@ -12,8 +12,16 @@ const mutations = {
 		uni.setStorageSync('userInfo', userInfo)
 		uni.setStorageSync('moto-pc-token', userInfo.token)
 	},
-	setTopBg(state, bg){
+	setTopBg(state, bg) {
 		state.topBg = bg
+	},
+	logOut() {
+		uni.removeStorageSync('moto-pc-token')
+		uni.removeStorageSync('userInfo')
+		getApp().$Message.warning('退出登录成功')
+		uni.navigateTo({
+			url: '/pages/login/login'
+		})
 	}
 }
 export default createStore({

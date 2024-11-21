@@ -5,18 +5,29 @@
 				<image class="logo-img" src="/static/image/logo.png"></image>
 				<view class="title">机车圈APP | 创作者中心</view>
 			</view>
-			<view class="moto-flex-row-left" style="margin-right: 16px;">
-				<image class="user-avatar" :src="userInfo.avatarUrl"></image>
-				<view class="nick-name">{{userInfo.nickName}}</view>
-				<view class="iconv2">&#xe652;</view>
-			</view>
+			<el-dropdown>
+				<view class="moto-flex-row-left" style="margin-right: 16px;position: relative;">
+					<image class="user-avatar" :src="userInfo.avatarUrl"></image>
+					<view class="nick-name">{{userInfo.nickName}}</view>
+					<view class="iconv2">&#xe652;</view>
+					<view class="user-option-container"></view>
+				</view>
+				<template #dropdown>
+					<el-dropdown-menu>
+						<el-dropdown-item>个人中心</el-dropdown-item>
+						<el-dropdown-item>用户反馈</el-dropdown-item>
+						<el-dropdown-item divided @click="logOut">退出登录</el-dropdown-item>
+					</el-dropdown-menu>
+				</template>
+			</el-dropdown>
 		</view>
 	</view>
 </template>
 
 <script>
 	import {
-		mapState
+		mapState,
+		mapMutations
 	} from 'vuex'
 	export default {
 		data() {
@@ -28,7 +39,8 @@
 			...mapState(['userInfo', 'topBg'])
 		},
 		methods: {
-			openHome(){
+			...mapMutations(['logOut']),
+			openHome() {
 				uni.navigateTo({
 					url: '/pages/moto-cms/home'
 				})
