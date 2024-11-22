@@ -56,171 +56,6 @@
 					:disabled="!showFooterToolBar"></tool-ai> -->
 			</view>
 		</view>
-		<view class="editor-toolbar m" :hidden="!showFooterToolBar"
-			:style="{transform: `translateY(-${keyboardHeight}px)`}" @touchend.stop="">
-			<view class="editor-toolbar-tools">
-				<view class="tool" @click="showInsertBlockView">
-					<uni-icons type="plus" size="60rpx" />
-				</view>
-				<view class="editor-toolbar-divider"></view>
-				<view :class="{tool: true, active: showToolPopup === 'm-tool-header'}"
-					@click="showToolPopupView('m-tool-header')" id="m-tool-header">
-					<uni-icons custom-prefix="editor-icon" type="icon-text-group" size="54rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true, active: showToolPopup === 'm-tool-text'}"
-					@click="showToolPopupView('m-tool-text')" id="m-tool-text">
-					<uni-icons custom-prefix="editor-icon" type="icon-attr-group" size="60rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true, active: showToolPopup === 'm-tool-align'}"
-					@click="showToolPopupView('m-tool-align')" id="m-tool-align">
-					<uni-icons custom-prefix="editor-icon" type="icon-align-left" size="60rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true, active: formats.link}" @click="showLinkPopup(formats.link)">
-					<uni-icons custom-prefix="editor-icon" type="icon-link" size="60rpx"></uni-icons>
-				</view>
-				<view class="tool" @click="() => $refs.insertImageDrawer.open()">
-					<uni-icons custom-prefix="editor-icon" type="icon-image" size="60rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true}" @click="format('ai')">
-					<uni-icons custom-prefix="editor-icon" type="icon-ai" size="60rpx" color="#b454ff"></uni-icons>
-				</view>
-				<view class="editor-toolbar-divider"></view>
-				<view class="tool hide-keyboard" @click="hideKeyboard()">
-					<uni-icons custom-prefix="editor-icon" type="icon-jianpan" size="70rpx"></uni-icons>
-				</view>
-			</view>
-			<view class="editor-toolbar-popup" id="m-tool-header-popup"
-				:class="{show: showToolPopup === 'm-tool-header'}"
-				:style="{left: `${toolPopupRect.left}px`, right: `${toolPopupRect.right}px`}">
-				<view :class="{tool: true, active: formats.header === 1}" @click="format('header', 1)">
-					<uni-icons custom-prefix="editor-icon" type="icon-header1" size="60rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true, active: formats.header === 2}" @click="format('header', 2)">
-					<uni-icons custom-prefix="editor-icon" type="icon-header2" size="60rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true, active: formats.header === 3}" @click="format('header', 3)">
-					<uni-icons custom-prefix="editor-icon" type="icon-header3" size="60rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true, active: formats.header === 4}" @click="format('header', 4)">
-					<uni-icons custom-prefix="editor-icon" type="icon-header4" size="60rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true, active: formats.header === 5}" @click="format('header', 5)">
-					<uni-icons custom-prefix="editor-icon" type="icon-header5" size="60rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true, active: formats.header === 6}" @click="format('header', 6)">
-					<uni-icons custom-prefix="editor-icon" type="icon-header6" size="60rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true, active: formats.list === 'ordered'}" @click="format('list', 'ordered')">
-					<uni-icons custom-prefix="editor-icon" type="icon-ul" size="60rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true, active: formats.list === 'bullet'}" @click="format('list', 'bullet')">
-					<uni-icons custom-prefix="editor-icon" type="icon-ol" size="60rpx"></uni-icons>
-				</view>
-			</view>
-			<view class="editor-toolbar-popup" id="m-tool-text-popup" :class="{show: showToolPopup === 'm-tool-text'}"
-				:style="{left: `${toolPopupRect.left}px`, right: `${toolPopupRect.right}px`}">
-				<view :class="{tool: true, active: formats.bold}" @click="format('bold')">
-					<uni-icons custom-prefix="editor-icon" type="icon-bold" size="60rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true, active: formats.italic}" @click="format('italic')">
-					<uni-icons custom-prefix="editor-icon" type="icon-italic" size="60rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true, active: formats.underline}" @click="format('underline')">
-					<uni-icons custom-prefix="editor-icon" type="icon-underline" size="60rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true, active: formats.strike}" @click="format('strike')">
-					<uni-icons custom-prefix="editor-icon" type="icon-strike" size="60rpx"></uni-icons>
-				</view>
-			</view>
-			<view class="editor-toolbar-popup" id="m-tool-align-popup" :class="{show: showToolPopup === 'm-tool-align'}"
-				:style="{left: `${toolPopupRect.left}px`, right: `${toolPopupRect.right}px`}">
-				<view :class="{tool: true, active: formats.indent}"
-					@click="format('indent', formats.indent ? '-1' : '+1')">
-					<uni-icons custom-prefix="editor-icon" type="icon-line-indent" size="48rpx"></uni-icons>
-				</view>
-				<view class="editor-toolbar-popup-divider"></view>
-				<view :class="{tool: true, active: formats.align === 'left'}" @click="format('align', 'left')">
-					<uni-icons custom-prefix="editor-icon" type="icon-align-left" size="60rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true, active: formats.align === 'center'}" @click="format('align', 'center')">
-					<uni-icons custom-prefix="editor-icon" type="icon-align-center" size="60rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true, active: formats.align === 'right'}" @click="format('align', 'right')">
-					<uni-icons custom-prefix="editor-icon" type="icon-align-right" size="60rpx"></uni-icons>
-				</view>
-				<view :class="{tool: true, active: formats.align === 'justify'}" @click="format('align', 'justify')">
-					<uni-icons custom-prefix="editor-icon" type="icon-align-justify" size="60rpx"></uni-icons>
-				</view>
-			</view>
-		</view>
-		<uni-transition :mode-class="['slide-bottom', 'fade']" :show="showInsertBlockToolSetting" class="tool-setting">
-			<view>
-				<view class="tool-setting-header">
-					<view class="close" @click="closeToolSetting">
-						<uni-icons type="closeempty" size="40rpx" class="icon" />
-					</view>
-					<text>添加</text>
-				</view>
-				<view class="body insert-block">
-					<view class="item" @click="() => $refs.insertImageDrawer.open()">
-						<view class="icon">
-							<uni-icons custom-prefix="editor-icon" type="icon-image" size="70rpx"></uni-icons>
-						</view>
-						<text class="text">图片</text>
-					</view>
-					<view class="item" @click="format('hr')">
-						<view class="icon">
-							<uni-icons custom-prefix="editor-icon" type="icon-hr" size="70rpx"></uni-icons>
-						</view>
-						<text class="text">分割线</text>
-					</view>
-				</view>
-			</view>
-		</uni-transition>
-		<uni-transition :show="showToolSettingMask">
-			<view class="tool-setting-mask"></view>
-		</uni-transition>
-
-		<uni-popup ref="popup" type="center">
-			<view class="popup-body" @touchend.stop="">
-				<!-- #ifndef H5 -->
-				<view class="tip">
-					<text>由于平台限制，插入超链接将转换为Markdown格式，不影响内容展示</text>
-				</view>
-				<!-- #endif -->
-				<uni-forms label-width="90px">
-					<uni-forms-item label="链接名称" name="link">
-						<uni-easyinput v-model="currentLink.title" />
-					</uni-forms-item>
-					<uni-forms-item label="链接地址" name="link">
-						<uni-easyinput v-model="currentLink.url" />
-					</uni-forms-item>
-				</uni-forms>
-				<view class="popup-body-btn-group">
-					<button class="btn" size="mini" @click="$refs.popup.close()">取消</button>
-					<button class="btn" size="mini" type="primary" @click="linkChange">确定</button>
-				</view>
-			</view>
-		</uni-popup>
-
-		<view class="uni-im-chat-components" :hidden="!showImChat">
-			<view class="close-bar">
-				<view class="head">
-					<text class="title">uni-ai-chat</text>
-					<text class="desc">输入prompt提示词后AI根据你的输入生成文章</text>
-				</view>
-				<view class="close" @click="showImChat=false">
-					<uni-icons type="closeempty" size="40rpx" class="icon"></uni-icons>
-				</view>
-			</view>
-			<!-- 	<uni-im-chat ref="uniImChat"></uni-im-chat> -->
-		</view>
-
-		<uni-drawer class="insert-image-drawer" v-if="drawerWidth" ref="insertImageDrawer" mode="right"
-			:width="drawerWidth">
-			<uni-media-library mode="picker" :selected-count="1" :media-tabs="['image']"
-				@onInsert="onInsertImage"></uni-media-library>
-		</uni-drawer>
 	</view>
 </template>
 
@@ -287,7 +122,7 @@
 			WebEditor,
 			// #endif
 		},
-		props:{
+		props: {
 			bottomHeight: {
 				type: String,
 				default: '0px'
@@ -612,8 +447,8 @@
 				this.$refs.popup.close()
 			}
 		},
-		watch:{
-			bottomHeight(){
+		watch: {
+			bottomHeight() {
 				this.bottomHeightCss = this.bottomHeight
 			}
 		}
@@ -634,27 +469,14 @@
 		scrollbar-width: none;
 	}
 
-	.popup-body {
-		background: #fff;
-		padding: 30px;
-		border-radius: 4px;
-		max-width: 80%;
-		margin: 0 auto;
-
-		.tip {
-			font-size: 14px;
-			text-align: center;
-			color: #666;
-			margin-bottom: 10px;
-		}
-
-		.popup-body-btn-group {
-			text-align: center;
-
-			.btn {
-				margin: 0 5px;
-			}
-		}
+	.editor-toolbar {
+		position: absolute;
+		background-color: #f8f8f8;
+		top: -40px;
+		right: 0;
+		z-index: 999;
+		width: 100%;
+		height: 40px;
 	}
 
 	// 修改编辑器默认样式
@@ -719,142 +541,6 @@
 				color: #ff502c;
 				padding: 0.065em 0.4em;
 				font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-			}
-		}
-	}
-
-	.uni-im-chat-components {
-		width: 450px;
-		position: fixed;
-		top: 50px;
-		right: 50px;
-		bottom: 70px;
-		z-index: 999;
-		border: #fefefe solid 2px;
-		box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-		border-radius: 8px;
-		overflow: hidden;
-
-		.close-bar {
-			height: 50px;
-			background: #fff;
-			display: flex;
-			align-items: center;
-			padding: 0 10px;
-			justify-content: flex-end;
-			position: relative;
-
-			.head {
-				display: flex;
-				position: absolute;
-				left: 0;
-				right: 0;
-				text-align: center;
-				flex-direction: column;
-				gap: 5px;
-
-				.title {
-					font-size: 14px;
-					font-weight: bold;
-					color: #333;
-					padding-bottom: 0;
-					border: none;
-				}
-
-				.desc {
-					font-size: 12px;
-					color: #999;
-				}
-			}
-
-			.close {
-				width: 30px;
-				height: 30px;
-				background: #f1f1f1;
-				border-radius: 50%;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				position: relative;
-				z-index: 2;
-				cursor: pointer;
-
-				.icon {
-					display: block;
-				}
-			}
-		}
-
-		::v-deep {
-			//* {
-			//  max-width: 100%;
-			//}
-
-			.page {
-				height: 720px;
-			}
-
-			.container {
-				width: 100%;
-				height: 100%;
-				margin: 0;
-				box-shadow: none;
-				flex: 1;
-				border-radius: 0;
-			}
-
-			.menu {
-				padding: 0;
-			}
-
-			.msg-item {
-				.content {
-					max-width: 88%;
-				}
-			}
-
-			.trash {
-				width: auto;
-			}
-
-			.foot-box {
-				gap: 10px;
-				padding: 10px;
-
-				.send {
-					width: 50px;
-				}
-
-				.textarea-box {
-					flex: 1;
-					width: auto;
-
-					.textarea {
-						width: 100%;
-					}
-				}
-			}
-		}
-	}
-
-	@media screen and (max-width: 768px) {
-		.uni-im-chat-components {
-			width: 100%;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			margin: 0 auto;
-			border: none;
-
-			&:before {
-				content: "";
-				position: fixed;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: rgba(0, 0, 0, .5);
-				z-index: -1;
 			}
 		}
 	}

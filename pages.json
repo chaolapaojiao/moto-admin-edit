@@ -2,17 +2,17 @@
 	"pages": [{
 			"path": "pages/moto-cms/home",
 			"style": {
-				"navigationBarTitleText": "首页"
+				"navigationBarTitleText": "机车圈-首页"
 			}
 		}, {
 			"path": "pages/moto-cms/article-list",
 			"style": {
-				"navigationBarTitleText": "发布记录"
+				"navigationBarTitleText": "机车圈-发布记录"
 			}
 		}, {
 			"path": "pages/moto-cms/article-draft",
 			"style": {
-				"navigationBarTitleText": "草稿箱"
+				"navigationBarTitleText": "机车圈-草稿箱"
 			}
 		},
 		{
@@ -27,35 +27,49 @@
 			"path": "pages/moto-cms/rich-article-editor",
 			"style": {
 				"leftWindow": false,
-				"navigationBarTitleText": "长图文资讯编辑"
+				"navigationBarTitleText": "机车圈-长图文资讯编辑"
 			}
 		},
 		{
 			"path": "pages/moto-cms/normal-article-editor",
 			"style": {
 				"leftWindow": false,
-				"navigationBarTitleText": "动态编辑"
+				"navigationBarTitleText": "机车圈-动态编辑"
 			}
 		},
 		{
 			"path" : "pages/moto-interact/comment",
 			"style" : 
 			{
-				"navigationBarTitleText" : "评论互动"
+				"navigationBarTitleText" : "机车圈-评论管理"
 			}
 		},
 		{
 			"path" : "pages/moto-interact/like",
 			"style" : 
 			{
-				"navigationBarTitleText" : "点赞互动"
+				"navigationBarTitleText" : "机车圈-点赞管理"
 			}
 		},
 		{
 			"path" : "pages/moto-interact/follow",
 			"style" : 
 			{
-				"navigationBarTitleText" : "关注互动"
+				"navigationBarTitleText" : "机车圈-关注管理"
+			}
+		},
+		{
+			"path" : "pages/user/user-center",
+			"style" : 
+			{
+				"navigationBarTitleText" : "机车圈-用户中心"
+			}
+		},
+		{
+			"path" : "pages/user/user-feedback",
+			"style" : 
+			{
+				"navigationBarTitleText" : "机车圈-用户反馈"
 			}
 		}
 	],
@@ -72,6 +86,9 @@
 		"path": "windows/leftWindow",
 		"style": {
 			"width": "220px"
+		},
+		"matchMedia": {
+			"minWidth": 0
 		}
 	},
 	"globalStyle": {

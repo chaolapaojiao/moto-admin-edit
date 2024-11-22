@@ -5,7 +5,7 @@
 		</template>
 		<view style="height: 20px;"></view>
 		<view v-for="item in typeList" class="moto-flex-row-left" style="margin-bottom: 30px;" @click="oepnArticleEdit(item)">
-			<image class="item-icon" src="/static/image/logo.png"></image>
+			<image class="item-icon" :src="item.icon"></image>
 			<view>
 				<view class="item-title">{{item.title}}</view>
 				<view class="item-desc">{{item.desc}}</view>
@@ -22,16 +22,19 @@
 				dialogVisible: false,
 				typeList: [{
 						title: '长图文',
+						icon: '/static/image/popups_icon_issue.png',
 						desc: '主要以多图片文字为主,详细分享你的心得',
 						linkUrl: '/pages/moto-cms/rich-article-editor?type=CIRCLE_BIG_ARTICLE'
 					},
 					{
 						title: '动态',
+						icon: '/static/image/popups_icon_scond.png',
 						desc: '主要以多图片文字为主,详细分享你的心得',
 						linkUrl: '/pages/moto-cms/normal-article-editor'
 					},
 					{
 						title: '资讯',
+						icon: '/static/image/popups_icon_score.png',
 						desc: '主要以多图片文字为主,详细分享你的心得',
 						linkUrl: '/pages/moto-cms/rich-article-editor?type=ARTICLE'
 					}
@@ -52,7 +55,7 @@
 		width: 50px;
 		height: 50px;
 		border-radius: 25px;
-		margin-right: 10px;
+		margin-right: 20px;
 	}
 	
 	.item-title {

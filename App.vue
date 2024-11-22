@@ -19,5 +19,13 @@
 		background-color: #f8f8f8;
 	}
 
+	uni-left-window {
+		min-width: 220px !important;
+	}
+
+	uni-top-window {
+		min-width: 1000px;
+	}
+
 	/*每个页面公共css */
 </style>

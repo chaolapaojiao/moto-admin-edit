@@ -1,6 +1,6 @@
 <template>
 	<view>
-		点赞
+		
 	</view>
 </template>
 

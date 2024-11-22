@@ -125,7 +125,7 @@
 	.edit-btn {
 		width: 60px;
 		height: 30px;
-		border: 0.5px solid #bebebe;
+		border: 0.5px solid #eee;
 		border-radius: 4px;
 		color: #141E34;
 		text-align: center;
@@ -157,7 +157,7 @@
 		width: 60px;
 		height: 30px;
 		background-color: #ff6100;
-		border: 0.5px solid #bebebe;
+		border: 0.5px solid #eee;
 		border-radius: 4px;
 		color: #FFFFFF;
 		text-align: center;

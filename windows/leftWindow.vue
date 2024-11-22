@@ -121,6 +121,7 @@
 	.sidebar-container {
 		height: 100%;
 		width: 100%;
+		min-width: 220px;
 	}
 	
 	.sidebar {
@@ -160,16 +161,17 @@
 	}
 	
 	.pub-btn {
-		width: 135px;
+		width: 170px;
 		height: 40px;
 		background-color: #ff6100;
 		border-radius: 4px;
 		color: #FFFFFF;
 		text-align: center;
 		line-height: 40px;
-		font-size: 12px;
+		font-size: 14px;
 		font-weight: bold;
 		margin-bottom: 10px;
+		letter-spacing: 1px;
 	}
 	
 	.group-name {

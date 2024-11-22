@@ -9,13 +9,14 @@
 				</view>
 			</view>
 			<view style="height: 85%;">
-				<view v-for="(item,index) in tabs[nCurrentTab].data[tabs[nCurrentTab].currentPage]" style="height: 20%;">
+				<view v-for="(item,index) in tabs[nCurrentTab].data[tabs[nCurrentTab].currentPage]"
+					style="height: 20%;">
 					<article-card @deleteSuccess="onDeleteSuccess" :item="item"></article-card>
 				</view>
 				<el-empty v-if="!tabs[nCurrentTab].total" :image-size="150" />
 			</view>
 			<view class="moto-flex-row-center">
-				<el-pagination hide-on-single-page size="small" @change="onPageChange" layout="prev, pager, next"
+				<el-pagination background hide-on-single-page size="small" @change="onPageChange" layout="prev, pager, next"
 					:default-page-size="tabs[nCurrentTab].size" :total="tabs[nCurrentTab].total" />
 			</view>
 		</view>
@@ -141,5 +142,10 @@
 		line-height: 23px;
 		border-radius: 2px;
 		transition: 0.1s;
+	}
+
+	::v-deep .el-pagination .btn-next,
+	::v-deep .el-pagination .btn-prev {
+		border: none;
 	}
 </style>

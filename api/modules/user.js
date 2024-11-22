@@ -39,8 +39,20 @@ function getUserPubStatistics() {
 	})
 }
 
+function getInteractList(data) {
+	let {
+		timestamp,
+		signature
+	} = paramsEncryption(data)
+	data.timestamp = timestamp
+	data.signature = signature
+	return http.get('common/getInteractList', {
+		params: data
+	})
+}
 export default {
 	getLoginQrCode,
 	checkQrLogin,
-	getUserPubStatistics
+	getUserPubStatistics,
+	getInteractList
 }

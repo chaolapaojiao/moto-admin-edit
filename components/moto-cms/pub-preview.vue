@@ -1,5 +1,5 @@
 <template>
-	<view style="height: 100%;overflow: hidden;">
+	<view style="height: 100%;overflow: hidden;min-width: 500px;">
 		<view class="card-title">预览卡片</view>
 		<view class="article-card">
 			<view class="moto-flex-row-left">
@@ -8,13 +8,18 @@
 			</view>
 			<view class="title">{{articleData.title}}</view>
 			<view class="content moto-lines-3">{{articleData.content}}</view>
-			<view class="moto-flex-row-between" v-if="articleData.images.length >= 3">
-				<view v-for="image in articleData.images">
-					<image mode="aspectFill" class="image-item" :src="image"></image>
+			<view v-if="articleData.images.length">
+				<view class="moto-flex-row-between" v-if="articleData.images.length >= 3">
+					<view v-for="image in articleData.images">
+						<image mode="aspectFill" class="image-item" :src="image"></image>
+					</view>
+				</view>
+				<view v-if="articleData.images.length <= 2">
+					<image mode="widthFix" class="image-item-single" :src="articleData.images[0]"></image>
 				</view>
 			</view>
-			<view v-if="articleData.images.length <= 2">
-				<image mode="widthFix" class="image-item-single" :src="articleData.images[0]"></image>
+			<view v-else class="moto-flex-row-between">
+				<view class="no-image-box" v-for="(item,index) in 3">暂无图片</view>
 			</view>
 			<view class="vote-container" v-if="vote.voteItemList.length">
 				<view class="moto-flex-row-left" style="margin-bottom: 5px;">
@@ -88,7 +93,7 @@
 					},
 					title: '你的文章标题',
 					content: '你的文章内容',
-					images: ['/static/image/logo.png', '/static/image/logo.png', '/static/image/logo.png', ],
+					images: [],
 				}
 			}
 		},
@@ -114,9 +119,7 @@
 			},
 			images: {
 				handler() {
-					this.articleData.images = this.images.length ? this.images : ['/static/image/logo.png',
-						'/static/image/logo.png', '/static/image/logo.png'
-					]
+					this.articleData.images = this.images.length ? this.images : []
 				},
 				immediate: true,
 				deep: true
@@ -135,21 +138,21 @@
 
 <style lang="scss" scoped>
 	.article-card {
-		width: 280px;
+		width: 350px;
 		padding: 16px;
-		margin: 0 25px 0 50px;
+		margin: 0 25px 0 15px;
 		background-color: #FFFFFF;
 		border-radius: 4px;
 		box-shadow: 2px 4px 5px 0 rgba(0, 0, 0, 0.08);
 	}
-	
+
 	.title {
-		font-size: 14px;
+		font-size: 15px;
 		font-weight: bold;
 		color: #141E34;
 		margin: 4px 0;
 	}
-	
+
 	.user-avatar {
 		width: 32px;
 		height: 32px;
@@ -157,13 +160,13 @@
 		border: 1px solid #f8f8f8;
 		margin-right: 6px;
 	}
-	
+
 	.user-name {
 		font-size: 12px;
 		font-weight: 500;
 		color: #141E34;
 	}
-	
+
 	.content {
 		font-size: 14px;
 		color: #141E34;
@@ -171,39 +174,39 @@
 		margin-bottom: 4px;
 		white-space: normal;
 	}
-	
+
 	.image-item {
-		width: 92px;
-		height: 72px;
+		width: 114px;
+		height: 82px;
 		border: 1px solid #eee;
 		background-color: #ddd;
 		border-radius: 4px;
 		margin-bottom: 4px;
 	}
-	
+
 	.card-icon {
 		font-size: 15px;
 		margin-right: 2px;
 	}
-	
+
 	.time {
 		font-size: 11px;
 		color: #9FA5B4;
 	}
-	
+
 	.circle-name {
 		font-size: 11px;
 		color: #9FA5B4;
 		margin-left: 6px;
 	}
-	
+
 	.line {
 		width: 100%;
 		height: 1px;
 		background-color: #eee;
 		margin: 12px 0;
 	}
-	
+
 	.image-item-single {
 		width: 120px;
 		border: 1px solid #eee;
@@ -211,7 +214,7 @@
 		border-radius: 4px;
 		margin-bottom: 4px;
 	}
-	
+
 	.vote-container {
 		padding: 10px 12px 10px 12px;
 		background: #F7F8FB;
@@ -219,19 +222,19 @@
 		width: 260px;
 		margin-bottom: 8px;
 	}
-	
+
 	.vote-icon {
 		width: 30px;
 		height: 16px;
 	}
-	
+
 	.vote-title {
 		font-size: 15px;
 		color: #141E34;
 		font-weight: 500;
 		margin-left: 6px;
 	}
-	
+
 	.vote-opiton-item {
 		width: 250px;
 		height: 28px;
@@ -244,10 +247,22 @@
 		color: #141E34;
 		border: 1px solid #EBECEF;
 	}
-	
+
 	.card-title {
 		margin: 50px 0 25px 50px;
 		font-size: 14px;
 	}
 
+	.no-image-box {
+		width: 92px;
+		height: 72px;
+		border: 1px solid #eee;
+		background-color: #ddd;
+		border-radius: 4px;
+		margin-bottom: 4px;
+		text-align: center;
+		line-height: 72px;
+		font-size: 10px;
+		color: #666666;
+	}
 </style>

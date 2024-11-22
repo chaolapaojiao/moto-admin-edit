@@ -1,11 +1,11 @@
 <template>
 	<view class="container">
-		<el-row :gutter="10" style="height: 100%;">
-			<el-col :span="7">
+		<view  style="height: 100%;display: flex;width: 100%;">
+			<view style="width: 30%;min-width: 400px;">
 				<pub-preview :vote="linkVoteInfo" :circle="linkCircle" :title="articleTitle"
 					:images="imageList.map(item => item.url).slice(0, 3)" :content="articleContent"></pub-preview>
-			</el-col>
-			<el-col :span="16">
+			</view>
+			<view style="height: 100%;width: 60%;min-width: 800px;">
 				<view class="editor-container card-shadow">
 					<view style="padding: 16px;">
 						<scroll-view :show-scrollbar="false" class="moto-flex-row-left image-scroll-container" scroll-x>
@@ -64,7 +64,7 @@
 						</scroll-view>
 					</view>
 					<view class="tool-container">
-						<view class="moto-flex-row-between">
+						<view class="moto-flex-row-between" style="margin-bottom: 15px;">
 							<view class="moto-flex-row-left">
 								<view class="moto-flex-row-left" @click="openLocationSelect">
 									<view class="iconv2 link-icon">&#xe784;</view>
@@ -96,8 +96,8 @@
 						</view>
 					</view>
 				</view>
-			</el-col>
-		</el-row>
+			</view>
+		</view>
 		<pub-circle-select @circleSelect="onCircleSelect" ref="circle-select"></pub-circle-select>
 		<pub-location-select @locationSelect="onLocatonSelect" ref="location-select"></pub-location-select>
 		<pub-topic-select :seleted="linkTopicList.map(item => item.topicTagId)" @topicSelect="onTopicSelect"
