@@ -118,7 +118,7 @@
 	}
 	
 	.data-count {
-		color: #666666;
+		color: rgba(51, 51, 51, .8);
 		font-size: 14px;
 	}
 	
@@ -130,7 +130,7 @@
 		color: #141E34;
 		text-align: center;
 		line-height: 30px;
-		font-size: 14px;
+		font-size: 13px;
 		margin-right: 15px;
 	}
 	

@@ -26,6 +26,8 @@
 	uni-top-window {
 		min-width: 1000px;
 	}
-
+	page{
+		min-width: 700px;
+	}
 	/*每个页面公共css */
 </style>

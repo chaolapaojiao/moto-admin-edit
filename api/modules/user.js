@@ -50,9 +50,22 @@ function getInteractList(data) {
 		params: data
 	})
 }
+
+// 发送评论
+function sendComment(data) {
+	let {
+		timestamp,
+		signature
+	} = paramsEncryption(data, 'post')
+	signature = signature.replace(/\+/g, '%2B')
+	const jsonStr = JSON.stringify(data)
+	return http.post(`common/setComment?timestamp=${timestamp}&signature=${signature}`, jsonStr)
+}
+
 export default {
 	getLoginQrCode,
 	checkQrLogin,
 	getUserPubStatistics,
-	getInteractList
+	getInteractList,
+	sendComment
 }

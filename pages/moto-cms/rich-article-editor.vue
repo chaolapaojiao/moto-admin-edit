@@ -613,25 +613,6 @@
 					})
 				}
 			},
-
-			async openImageUpload(index) {
-				uni.chooseImage({
-					count: 1, //默认9
-					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					success: (res) => {
-						this.formData.thumbnail[index].source = res.tempFilePaths[0]
-						http.upload('common/imageUpload', {
-							name: 'file',
-							filePath: res.tempFilePaths[0]
-						}).then(res => {
-							const result = JSON.parse(res.data)
-							if (result.code === 200) {
-								this.formData.thumbnail[index].source = result.data.url
-							}
-						})
-					}
-				});
-			},
 			async onInsertCover(selectMediaItems) {
 				const coverIndex = this.coverIndex !== null ? this.coverIndex : 0
 				const image = selectMediaItems[0]

@@ -119,7 +119,6 @@
 		height: 100%;
 		padding: 40px;
 		box-sizing: border-box;
-		min-width: 1000px;
 	}
 
 	.article-card {
@@ -169,9 +168,9 @@
 	}
 
 	.btn {
-		padding: 2px 5px;
+		padding: 3px 6px;
 		border: 1px solid #eee;
-		border-radius: 2px;
+		border-radius: 4px;
 		font-size: 11px;
 		margin-right: 5px;
 	}

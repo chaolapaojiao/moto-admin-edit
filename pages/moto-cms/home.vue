@@ -1,5 +1,5 @@
 <template>
-	<view style="width: 100%;height: 100%;min-width: 1000px;">
+	<view style="width: 100%;height: 100%">
 		<view class="moto-flex-row-left" style="height: 20%;width: 90%">
 			<view class="card-shadow moto-flex-column-center article-count-card">
 				<view class="moto-flex-row-left" style="margin-bottom: 25px;">

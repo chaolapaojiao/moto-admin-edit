@@ -87,7 +87,7 @@ async function imageCompress(url, quality = 0.8) {
 }
 
 // 图片加密
-function uploadEncryption(url) {
+function uploadEncryption(url, type) {
 	return new Promise(async (resolve, reject) => {
 		const compressInfo = await imageCompress(url)
 		const reader = new FileReader()
@@ -95,7 +95,7 @@ function uploadEncryption(url) {
 		reader.onload = (e) => {
 			const arrayBuffer = e.target.result;
 			const md5Value = md5(arrayBuffer)
-			const paramsStr = 'timestamp=' + timestamp + '&md5=' + md5Value
+			const paramsStr = 'timestamp=' + timestamp + '&md5=' + md5Value + '&type=' + type
 			const sha256Value = CryptoJS.SHA256(paramsStr).toString(CryptoJS.enc.Hex).toUpperCase();
 			let encryptor = new JSEncrypt()
 			encryptor.setPublicKey(key)
@@ -112,18 +112,18 @@ function uploadEncryption(url) {
 
 }
 // 图片上传
-export async function imageUpload(url) {
-	const result = await uploadEncryption(url)
+export async function imageUpload(url, type = 'ARTICLE') {
+	const result = await uploadEncryption(url, type)
 	return new Promise((resolve, reject) => {
 		http.upload(
-			`common/imageUpload?timestamp=${result.timestamp}&md5=${result.md5Value}&signature=${result.signature}`, {
+			`common/imageUpload?timestamp=${result.timestamp}&type=${type}&md5=${result.md5Value}&signature=${result.signature}`, {
 				name: 'file',
 				filePath: result.url
 			}).then(res => {
 			const result = JSON.parse(res.data)
 			if (result.code === 200) {
 				resolve(result.data.url)
-			}else{
+			} else {
 				reject('upload fail')
 			}
 		}).catch(err => {
